@@ -769,9 +769,18 @@ footer {
   .real-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
   .real-card { min-height: 200px; }
   .real-card:first-child { grid-row: auto; }
-  .syndics-inner { grid-template-columns: 1fr; padding: 40px 28px; }
-  .syndics-cta { align-items: stretch; }
-  .syndics-cta .btn-teal, .syndics-cta .btn-ghost { text-align: center; white-space: normal; padding: 14px 16px; }
+  .syndics-section { padding: 40px 16px; }
+  .syndics-inner { grid-template-columns: 1fr; padding: 32px 24px; overflow: hidden; }
+  .syndics-title { font-size: 26px; line-height: 1.2; }
+  .syndics-sub { font-size: 14px; max-width: 100%; }
+  .sf-item { font-size: 13px; }
+  .syndics-cta { align-items: stretch; width: 100%; }
+  .syndics-cta .btn-teal, .syndics-cta .btn-ghost { text-align: center; white-space: normal; padding: 14px 16px; width: 100%; box-sizing: border-box; }
+  .why-section { padding: 64px 20px; }
+  .cibles-section { padding: 64px 20px; }
+  .realisations-section { padding: 64px 20px; }
+  .temoignages-section { padding: 64px 20px; }
+  .zone-section { padding: 48px 20px; }
   .zone-inner { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .urgence-band { flex-direction: column; text-align: center; padding: 20px; }
@@ -900,7 +909,7 @@ footer {
 
 <!-- POURQUOI NOUS -->
 <section class="why-section">
-  <div class="why-layout" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+  <div class="why-layout">
     <div class="why-text reveal">
       <p class="section-eyebrow">Notre différence</p>
       <h2 class="section-title">9 plombiers sur 10<br>refusent la fonte</h2>
