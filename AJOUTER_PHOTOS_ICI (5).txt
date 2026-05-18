@@ -1,7 +1,0 @@
-{
-  "type": "Diagnostic",
-  "titre": "Inspection réseau — rapport assurance",
-  "lieu": "Paris 16e",
-  "detail": "Copropriété 32 lots · Caméra auto-propulsée",
-  "annee": "2024"
-}
