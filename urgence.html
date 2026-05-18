@@ -90,25 +90,31 @@
     <p class="section-eyebrow" style="text-align:center">Formulaire urgence</p>
     <h2 class="section-title" style="text-align:center;margin-bottom:8px">Être rappelé sous 30 min</h2>
     <p style="text-align:center;color:var(--text-muted);font-size:15px;margin-bottom:40px;font-weight:300">Remplissez ce formulaire — nous vous rappelons immédiatement.</p>
-    <div class="form-grid">
-      <div class="form-group"><label>Prénom et Nom *</label><input type="text" placeholder="Jean Dupont"></div>
-      <div class="form-group"><label>Téléphone *</label><input type="tel" placeholder="06 XX XX XX XX"></div>
-      <div class="form-group full"><label>Adresse de l'intervention *</label><input type="text" placeholder="12 rue de la Fontaine, Paris 16e"></div>
-      <div class="form-group full"><label>Type de problème *</label>
-        <select>
-          <option value="">Choisir...</option>
-          <option>Fuite active</option>
-          <option>Colonne bouchée</option>
-          <option>Rupture canalisation</option>
-          <option>Dégât des eaux</option>
-          <option>Diagnostic</option>
-          <option>Autre</option>
-        </select>
+    <!-- FORMSPREE : remplacer YOUR_FORM_ID par l'ID obtenu sur formspree.io/forms -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="form-urgence">
+      <input type="hidden" name="_subject" value="🚨 URGENCE SOS FONTE — Demande de rappel">
+      <input type="hidden" name="_next" value="https://xaledus.github.io/sosfonte/urgence.html?merci=1">
+      <div class="form-grid">
+        <div class="form-group"><label for="f-nom">Prénom et Nom *</label><input id="f-nom" type="text" name="nom" placeholder="Jean Dupont" required></div>
+        <div class="form-group"><label for="f-tel">Téléphone *</label><input id="f-tel" type="tel" name="telephone" placeholder="06 XX XX XX XX" required></div>
+        <div class="form-group full"><label for="f-adresse">Adresse de l'intervention *</label><input id="f-adresse" type="text" name="adresse" placeholder="12 rue de la Fontaine, Paris 16e" required></div>
+        <div class="form-group full"><label for="f-type">Type de problème *</label>
+          <select id="f-type" name="type_probleme" required>
+            <option value="">Choisir...</option>
+            <option>Fuite active sur fonte</option>
+            <option>Colonne bouchée / refoulement</option>
+            <option>Rupture ou fissure de canalisation fonte</option>
+            <option>Dégât des eaux — réseau fonte</option>
+            <option>Jonction fonte/PVC qui lâche</option>
+            <option>Diagnostic / inspection caméra</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group full"><label for="f-desc">Description (optionnel)</label><textarea id="f-desc" name="description" placeholder="Décrivez votre situation en quelques mots..."></textarea></div>
       </div>
-      <div class="form-group full"><label>Description (optionnel)</label><textarea placeholder="Décrivez votre situation en quelques mots..."></textarea></div>
-    </div>
-    <button class="btn-primary form-submit" style="margin-top:20px;width:100%;justify-content:center">🔴 Je veux être rappelé sous 30 minutes</button>
-    <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:14px">Ou appelez directement : <strong><a href="tel:0180846040" style="color:var(--red)">01 80 84 60 40</a></strong></p>
+      <button type="submit" class="btn-primary form-submit" style="margin-top:20px;width:100%;justify-content:center">🔴 Je veux être rappelé sous 30 minutes</button>
+      <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:14px">Ou appelez directement : <strong><a href="tel:0180846040" style="color:var(--red)">01 80 84 60 40</a></strong></p>
+    </form>
   </div>
 </section>
 

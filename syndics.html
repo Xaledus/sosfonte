@@ -86,16 +86,20 @@
     <p class="section-eyebrow" style="text-align:center">Formulaire syndic</p>
     <h2 class="section-title" style="text-align:center;margin-bottom:8px">Demander un rendez-vous découverte</h2>
     <p style="text-align:center;color:var(--text-muted);font-size:15px;margin-bottom:40px;font-weight:300">Présentez-nous vos immeubles — nous vous proposons une offre sur mesure sous 24h.</p>
-    <div class="form-grid">
-      <div class="form-group full"><label>Nom du cabinet *</label><input type="text" placeholder="Cabinet Immobilier Dupont"></div>
-      <div class="form-group"><label>Votre nom et prénom *</label><input type="text" placeholder="Jean Dupont"></div>
-      <div class="form-group"><label>Téléphone direct *</label><input type="tel" placeholder="01 XX XX XX XX"></div>
-      <div class="form-group full"><label>Email professionnel *</label><input type="email" placeholder="j.dupont@cabinet.fr"></div>
-      <div class="form-group"><label>Nombre d'immeubles avec réseaux fonte</label><input type="text" placeholder="Ex : 4 immeubles"></div>
-      <div class="form-group"><label>Ville(s) principale(s)</label><input type="text" placeholder="Paris 16e, Neuilly..."></div>
-      <div class="form-group full"><label>Message / besoin spécifique</label><textarea placeholder="Décrivez votre situation ou vos besoins..."></textarea></div>
-    </div>
-    <button class="btn-teal form-submit" style="margin-top:20px">Demander un rendez-vous découverte →</button>
+    <!-- FORMSPREE : remplacer YOUR_FORM_ID par l'ID obtenu sur formspree.io/forms -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="_subject" value="🏢 Demande syndic SOS FONTE">
+      <div class="form-grid">
+        <div class="form-group full"><label for="s-cabinet">Nom du cabinet *</label><input id="s-cabinet" type="text" name="cabinet" placeholder="Cabinet Immobilier Dupont" required></div>
+        <div class="form-group"><label for="s-nom">Votre nom et prénom *</label><input id="s-nom" type="text" name="nom" placeholder="Jean Dupont" required></div>
+        <div class="form-group"><label for="s-tel">Téléphone direct *</label><input id="s-tel" type="tel" name="telephone" placeholder="01 XX XX XX XX" required></div>
+        <div class="form-group full"><label for="s-email">Email professionnel *</label><input id="s-email" type="email" name="email" placeholder="j.dupont@cabinet.fr" required></div>
+        <div class="form-group"><label for="s-nb">Nombre d'immeubles avec réseaux fonte</label><input id="s-nb" type="text" name="nb_immeubles" placeholder="Ex : 4 immeubles"></div>
+        <div class="form-group"><label for="s-ville">Ville(s) principale(s)</label><input id="s-ville" type="text" name="villes" placeholder="Paris 16e, Neuilly..."></div>
+        <div class="form-group full"><label for="s-message">Message / besoin spécifique</label><textarea id="s-message" name="message" placeholder="Décrivez votre situation ou vos besoins..."></textarea></div>
+      </div>
+      <button type="submit" class="btn-teal form-submit" style="margin-top:20px">Demander un rendez-vous découverte →</button>
+    </form>
   </div>
 </section>
 
