@@ -1,6 +1,7 @@
-Ajouter ici :
-- cover.jpg (photo principale)
-- photo1.jpg, photo2.jpg...
-
-Chantier : Inspection réseau — rapport assurance
-Lieu : Paris 16e
+{
+  "type": "Diagnostic",
+  "titre": "Inspection réseau — rapport assurance",
+  "lieu": "Paris 16e",
+  "detail": "Copropriété 32 lots · Caméra auto-propulsée",
+  "annee": "2024"
+}
