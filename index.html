@@ -137,16 +137,15 @@ nav a:hover, nav a.active { color: white; }
 
 .hero-bg-pattern {
   position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 70% 50%, rgba(26,138,114,0.12) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(192,57,43,0.08) 0%, transparent 40%);
+  background: radial-gradient(ellipse 65% 80% at 18% 55%, rgba(26,138,114,0.18) 0%, transparent 100%);
 }
 
 .hero-grid-lines { display: none; }
 
 .hero-content {
   position: relative; z-index: 2;
-  max-width: 700px;
+  flex: 1;
+  min-width: 0;
 }
 
 .hero-badge {
@@ -553,7 +552,12 @@ nav a:hover, nav a.active { color: white; }
 
 .real-pipe-icon {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  font-size: 48px; opacity: 0.06;
+  font-size: 64px; opacity: 0.14;
+}
+
+.real-card:first-child .real-overlay {
+  background: linear-gradient(180deg, rgba(13,31,53,0.65) 0%, rgba(13,31,53,0.1) 45%, rgba(13,31,53,0.92) 100%);
+  justify-content: space-between;
 }
 
 /* ── TEMOIGNAGES ────────────────────────── */
@@ -750,12 +754,20 @@ footer {
   header { padding: 0 20px; }
   nav { display: none; }
   .hero { padding: 100px 20px 100px; }
+  .hero h1 { font-size: clamp(30px, 8vw, 42px); }
+  .hero-sub { font-size: 15px; }
   .hero-visual { display: none; }
   .hero-stats { display: none; }
+  .hero-actions { gap: 10px; }
+  .btn-primary, .btn-secondary { padding: 13px 18px; font-size: 14px; }
   .section { padding: 64px 20px; }
   .expertises-grid, .cibles-grid, .temoignages-grid { grid-template-columns: 1fr; }
   .why-layout { grid-template-columns: 1fr; }
+  .why-stats { grid-template-columns: 1fr 1fr; }
+  .ws-card { padding: 24px 16px; }
+  .ws-num { font-size: 36px; }
   .real-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .real-card { min-height: 200px; }
   .real-card:first-child { grid-row: auto; }
   .syndics-inner { grid-template-columns: 1fr; padding: 40px 28px; }
   .syndics-cta { align-items: stretch; }
@@ -777,17 +789,17 @@ footer {
 
 <!-- HEADER -->
 <header>
-  <a href="#" class="logo">
+  <a href="index.html" class="logo">
     <div class="logo-icon">SF</div>
     <span class="logo-text">SOS <span>FONTE</span></span>
   </a>
   <nav>
-    <a href="#" class="active">Accueil</a>
-    <a href="#">Urgence</a>
-    <a href="#">Services</a>
-    <a href="#">Syndics</a>
-    <a href="#">Réalisations</a>
-    <a href="#">Contact</a>
+    <a href="index.html" class="active">Accueil</a>
+    <a href="urgence.html">Urgence</a>
+    <a href="services.html">Services</a>
+    <a href="syndics.html">Syndics</a>
+    <a href="realisations.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
   </nav>
   <a href="tel:0180846040" class="header-cta">
     📞 01 80 84 60 40
@@ -929,7 +941,7 @@ footer {
     <div class="why-stats reveal">
       <div class="ws-card">
         <div class="ws-num">20<span>+</span></div>
-        <div class="ws-label">années d'expérience sur réseaux fonte</div>
+        <div class="ws-label">années d'expertise</div>
       </div>
       <div class="ws-card">
         <div class="ws-num">170<span>+</span></div>
@@ -995,9 +1007,16 @@ footer {
           <div class="real-pipe-icon">🔧</div>
         </div>
         <div class="real-overlay">
-          <p class="real-type">Remplacement colonne</p>
-          <p class="real-title">Colonne EU complète — immeuble 1910</p>
-          <p class="real-loc">Paris 17e — 6 niveaux — 4 jours</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="background:rgba(26,138,114,0.25);border:1px solid rgba(26,138,114,0.4);color:var(--teal-light);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">6 niveaux</span>
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500">4 jours</span>
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500">Décennale</span>
+          </div>
+          <div>
+            <p class="real-type">Remplacement colonne</p>
+            <p class="real-title">Colonne EU complète — immeuble 1910</p>
+            <p class="real-loc">Paris 17e — Rapport assurance fourni</p>
+          </div>
         </div>
       </div>
       <div class="real-card">
@@ -1110,7 +1129,10 @@ footer {
       <div class="map-bg"></div>
       <div class="map-label">SOS FONTE — IDF</div>
       <div class="map-dot map-center"></div>
-      <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:11px;color:rgba(0,0,0,0.45);font-weight:500;padding:0 12px">108B rue des Maraîchers · 91140 Villebon-sur-Yvette</div>
+      <div style="position:absolute;bottom:16px;left:12px;right:12px;background:rgba(13,31,53,0.88);border-radius:8px;padding:10px 14px;text-align:center;z-index:2">
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.85)">📍 108B rue des Maraîchers</p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">91140 Villebon-sur-Yvette</p>
+      </div>
     </div>
   </div>
 </section>
