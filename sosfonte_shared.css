@@ -41,7 +41,7 @@ nav a:hover, nav a.active { color: white; }
 
 /* PAGE HERO (sous-pages) */
 .page-hero { padding: 140px 40px 80px; background: var(--navy); position: relative; overflow: hidden; }
-.page-hero-bg { position: absolute; inset: 0; background-image: radial-gradient(circle at 70% 50%, rgba(23,181,166,0.1) 0%, transparent 60%); }
+.page-hero-bg { position: absolute; inset: 0; background-image: radial-gradient(circle at 70% 50%, rgba(23,181,166,0.06) 0%, transparent 60%); }
 .page-hero-grid { display: none; }
 .page-hero-inner { max-width: 1160px; margin: 0 auto; position: relative; z-index: 2; }
 .page-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(23,181,166,0.15); border: 1px solid rgba(23,181,166,0.3); color: var(--teal-light); padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500; margin-bottom: 24px; }
@@ -50,14 +50,14 @@ nav a:hover, nav a.active { color: white; }
 .page-hero-sub { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.7; font-weight: 300; }
 
 /* SECTIONS */
-.section { padding: 100px 40px; }
+.section { padding: 72px 40px; }
 .section-inner { max-width: 1160px; margin: 0 auto; }
-.section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+.section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-bottom: 14px; }
 .section-title { font-family: 'Poppins', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
 .section-sub { font-size: 17px; color: var(--text-muted); max-width: 540px; line-height: 1.7; font-weight: 300; }
 .bg-cream { background: var(--cream); }
 .bg-navy { background: var(--navy); }
-.bg-navy .section-eyebrow { color: var(--teal-light); }
+.bg-navy .section-eyebrow { color: rgba(255,255,255,0.38); }
 .bg-navy .section-title { color: white; }
 .bg-navy .section-sub { color: rgba(255,255,255,0.55); }
 
