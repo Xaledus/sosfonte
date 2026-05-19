@@ -125,6 +125,12 @@ nav a:hover, nav a.active { color: white; }
 }
 .header-cta:hover { background: var(--red-light); }
 
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; flex-shrink: 0; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform .3s, opacity .3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ── HERO ────────────────────────────────── */
 .hero {
   min-height: 100vh;
@@ -752,7 +758,11 @@ footer {
 @media (max-width: 768px) {
   .mobile-sticky { display: block; }
   header { padding: 0 20px; }
-  nav { display: none; }
+  nav { display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0; background: rgba(13,31,53,0.98); flex-direction: column; padding: 24px 20px; gap: 0; z-index: 99; overflow-y: auto; }
+  nav.open { display: flex; }
+  nav a { font-size: 17px !important; padding: 16px 0 !important; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.85) !important; }
+  nav a:last-child { border-bottom: none; }
+  .nav-toggle { display: flex; }
   .hero { padding: 100px 20px 100px; }
   .hero h1 { font-size: clamp(30px, 8vw, 42px); }
   .hero-sub { font-size: 15px; }
@@ -847,12 +857,6 @@ footer {
       <div class="trust-item"><span class="icon">⚡</span> Intervention sous 4h à Paris</div>
       <div class="trust-item"><span class="icon">✓</span> Devis gratuit et transparent</div>
       <div class="trust-item"><span class="icon">🛡</span> Assurance décennale</div>
-    </div>
-  </div>
-
-  <div class="hero-visual">
-    <div class="hero-visual-placeholder">
-      <!-- Photo de chantier fonte ici -->
     </div>
   </div>
 
