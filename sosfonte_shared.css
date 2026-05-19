@@ -99,7 +99,17 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus { border-color: var(--teal); }
 textarea { resize: vertical; min-height: 120px; }
+input[type="file"] { padding: 10px 12px; background: var(--cream); cursor: pointer; }
+input[type="file"]::file-selector-button { background: var(--navy); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; margin-right: 12px; font-family: 'DM Sans', sans-serif; }
+input[type="file"]::file-selector-button:hover { background: var(--teal); }
 .form-submit { margin-top: 8px; width: 100%; justify-content: center; cursor: pointer; border: none; }
+
+/* WA Hint block */
+.wa-hint { background: #e8f5f2; border: 1px solid #c5e8df; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+.wa-hint-text p:first-child { font-size: 14px; font-weight: 600; color: var(--teal); margin-bottom: 4px; }
+.wa-hint-text p:last-of-type { font-size: 13px; color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
+.wa-hint-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white; padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .2s; }
+.wa-hint-btn:hover { background: #22c55e; }
 
 /* ── TOKENS SUPPLÉMENTAIRES ── */
 :root {
