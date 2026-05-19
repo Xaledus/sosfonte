@@ -143,7 +143,7 @@ nav a:hover, nav a.active { color: white; }
 
 .hero-bg-pattern {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 65% 80% at 18% 55%, rgba(23,181,166,0.18) 0%, transparent 100%);
+  background: radial-gradient(ellipse 65% 80% at 18% 55%, rgba(23,181,166,0.07) 0%, transparent 100%);
 }
 
 .hero-grid-lines { display: none; }
@@ -318,8 +318,8 @@ nav a:hover, nav a.active { color: white; }
 .section-inner { max-width: 1160px; margin: 0 auto; }
 
 .section-eyebrow {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--teal);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.38);
   margin-bottom: 14px;
 }
 
@@ -367,7 +367,7 @@ nav a:hover, nav a.active { color: white; }
 
 .ec-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 22px; font-weight: 700; color: var(--navy);
+  font-size: 22px; font-weight: 700; color: var(--text);
   margin-bottom: 12px; line-height: 1.2;
   transition: color .3s;
 }
@@ -394,7 +394,7 @@ nav a:hover, nav a.active { color: white; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 
-.why-text .section-eyebrow { color: var(--teal-light); }
+.why-text .section-eyebrow { color: rgba(255,255,255,0.38); }
 .why-text .section-title { color: white; }
 .why-text .section-sub { color: rgba(255,255,255,0.55); }
 
@@ -451,7 +451,7 @@ nav a:hover, nav a.active { color: white; }
 .ws-label { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; line-height: 1.4; }
 
 /* ── CIBLES ─────────────────────────────── */
-.cibles-section { padding: 100px 40px; background: var(--cream); }
+.cibles-section { padding: 72px 40px; background: var(--cream); }
 
 .cibles-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -505,7 +505,7 @@ nav a:hover, nav a.active { color: white; }
 }
 
 /* ── RÉALISATIONS ───────────────────────── */
-.realisations-section { padding: 100px 40px; }
+.realisations-section { padding: 72px 40px; }
 
 .real-grid {
   display: grid;
@@ -562,13 +562,14 @@ nav a:hover, nav a.active { color: white; }
 }
 
 .real-card:first-child .real-overlay {
-  background: linear-gradient(180deg, rgba(17,17,17,0.65) 0%, rgba(17,17,17,0.1) 45%, rgba(17,17,17,0.92) 100%);
-  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.2) 50%, rgba(17,17,17,0.9) 100%);
+  justify-content: flex-start;
+  gap: 14px;
 }
 
 /* ── TEMOIGNAGES ────────────────────────── */
-.temoignages-section { padding: 100px 40px; background: var(--navy); }
-.temoignages-section .section-eyebrow { color: var(--teal-light); }
+.temoignages-section { padding: 72px 40px; background: var(--navy); }
+.temoignages-section .section-eyebrow { color: rgba(255,255,255,0.38); }
 .temoignages-section .section-title { color: white; }
 
 .temoignages-grid {
@@ -623,7 +624,7 @@ nav a:hover, nav a.active { color: white; }
   background: radial-gradient(circle at right, rgba(23,181,166,0.15) 0%, transparent 70%);
 }
 
-.syndics-eyebrow { color: var(--teal-light); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+.syndics-eyebrow { color: rgba(255,255,255,0.38); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px; }
 
 .syndics-title {
   font-family: 'Poppins', sans-serif;
@@ -798,8 +799,8 @@ footer {
 
 /* ── SCROLL REVEAL ───────────────────────── */
 .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity .7s ease, transform .7s ease;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .35s ease, transform .35s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
@@ -959,7 +960,7 @@ footer {
       </div>
       <div class="ws-card">
         <div class="ws-num">170<span>+</span></div>
-        <div class="ws-label">immeubles traités en Île-de-France</div>
+        <div class="ws-label">immeubles traités IDF</div>
       </div>
       <div class="ws-card">
         <div class="ws-num"><span>&lt;</span>4h</div>
@@ -1218,7 +1219,7 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0, rootMargin: '0px 0px 120px 0px' });
 reveals.forEach(el => observer.observe(el));
 </script>
 
