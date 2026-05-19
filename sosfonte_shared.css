@@ -232,10 +232,55 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
   .reveal { opacity: 1 !important; transform: none !important; }
 }
 
+/* ── HAMBURGER MENU ── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 101;
+  flex-shrink: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   header { padding: 0 16px; }
-  nav { display: none; }
+  .nav-toggle { display: flex; }
+  nav {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0; bottom: 0;
+    background: rgba(13,31,53,0.98);
+    flex-direction: column;
+    padding: 24px 20px;
+    gap: 0;
+    z-index: 99;
+    overflow-y: auto;
+  }
+  nav.open { display: flex; }
+  nav a {
+    font-size: 17px !important;
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85) !important;
+  }
+  nav a:last-child { border-bottom: none; }
+  .header-cta { padding: 8px 12px; font-size: 13px; gap: 6px; }
   .page-hero { padding: 88px 20px 48px; }
   .section { padding: 48px 20px; }
   .form-section { padding: 48px 20px; }
@@ -319,6 +364,13 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
   .why-features {
     margin-top: 24px !important;
   }
+}
+
+/* ── PADDINGS INLINE EXCESSIFS — override mobile ── */
+@media (max-width: 768px) {
+  [style*="padding:56px"] { padding: 24px 20px !important; }
+  [style*="padding:28px 40px"] { padding: 20px 16px !important; }
+  [style*="padding:32px 40px"] { padding: 20px 16px !important; }
 }
 
 /* ── STICKY BOTTOM — safe spacing ── */

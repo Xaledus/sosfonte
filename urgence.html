@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -22,6 +22,7 @@
     <a href="realisations.html">Réalisations</a>
     <a href="contact.html">Contact</a>
   </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <a href="tel:0180846040" class="header-cta">📞 01 80 84 60 40</a>
 </header>
 
@@ -86,7 +87,7 @@
   </div>
 </section>
 
-<section class="form-section bg-cream" style="padding:80px 40px">
+<section class="form-section bg-cream">
   <div class="form-wrap reveal">
     <p class="section-eyebrow" style="text-align:center">Formulaire urgence</p>
     <h2 class="section-title" style="text-align:center;margin-bottom:8px">Être rappelé sous 30 min</h2>
@@ -104,7 +105,7 @@
     </div>
     <form action="https://formspree.io/f/xpqnzoyg" method="POST" enctype="multipart/form-data" id="form-urgence">
       <input type="hidden" name="_subject" value="🚨 URGENCE SOS FONTE — Demande de rappel">
-      <input type="hidden" name="_next" value="https://xaledus.github.io/sosfonte/urgence.html?merci=1">
+      <input type="hidden" name="_next" value="https://sosfonte.com/urgence.html?merci=1">
       <div class="form-grid">
         <div class="form-group"><label for="f-nom">Prénom et Nom *</label><input id="f-nom" type="text" name="nom" placeholder="Jean Dupont" required></div>
         <div class="form-group"><label for="f-tel">Téléphone *</label><input id="f-tel" type="tel" name="telephone" placeholder="06 XX XX XX XX" required></div>
@@ -133,6 +134,10 @@
     </form>
   </div>
 </section>
+
+<div style="background:var(--cream);border-top:1px solid var(--border);padding:20px 40px;text-align:center">
+  <p style="font-size:14px;color:var(--text-muted);font-weight:300">Situation non urgente ? <a href="contact.html" style="color:var(--teal);font-weight:600;text-decoration:none">Remplissez notre formulaire de devis →</a></p>
+</div>
 
 <div class="urgence-band">
   <p>🚨 Une urgence fonte ? Ne laissez pas la situation s'aggraver.</p>
@@ -185,5 +190,9 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
 },{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
 reveals.forEach(el=>obs.observe(el));
+</script>
+
+<script>
+(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');t.setAttribute('aria-expanded',String(o));});}})();
 </script>
 </body></html>

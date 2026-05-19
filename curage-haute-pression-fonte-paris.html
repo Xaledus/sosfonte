@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -19,6 +19,7 @@
     <a href="services.html" class="active">Services</a><a href="syndics.html">Syndics</a>
     <a href="realisations.html">Réalisations</a><a href="contact.html">Contact</a>
   </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <a href="tel:0180846040" class="header-cta">📞 01 80 84 60 40</a>
 </header>
 
@@ -190,5 +191,9 @@
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05});
 reveals.forEach(el=>obs.observe(el));
+</script>
+
+<script>
+(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');t.setAttribute('aria-expanded',String(o));});}})();
 </script>
 </body></html>
