@@ -260,7 +260,7 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
 /* RESPONSIVE */
 @media (max-width: 768px) {
   header { padding: 0 16px; }
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex !important; }
   nav {
     display: none;
     position: fixed;
