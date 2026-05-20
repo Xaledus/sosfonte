@@ -52,16 +52,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy: #111111;
-  --navy-light: #1E1E1E;
+  --navy: #0D0D0F;
+  --navy-light: #1A1D20;
   --teal: #17B5A6;
   --teal-light: #1FC7B4;
   --teal-pale: #0D1F1E;
   --red: #FF6B00;
   --red-light: #FF8533;
-  --cream: #1A1A1A;
-  --warm-white: #111111;
-  --text: #F5F5F5;
+  --cream: #1A1D20;
+  --warm-white: #0D0D0F;
+  --text: #E5E7EB;
   --text-muted: #C7C7C7;
   --border: #2C3136;
   --gold: #FF6B00;
@@ -332,7 +332,7 @@ nav a:hover, nav a.active { color: white; }
   font-family: 'Poppins', sans-serif;
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 800; line-height: 1.1;
-  color: var(--navy);
+  color: var(--text);
   margin-bottom: 20px;
 }
 
@@ -375,6 +375,7 @@ nav a:hover, nav a.active { color: white; }
   font-size: 22px; font-weight: 700; color: var(--text);
   margin-bottom: 12px; line-height: 1.2;
   transition: color .3s;
+  opacity: 1 !important;
 }
 
 .ec-text {
@@ -395,8 +396,7 @@ nav a:hover, nav a.active { color: white; }
 }
 
 .why-layout {
-  max-width: 1160px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  max-width: 760px; margin: 0 auto;
 }
 
 .why-text .section-eyebrow { color: rgba(255,255,255,0.38); }
@@ -491,7 +491,7 @@ nav a:hover, nav a.active { color: white; }
 
 .cible-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 12px;
+  font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 12px;
 }
 
 .cible-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 20px; }
@@ -681,7 +681,7 @@ nav a:hover, nav a.active { color: white; }
 
 .zone-tag {
   background: var(--cream); border: 1px solid var(--border);
-  color: var(--navy); padding: 8px 16px; border-radius: 100px;
+  color: var(--text); padding: 8px 16px; border-radius: 100px;
   font-size: 13px; font-weight: 500;
 }
 
@@ -800,6 +800,9 @@ footer {
   .zone-inner { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .urgence-band { flex-direction: column; text-align: center; padding: 20px; }
+  /* Désactiver animations reveal sur mobile */
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .section { padding: 60px 20px !important; }
 }
 
 /* ── SCROLL REVEAL ───────────────────────── */
@@ -835,7 +838,6 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-pattern"></div>
-  <div class="hero-grid-lines"></div>
 
   <div class="hero-content">
     <div class="hero-badge">
@@ -845,8 +847,8 @@ footer {
     <h1>Là où les autres<br>refusent <em>d'intervenir</em></h1>
 
     <p class="hero-sub">
-      Fuites, colonnes vétustes, chutes EU/EV, immeubles haussmanniens.
-      Nous intervenons sur les réseaux fonte que les plombiers généralistes ne savent pas traiter.
+      Réseaux fonte, immeubles anciens, copropriétés — urgences IDF.
+      Là où les plombiers généralistes refusent d'intervenir.
     </p>
 
     <div class="hero-actions">
@@ -893,7 +895,7 @@ footer {
   <div class="section-inner">
     <p class="section-eyebrow reveal">Nos expertises</p>
     <h2 class="section-title reveal">Ce que nous faisons<br>mieux que quiconque</h2>
-    <p class="section-sub reveal">Trois domaines où notre spécialisation fonte fait la différence — pour les particuliers comme pour les professionnels.</p>
+    <p class="section-sub reveal">Réseaux fonte, immeubles anciens, copropriétés Paris et IDF.</p>
 
     <div class="expertises-grid reveal">
       <div class="expertise-card" onclick="location.href='services.html'">
@@ -937,45 +939,13 @@ footer {
         <div class="why-feature">
           <div class="wf-dot"></div>
           <div class="wf-content">
-            <h4>RC Décennale couvrant plomberie, maçonnerie et électricité</h4>
-            <p>Une couverture complète, pas partielle. Attestation fournie avant chaque chantier sur simple demande.</p>
-          </div>
-        </div>
-        <div class="why-feature">
-          <div class="wf-dot"></div>
-          <div class="wf-content">
             <h4>Diagnostic non destructif — colorant, caméra, gaz traceur</h4>
             <p>On localise avant d'ouvrir. Selon la configuration : colorant traceur dès 150 €, passage caméra à partir de 350 €, rapport reconnu par les assureurs.</p>
-          </div>
-        </div>
-        <div class="why-feature">
-          <div class="wf-dot"></div>
-          <div class="wf-content">
-            <h4>Références : Spie Facilities, Century 21, Cotoit, Isambert</h4>
-            <p>Les grands comptes de la gestion immobilière IDF nous font confiance. Même exigence pour chaque intervention, petite ou grande.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="why-stats reveal">
-      <div class="ws-card">
-        <div class="ws-num">20<span>+</span></div>
-        <div class="ws-label">années d'expertise</div>
-      </div>
-      <div class="ws-card">
-        <div class="ws-num">170<span>+</span></div>
-        <div class="ws-label">immeubles traités IDF</div>
-      </div>
-      <div class="ws-card">
-        <div class="ws-num"><span>&lt;</span>4h</div>
-        <div class="ws-label">délai moyen d'intervention à Paris</div>
-      </div>
-      <div class="ws-card">
-        <div class="ws-num">100<span>%</span></div>
-        <div class="ws-label">des chantiers couverts en décennale</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -983,29 +953,26 @@ footer {
 <section class="cibles-section">
   <div class="section-inner">
     <p class="section-eyebrow reveal">Qui fait appel à nous</p>
-    <h2 class="section-title reveal">Trois profils,<br>une même exigence</h2>
+    <h2 class="section-title reveal">Qui fait appel<br>à SOS FONTE ?</h2>
 
     <div class="cibles-grid reveal">
       <div class="cible-card">
         <div class="cible-accent"></div>
-        <div class="cible-tag">Priorité</div>
-        <div class="cible-icon">🏢</div>
+        <div class="cible-tag">PRIORITÉ</div>
         <h3 class="cible-title">Syndics & gestionnaires</h3>
         <p class="cible-text">Un partenaire technique fiable pour vos copropriétés. Contrats annuels, accès prioritaire urgences, rapport technique pour l'AG.</p>
         <a href="syndics.html" class="cible-link">Voir notre offre syndics →</a>
       </div>
       <div class="cible-card">
         <div class="cible-accent"></div>
-        <div class="cible-tag">Prescripteur clé</div>
-        <div class="cible-icon">🏠</div>
+        <div class="cible-tag">PRESCRIPTEUR</div>
         <h3 class="cible-title">Propriétaires & CS</h3>
         <p class="cible-text">Mécontents des prestataires généralistes ou des devis opaques ? Nous sommes l'alternative sérieuse que votre immeuble mérite.</p>
         <a href="services.html" class="cible-link">En savoir plus →</a>
       </div>
       <div class="cible-card">
         <div class="cible-accent"></div>
-        <div class="cible-tag">Urgence</div>
-        <div class="cible-icon">⚠️</div>
+        <div class="cible-tag">URGENCE</div>
         <h3 class="cible-title">Particuliers en urgence</h3>
         <p class="cible-text">Fuite active, colonne qui refoule, chute effondrée : on intervient quand les autres ne peuvent pas. Sous 4h à Paris.</p>
         <a href="tel:0180846040" class="cible-link">Appeler maintenant →</a>

@@ -4,16 +4,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy: #111111;
-  --navy-light: #1E1E1E;
+  --navy: #0D0D0F;
+  --navy-light: #1A1D20;
   --teal: #17B5A6;
   --teal-light: #1FC7B4;
   --teal-pale: #0D1F1E;
   --red: #FF6B00;
   --red-light: #FF8533;
-  --cream: #1A1A1A;
-  --warm-white: #111111;
-  --text: #F5F5F5;
+  --cream: #1A1D20;
+  --warm-white: #0D0D0F;
+  --text: #E5E7EB;
   --text-muted: #C7C7C7;
   --border: #2C3136;
   --gold: #FF6B00;
