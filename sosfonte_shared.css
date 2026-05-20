@@ -30,9 +30,7 @@ header {
   padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 72px;
 }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-icon { width: 40px; height: 40px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 18px; color: white; letter-spacing: -1px; }
-.logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 20px; color: white; letter-spacing: 0.02em; }
-.logo-text span { color: var(--teal-light); }
+.logo-img { height: 38px; width: auto; display: block; }
 nav { display: flex; gap: 32px; }
 nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color .2s; }
 nav a:hover, nav a.active { color: white; }
