@@ -30,7 +30,7 @@ header {
   padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 72px;
 }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-img { height: 52px; width: auto; display: block; }
+.logo-img { height: 64px; width: auto; display: block; }
 nav { display: flex; gap: 32px; }
 nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color .2s; }
 nav a:hover, nav a.active { color: white; }
