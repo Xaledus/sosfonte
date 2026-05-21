@@ -298,7 +298,9 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
     color: rgba(255,255,255,0.85) !important;
   }
   nav a:last-child { border-bottom: none; }
-  .header-cta { padding: 8px 12px; font-size: 13px; gap: 6px; }
+  /* Header CTA : icône seule sur mobile */
+  .header-cta { font-size: 0 !important; padding: 10px 12px !important; gap: 0 !important; }
+  .header-cta::before { content: "📞"; font-size: 18px; line-height: 1; }
   .page-hero { padding: 88px 20px 48px; }
   .section { padding: 48px 20px; }
   .form-section { padding: 48px 20px; }

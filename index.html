@@ -806,6 +806,9 @@ footer {
   /* Désactiver animations reveal sur mobile */
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .section { padding: 60px 20px !important; }
+  /* Header CTA : icône seule sur mobile */
+  .header-cta { font-size: 0 !important; padding: 10px 12px !important; gap: 0 !important; white-space: nowrap; }
+  .header-cta::before { content: "📞"; font-size: 18px; line-height: 1; }
 }
 
 /* ── SCROLL REVEAL ───────────────────────── */
