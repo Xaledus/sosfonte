@@ -150,6 +150,7 @@ input[type="file"]::file-selector-button:hover { background: var(--teal); }
   transition: all .2s; min-height: 52px;
 }
 .btn-whatsapp:hover { background: #3a3e44; transform: translateY(-1px); }
+.btn-whatsapp svg, .wa-hint-btn svg { fill: #25D366; }
 
 /* ── BADGE DISPONIBLE (point vert animé) ── */
 .badge-disponible {
