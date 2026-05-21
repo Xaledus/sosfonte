@@ -61,14 +61,15 @@
   --teal-border: rgba(23,181,166,0.30);
   --teal-glow: rgba(23,181,166,0.10);
   --teal-subtle: rgba(23,181,166,0.06);
-  --red: #FF5A00;
-  --red-light: #FF8A00;
+  --orange-conversion: #FF5A00;
+  --orange-accent: #FF7A00;
+  --orange-hover: #FF8A00;
+  --orange-glow: rgba(255,122,0,0.30);
   --cream: #1E2126;
   --warm-white: #0D0F12;
   --text: #F2F2F2;
   --text-muted: #C7C7C7;
   --border: #2B2E33;
-  --gold: #FF5A00;
 }
 
 html { scroll-behavior: smooth; }
@@ -112,7 +113,7 @@ nav a {
 nav a:hover, nav a.active { color: white; }
 
 .header-cta {
-  background: var(--red);
+  background: var(--orange-conversion);
   color: white; text-decoration: none;
   padding: 10px 20px; border-radius: 6px;
   font-size: 14px; font-weight: 600;
@@ -120,7 +121,7 @@ nav a:hover, nav a.active { color: white; }
   transition: background .2s;
   white-space: nowrap;
 }
-.header-cta:hover { background: var(--red-light); }
+.header-cta:hover { background: var(--orange-hover); }
 
 .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; flex-shrink: 0; }
 .nav-toggle span { display: block; width: 22px; height: 2px; background:var(--navy-light); border-radius: 2px; transition: transform .3s, opacity .3s; }
@@ -208,15 +209,15 @@ nav a:hover, nav a.active { color: white; }
 }
 
 .btn-primary {
-  background: var(--red);
+  background: var(--orange-conversion);
   color: white; text-decoration: none;
   padding: 16px 28px; border-radius: 8px;
   font-size: 16px; font-weight: 600;
   display: flex; align-items: center; gap: 10px;
   transition: all .2s;
-  box-shadow: 0 4px 24px rgba(255,107,0,0.4);
+  box-shadow: 0 4px 24px rgba(255,122,0,0.35);
 }
-.btn-primary:hover { background: var(--red-light); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(255,107,0,0.5); }
+.btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(255,122,0,0.45); }
 
 .btn-secondary {
   background: rgba(255,255,255,0.08);
@@ -297,7 +298,7 @@ nav a:hover, nav a.active { color: white; }
 
 /* ── URGENCE BAND ─────────────────────────── */
 .urgence-band {
-  background: var(--red);
+  background: var(--orange-conversion);
   padding: 20px 40px;
   display: flex; align-items: center; justify-content: center; gap: 20px;
 }
@@ -307,7 +308,7 @@ nav a:hover, nav a.active { color: white; }
 }
 
 .urgence-band a {
-  background:var(--navy-light); color: var(--red);
+  background:var(--navy-light); color: var(--orange-conversion);
   padding: 10px 20px; border-radius: 6px;
   font-weight: 700; font-size: 15px; text-decoration: none;
   white-space: nowrap;
@@ -478,7 +479,7 @@ nav a:hover, nav a.active { color: white; }
 
 .cible-tag {
   display: inline-block;
-  background: var(--teal-pale); color: var(--teal);
+  background: rgba(255,122,0,0.12); border: 1px solid rgba(255,122,0,0.30); color: var(--orange-accent);
   font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
   margin-bottom: 20px;
@@ -588,7 +589,7 @@ nav a:hover, nav a.active { color: white; }
 
 .temoignage-card:hover { border-color: var(--teal-border); }
 
-.stars { color: var(--gold); font-size: 16px; margin-bottom: 20px; }
+.stars { color: var(--orange-accent); font-size: 16px; margin-bottom: 20px; }
 
 .temoignage-text {
   font-size: 16px; color: rgba(255,255,255,0.75);
@@ -751,7 +752,7 @@ footer {
 .mobile-sticky {
   display: none;
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  background: var(--red);
+  background: var(--orange-conversion);
   padding: 16px 24px;
   text-align: center;
   font-size: 16px; font-weight: 700; color: white;
