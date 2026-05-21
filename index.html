@@ -174,11 +174,10 @@ nav a.active { color: var(--orange); border-bottom: 2px solid var(--orange); pad
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
 .hero h1 {
-  font-family: 'Rajdhani', 'Poppins', sans-serif;
-  font-size: clamp(44px, 5.5vw, 76px);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: 0.01em;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 900;
+  line-height: 1.05;
   color: white;
   margin-bottom: 24px;
   animation: fadeUp .6s .1s ease both;
@@ -321,6 +320,12 @@ nav a.active { color: var(--orange); border-bottom: 2px solid var(--orange); pad
   font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
   text-transform: uppercase; color: rgba(255,255,255,0.38);
   margin-bottom: 14px;
+}
+
+.section-title em,
+.syndics-title em {
+  font-style: normal;
+  color: var(--orange);
 }
 
 .section-title {
@@ -836,10 +841,6 @@ footer {
   <div class="hero-bg-pattern"></div>
 
   <div class="hero-content">
-    <div class="hero-badge">
-      Spécialiste depuis 20 ans en IDF
-    </div>
-
     <h1>Là où les autres<br>refusent <em>d'intervenir</em></h1>
 
     <p class="hero-sub">
@@ -887,7 +888,7 @@ footer {
 <section class="section">
   <div class="section-inner">
     <p class="section-eyebrow reveal">Nos expertises</p>
-    <h2 class="section-title reveal">Ce que nous faisons<br>mieux que quiconque</h2>
+    <h2 class="section-title reveal">Ce que nous faisons<br><em>mieux que quiconque</em></h2>
     <p class="section-sub reveal">Réseaux fonte, immeubles anciens, copropriétés Paris et IDF.</p>
 
     <div class="expertises-grid reveal">
@@ -918,7 +919,7 @@ footer {
   <div class="why-layout">
     <div class="why-text reveal">
       <p class="section-eyebrow">Notre différence</p>
-      <h2 class="section-title">9 plombiers sur 10<br>refusent la fonte</h2>
+      <h2 class="section-title">9 plombiers sur 10<br><em>refusent la fonte</em></h2>
       <p class="section-sub">La fonte des immeubles parisiens demande une maîtrise technique rare — découpe, reprise sur joint, adaptation fonte/PVC, gaines techniques étroites.</p>
 
       <div class="why-features">
@@ -946,7 +947,7 @@ footer {
 <section class="cibles-section">
   <div class="section-inner">
     <p class="section-eyebrow reveal">Qui fait appel à nous</p>
-    <h2 class="section-title reveal">Qui fait appel<br>à SOS FONTE ?</h2>
+    <h2 class="section-title reveal">Qui fait appel<br><em>à SOS FONTE ?</em></h2>
 
     <div class="cibles-grid reveal">
       <div class="cible-card">
@@ -978,7 +979,7 @@ footer {
 <section class="realisations-section">
   <div class="section-inner">
     <p class="section-eyebrow reveal">Nos réalisations</p>
-    <h2 class="section-title reveal">Chantiers récents</h2>
+    <h2 class="section-title reveal">Chantiers <em>récents</em></h2>
     <p class="section-sub reveal">Chaque intervention est documentée. Voici quelques exemples de chantiers réalisés en Île-de-France.</p>
 
     <div class="real-grid reveal">
@@ -1039,7 +1040,7 @@ footer {
 <section class="temoignages-section">
   <div class="section-inner">
     <p class="section-eyebrow reveal">Avis clients</p>
-    <h2 class="section-title reveal">Ce que disent<br>nos clients</h2>
+    <h2 class="section-title reveal">Ce que disent<br><em>nos clients</em></h2>
 
     <div class="temoignages-grid reveal">
       <div class="temoignage-card">
@@ -1073,7 +1074,7 @@ footer {
   <div class="syndics-inner reveal">
     <div>
       <p class="syndics-eyebrow">Offre syndics & gestionnaires</p>
-      <h2 class="syndics-title">Un contrat partenaire<br>pour les gestionnaires IDF</h2>
+      <h2 class="syndics-title">Un contrat partenaire<br><em>pour les gestionnaires IDF</em></h2>
       <p class="syndics-sub">Accès prioritaire 24h/7j, tarifs bloqués sur 12 mois, rapport technique pour chaque AG. Le partenaire que vos copropriétaires attendent.</p>
       <div class="syndics-features">
         <div class="sf-item"><span class="sf-check">✓</span> Inspection annuelle de vos colonnes</div>
@@ -1094,7 +1095,7 @@ footer {
   <div class="zone-inner section-inner reveal">
     <div>
       <p class="section-eyebrow">Zone d'intervention</p>
-      <h2 class="section-title">Paris & Île-de-France</h2>
+      <h2 class="section-title">Paris & <em>Île-de-France</em></h2>
       <p class="section-sub">Nous intervenons sur Paris et les départements limitrophes. Intervention possible hors zone sur demande.</p>
       <div class="zone-tags">
         <span class="zone-tag">Paris (75)</span>
