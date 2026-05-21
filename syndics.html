@@ -191,11 +191,14 @@
 </footer>
 <a href="tel:0180846040" class="mobile-sticky">🔴 Urgence — Appeler maintenant</a>
 <script>
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
-},{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
-reveals.forEach(el=>obs.observe(el));
+if ('IntersectionObserver' in window && window.innerWidth > 768) {
+  document.body.classList.add('js-reveal');
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  },{threshold:0,rootMargin:'60px 0px 60px 0px'});
+  reveals.forEach(el=>obs.observe(el));
+}
 </script>
 
 <script>

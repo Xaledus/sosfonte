@@ -766,21 +766,26 @@ footer {
 
 @media (max-width: 768px) {
   .mobile-sticky { display: block; }
-  header { padding: 0 20px; }
+  header { padding: 0 16px; }
+  /* Menu hamburger */
   nav { display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0; background: rgba(13,15,18,0.98); flex-direction: column; padding: 24px 20px; gap: 0; z-index: 99; overflow-y: auto; }
   nav.open { display: flex; z-index: 10000; }
   body.menu-open .mobile-sticky { display: none !important; }
   nav a { font-size: 17px !important; padding: 16px 0 !important; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.85) !important; }
   nav a:last-child { border-bottom: none; }
   .nav-toggle { display: flex !important; }
-  .hero { padding: 100px 20px 100px; }
+  /* Bouton téléphone : masqué, la sticky bar du bas gère le CTA */
+  .header-cta { display: none !important; }
+  /* Hero */
+  .hero { padding: 80px 20px 60px; }
   .hero h1 { font-size: clamp(30px, 8vw, 42px); }
   .hero-sub { font-size: 15px; }
   .hero-visual { display: none; }
   .hero-stats { display: none; }
   .hero-actions { gap: 10px; }
   .btn-primary, .btn-secondary { padding: 13px 18px; font-size: 14px; }
-  .section { padding: 64px 20px; }
+  /* Sections */
+  .section { padding: 60px 20px; }
   .expertises-grid, .cibles-grid, .temoignages-grid { grid-template-columns: 1fr; }
   .why-layout { grid-template-columns: 1fr; }
   .why-stats { grid-template-columns: 1fr 1fr; }
@@ -796,28 +801,23 @@ footer {
   .sf-item { font-size: 13px; }
   .syndics-cta { align-items: stretch; width: 100%; }
   .syndics-cta .btn-teal, .syndics-cta .btn-ghost { text-align: center; white-space: normal; padding: 14px 16px; width: 100%; box-sizing: border-box; }
-  .why-section { padding: 64px 20px; }
-  .cibles-section { padding: 64px 20px; }
-  .realisations-section { padding: 64px 20px; }
-  .temoignages-section { padding: 64px 20px; }
+  .why-section { padding: 60px 20px; }
+  .cibles-section { padding: 60px 20px; }
+  .realisations-section { padding: 60px 20px; }
+  .temoignages-section { padding: 60px 20px; }
   .zone-section { padding: 48px 20px; }
   .zone-inner { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+  /* Footer 1 colonne */
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .urgence-band { flex-direction: column; text-align: center; padding: 20px; }
-  /* Désactiver animations reveal sur mobile */
+  /* Reveals : toujours visibles sur mobile */
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .section { padding: 60px 20px !important; }
-  /* Header CTA : icône seule sur mobile */
-  .header-cta { font-size: 0 !important; padding: 10px 12px !important; gap: 0 !important; white-space: nowrap; }
-  .header-cta::before { content: "📞"; font-size: 18px; line-height: 1; }
 }
 
-/* ── SCROLL REVEAL ───────────────────────── */
-.reveal {
-  opacity: 0; transform: translateY(10px);
-  transition: opacity .35s ease, transform .35s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* ── SCROLL REVEAL — progressive enhancement ── */
+.reveal { opacity: 1; transform: none; }
+.js-reveal .reveal { opacity: 0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease; }
+.js-reveal .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -1180,17 +1180,17 @@ footer {
 </a>
 
 <script>
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0, rootMargin: '0px 0px 120px 0px' });
-reveals.forEach(el => observer.observe(el));
+// Scroll reveal — progressive enhancement
+if ('IntersectionObserver' in window && window.innerWidth > 768) {
+  document.body.classList.add('js-reveal');
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0, rootMargin: '60px 0px 60px 0px' });
+  reveals.forEach(el => observer.observe(el));
+}
 </script>
 
 <script>
