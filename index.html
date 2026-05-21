@@ -119,7 +119,7 @@ nav a.active { color: var(--orange); border-bottom: 2px solid var(--orange); pad
 }
 .header-cta:hover { background: var(--orange-hover); }
 
-.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; flex-shrink: 0; }
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 11px 10px; min-width: 44px; min-height: 44px; z-index: 101; flex-shrink: 0; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .nav-toggle span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px; transition: transform .3s, opacity .3s; }
 .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }

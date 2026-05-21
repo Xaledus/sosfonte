@@ -259,9 +259,13 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 11px 10px;
+  min-width: 44px;
+  min-height: 44px;
   z-index: 101;
   flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .nav-toggle span {
   display: block;
