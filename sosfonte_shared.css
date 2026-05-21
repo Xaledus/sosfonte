@@ -290,7 +290,7 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
     z-index: 99;
     overflow-y: auto;
   }
-  nav.open { display: flex; }
+  nav.open { display: flex; z-index: 10000; }
   nav a {
     font-size: 17px !important;
     padding: 16px 0 !important;
@@ -404,6 +404,8 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
     padding: 14px 20px !important;
     padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
   }
+  /* Masquer sticky quand menu ouvert */
+  body.menu-open .mobile-sticky { display: none !important; }
   /* Push content above sticky to avoid overlap */
   footer {
     padding-bottom: 80px !important;

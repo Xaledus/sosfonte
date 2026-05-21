@@ -199,6 +199,6 @@ reveals.forEach(el=>obs.observe(el));
 </script>
 
 <script>
-(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');t.setAttribute('aria-expanded',String(o));});}})();
+(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
 </script>
 </body></html>
