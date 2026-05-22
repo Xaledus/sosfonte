@@ -448,6 +448,43 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
   }
 }
 
+/* ── PIÈCES JOINTES — masquées sur tous les formulaires ── */
+/* Masque le groupe entier (label + input + hint) */
+.form-group:has(input[type="file"]) {
+  display: none !important;
+}
+
+/* ── SERVICES — blocs pictogrammes placeholder sur mobile ── */
+/* Les 7 divs de 280px (futures photos) sont cachés sur mobile :
+   les services s'affichent en texte pur, propre et lisible.
+   À remettre en display:flex quand les photos seront intégrées. */
+@media (max-width: 768px) {
+  [style*="height:280px"] {
+    display: none !important;
+  }
+}
+
+/* ── FORMULAIRE URGENCE — anti-overflow mobile ── */
+@media (max-width: 768px) {
+  .form-wrap {
+    overflow: hidden;
+    max-width: 100%;
+  }
+  /* WA hint : passage en colonne sur petits écrans */
+  .wa-hint {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .wa-hint-btn {
+    display: flex;
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+}
+
 /* ── MENU HAMBURGER — fix overlay ── */
 /*
  * ROOT CAUSE : backdrop-filter sur <header> crée un containing block
