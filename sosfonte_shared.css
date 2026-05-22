@@ -68,7 +68,7 @@ h1 em, h2 em, h3 em, h4 em,
 .page-hero-sub { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.7; font-weight: 300; }
 
 /* SECTIONS */
-.section { padding: 72px 40px; }
+.section { padding: 56px 40px; }
 .section-inner { max-width: 1160px; margin: 0 auto; }
 .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-bottom: 14px; }
 .section-title { font-family: 'Poppins', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
@@ -92,7 +92,7 @@ h1 em, h2 em, h3 em, h4 em,
 .btn-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 
 /* CARDS */
-.card { background: var(--navy-light); border-radius: 16px; padding: 36px 32px; border: 1px solid var(--border); transition: all .3s; }
+.card { background: var(--navy-light); border-radius: 16px; padding: 36px 32px; border: 1px solid var(--border); transition: all .3s; text-align: center; }
 .card:hover { border-color: var(--teal); box-shadow: 0 8px 40px var(--teal-glow); transform: translateY(-3px); }
 .card-icon { font-size: 36px; margin-bottom: 16px; }
 .card-title { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
@@ -224,7 +224,7 @@ input[type="file"]::file-selector-button:hover { background: var(--teal); }
 .urgence-band a { background: white; color: var(--orange-conversion); padding: 10px 20px; border-radius: 6px; font-weight: 700; font-size: 15px; text-decoration: none; white-space: nowrap; }
 
 /* CTA BOTTOM */
-.cta-bottom { background: var(--navy); padding: 80px 40px; text-align: center; }
+.cta-bottom { background: var(--navy); padding: 56px 40px; text-align: center; }
 .cta-bottom h2 { font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 800; color: white; margin-bottom: 14px; }
 .cta-bottom p { font-size: 17px; color: rgba(255,255,255,0.55); font-weight: 300; max-width: 480px; margin: 0 auto 32px; line-height: 1.7; }
 .cta-bottom .btn-actions { justify-content: center; }

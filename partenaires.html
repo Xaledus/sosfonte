@@ -179,8 +179,12 @@
             </div>
             <div class="form-group full"><label for="p-exp">Expérience et références</label><textarea id="p-exp" name="experience" placeholder="Décrivez votre expérience, vos certifications, et quelques références en milieu urbain ou bâtiments occupés..."></textarea></div>
             <div class="form-group full">
-              <label for="p-docs">Documents (assurances, certifications) — optionnel</label>
-              <input id="p-docs" type="file" name="documents" accept=".pdf,.jpg,.png,.doc,.docx" multiple>
+              <label>Documents (assurances, certifications) — optionnel</label>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+                <label for="p-docs" style="display:inline-block;padding:8px 16px;background:var(--navy-light);border:1px solid var(--border);border-radius:6px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;white-space:nowrap;transition:border-color .2s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">Choisir des fichiers</label>
+                <span id="p-docs-name" style="font-size:13px;color:var(--text-muted);font-weight:300">Aucun fichier sélectionné</span>
+                <input id="p-docs" type="file" name="documents" accept=".pdf,.jpg,.png,.doc,.docx" multiple style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden">
+              </div>
               <p style="font-size:12px;color:var(--text-muted);margin-top:6px;font-weight:300">Attestation RC Pro, décennale, certifications, attestation de vigilance URSSAF, Kbis — tout document utile à l'étude de votre candidature</p>
             </div>
           </div>
@@ -251,5 +255,8 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 
 <script>
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
+</script>
+<script>
+(function(){var f=document.getElementById('p-docs');if(f){f.addEventListener('change',function(){var s=document.getElementById('p-docs-name');s.textContent=this.files.length>1?this.files.length+' fichiers sélectionnés':(this.files[0]?this.files[0].name:'Aucun fichier sélectionné');});}})();
 </script>
 </body></html>
