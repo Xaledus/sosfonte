@@ -833,10 +833,10 @@ footer {
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
-/* ── SCROLL REVEAL — progressive enhancement ── */
-.reveal { opacity: 1; transform: none; }
-.js-reveal .reveal { opacity: 0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease; }
-.js-reveal .reveal.visible { opacity: 1; transform: translateY(0); }
+/* ── SCROLL REVEAL — désactivé (gaps noirs au scroll) ── */
+.reveal, .js-reveal .reveal, .js-reveal .reveal.visible {
+  opacity: 1 !important; transform: none !important; transition: none !important;
+}
 </style>
 </head>
 <body>
