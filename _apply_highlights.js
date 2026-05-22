@@ -140,46 +140,51 @@ function processFile(fileHtml, rows) {
     let   matched   = false;
     let   log       = null;
 
-    /* Regex : capture les éléments titres/textes avec leur innerHTML.
-       On couvre h1-h6, p, li, td — PAS div/span pour éviter qu'un container
-       div avale ses enfants h2/h3 avant qu'ils puissent être matchés. */
-    const EL_RX = /<(h[1-6]|p|li|td)(\s[^>]*)?>([^]*?)<\/\1>/g;
-    let newHtml = fileHtml;
+    /* Deux passes dans l'ordre de priorité :
+       1. Titres h1-h6 → toujours préférés aux paragraphes
+       2. Éléments bloc p/li/td → seulement si aucun titre n'a matché
+       Évite qu'un <p> de corps contenant "santé" prenne la place d'un <h3>Santé</h3>. */
+    const PASSES = [
+      /<(h[1-6])(\s[^>]*)?>([^]*?)<\/\1>/g,
+      /<(p|li|td)(\s[^>]*)?>([^]*?)<\/\1>/g,
+    ];
 
-    // On rebuilde le html en passant sur chaque élément
-    newHtml = fileHtml.replace(EL_RX, (full, tag, attrs, inner) => {
-      if (matched) return full;
+    for (const EL_RX of PASSES) {
+      if (matched) break;
 
-      // Texte brut de l'élément (sans sous-tags)
-      // Important: remplacer les tags par un espace pour éviter que <br> colle deux mots
-      const rawText = inner.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-      const rawNorm = norm(rawText);
+      const tryHtml = fileHtml.replace(EL_RX, (full, tag, attrs, inner) => {
+        if (matched) return full;
 
-      // Matching souple : égalité ou inclusion dans les deux sens (±30 chars de tolérance)
-      const minLen  = Math.min(titleNorm.length, rawNorm.length);
-      const isMatch =
-        rawNorm === titleNorm ||
-        rawNorm.includes(titleNorm) ||
-        (titleNorm.length >= 15 && rawNorm.includes(titleNorm.substring(0, titleNorm.length - 5))) ||
-        (rawNorm.length  >= 15 && titleNorm.includes(rawNorm.substring(0, rawNorm.length  - 5)));
+        // Texte brut (tags → espace pour éviter que <br> colle deux mots)
+        const rawText = inner.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        const rawNorm = norm(rawText);
 
-      if (!isMatch) return full;
+        // Matching souple : égalité ou inclusion dans les deux sens
+        const isMatch =
+          rawNorm === titleNorm ||
+          rawNorm.includes(titleNorm) ||
+          (titleNorm.length >= 15 && rawNorm.includes(titleNorm.substring(0, titleNorm.length - 5))) ||
+          (rawNorm.length  >= 15 && titleNorm.includes(rawNorm.substring(0, rawNorm.length  - 5)));
 
-      // Ne pas toucher les éléments trop longs (paragraphes de corps de texte)
-      if (rawText.length > 160) return full;
+        if (!isMatch) return full;
 
-      const stripped  = stripHL(inner);
-      const { html: newInner, ok, miss } = applyHL(stripped, row.highlighted, row.color);
+        // Ne pas toucher les éléments trop longs (corps de texte)
+        if (rawText.length > 160) return full;
 
-      if (newInner === stripped) return full; // rien appliqué
+        const stripped  = stripHL(inner);
+        const { html: newInner, ok, miss } = applyHL(stripped, row.highlighted, row.color);
 
-      matched = true;
-      log = { ok, miss };
-      return full.replace(inner, newInner);
-    });
+        if (newInner === stripped) return full; // rien appliqué
+
+        matched = true;
+        log = { ok, miss };
+        return full.replace(inner, newInner);
+      });
+
+      if (matched) fileHtml = tryHtml;
+    }
 
     if (matched) {
-      fileHtml = newHtml;
       results.push({ ref: row.ref, title: row.title, matched: true, log });
     } else {
       results.push({ ref: row.ref, title: row.title, matched: false });
