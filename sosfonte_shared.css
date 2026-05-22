@@ -332,10 +332,15 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
     gap: 24px !important; 
   }
   [style*="grid-template-columns: repeat(3"] ,
-  [style*="grid-template-columns:repeat(3"] { 
-    display: flex !important; 
-    flex-direction: column !important; 
-    gap: 16px !important; 
+  [style*="grid-template-columns:repeat(3"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  [style*="grid-template-columns: repeat(4"] ,
+  [style*="grid-template-columns:repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
   }
   [style*="grid-template-columns: 2fr"] { 
     display: flex !important; 
