@@ -447,3 +447,42 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
     display: none;
   }
 }
+
+/* ── MENU HAMBURGER — fix overlay ── */
+/*
+ * ROOT CAUSE : backdrop-filter sur <header> crée un containing block
+ * pour les descendants position:fixed (CSS Containment spec §9.2).
+ * → nav { position:fixed; top:72px; bottom:0 } se calcule par rapport
+ *   au header de 72px de haut → hauteur effective = 0 → menu invisible.
+ * FIX : supprimer backdrop-filter sur mobile ; fond opaque à la place.
+ */
+@media (max-width: 768px) {
+  header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(13,15,18,0.98) !important;
+  }
+
+  /* Logo + bouton hamburger restent au-dessus du panneau nav
+     au sein du stacking context du header (z-index header = 100) */
+  .logo { position: relative; z-index: 10001; }
+  .nav-toggle { position: relative; z-index: 10001 !important; }
+
+  /* Panneau plein écran : part de top:0, padding-top pousse
+     les liens sous la barre header (72px) */
+  nav.open {
+    top: 0 !important;
+    padding-top: 80px !important;
+    z-index: 10000 !important;
+    background: rgba(13,15,18,0.99) !important;
+    /* Force un calque GPU — fix iOS Safari position:fixed */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Bloquer le scroll de fond quand le menu est ouvert */
+  body.menu-open {
+    overflow: hidden !important;
+    touch-action: none;
+  }
+}
