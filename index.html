@@ -811,7 +811,13 @@ footer {
   .zone-inner { grid-template-columns: 1fr; }
   /* Footer 1 colonne */
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  /* Footer copyright — anti scroll horizontal */
+  .footer-copy { white-space: normal !important; }
+  .footer-bottom { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; }
   .urgence-band { flex-direction: column; text-align: center; padding: 20px; }
+  /* Boutons pleine largeur */
+  .btn-actions { flex-direction: column !important; }
+  .btn-primary, .btn-secondary, .btn-teal { width: 100% !important; justify-content: center !important; box-sizing: border-box !important; }
   /* Reveals : toujours visibles sur mobile */
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

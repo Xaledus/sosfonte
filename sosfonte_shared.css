@@ -395,8 +395,34 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
 /* ── PADDINGS INLINE EXCESSIFS — override mobile ── */
 @media (max-width: 768px) {
   [style*="padding:56px"] { padding: 24px 20px !important; }
+  [style*="padding:48px"] { padding: 24px 20px !important; }
+  [style*="padding:40px"] { padding: 20px 16px !important; }
   [style*="padding:28px 40px"] { padding: 20px 16px !important; }
   [style*="padding:32px 40px"] { padding: 20px 16px !important; }
+  [style*="margin-bottom:72px"] { margin-bottom: 32px !important; }
+  [style*="margin-bottom:48px"] { margin-bottom: 24px !important; }
+}
+
+/* ── FOOTER MOBILE — anti scroll horizontal ── */
+@media (max-width: 768px) {
+  .footer-copy { white-space: normal !important; }
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* ── BOUTONS MOBILE — full width, taille réduite ── */
+@media (max-width: 768px) {
+  .btn-actions { flex-direction: column !important; }
+  .btn-primary, .btn-secondary, .btn-teal {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+  }
 }
 
 /* ── STICKY BOTTOM — safe spacing ── */
