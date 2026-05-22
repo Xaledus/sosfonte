@@ -74,37 +74,19 @@ function applyHL(innerHTML, wordsStr, color) {
   const open  = color === 'turquoise' ? '<span class="hl-teal">' : '<em>';
   const close = color === 'turquoise' ? '</span>'               : '</em>';
 
-  // Nettoyage des tokens (collapse espaces multiples)
+  // Nettoyage des tokens — on garde TOUS les tokens non-vides (y compris chiffres isolés "9","4","1")
   const tokens = wordsStr.replace(/\s+/g, ' ').trim()
-    .split(' ').filter(t => t.length >= 2);
+    .split(' ').filter(t => t.length >= 1);
 
   let result  = innerHTML;
   const ok    = [];
   const miss  = [];
 
-  // 1. Essai phrase entière (tokens consécutifs dans le texte brut)
-  if (tokens.length > 1) {
-    const phraseNorm = tokens.map(t => norm(t)).join(' ');
-    const textOnly   = norm(result.replace(/<[^>]+>/g, ''));
-    if (textOnly.includes(phraseNorm)) {
-      // Phrase présente → cherche la séquence dans le HTML complet
-      const rxParts = tokens.map(t =>
-        norm(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      );
-      const phraseRxHtml = new RegExp(rxParts.join('[\\s\\S]{0,15}'), 'i');
-      const m = result.match(phraseRxHtml);
-      if (m) {
-        result = result.replace(phraseRxHtml, `${open}${m[0]}${close}`);
-        ok.push(tokens.join(' '));
-        return { html: result, ok, miss };
-      }
-    }
-  }
-
-  // 2. Token par token
+  // Token par token uniquement (suppression de la logique phrase-entière qui
+  // enroulait les séparateurs comme "&" à l'intérieur d'un seul <em>)
   for (const token of tokens) {
     const tokenNorm = norm(token);
-    if (tokenNorm.length < 2) continue;
+    if (!tokenNorm) continue;
     const textOnly = norm(result.replace(/<[^>]+>/g, ''));
     if (!textOnly.includes(tokenNorm)) { miss.push(token); continue; }
 
