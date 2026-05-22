@@ -94,7 +94,7 @@ h1 em, h2 em, h3 em, h4 em,
 /* CARDS */
 .card { background: var(--navy-light); border-radius: 16px; padding: 36px 32px; border: 1px solid var(--border); transition: all .3s; text-align: center; }
 .card:hover { border-color: var(--teal); box-shadow: 0 8px 40px var(--teal-glow); transform: translateY(-3px); }
-.card-icon { font-size: 36px; margin-bottom: 16px; }
+.card-icon { font-size: 36px; margin-bottom: 16px; display: block; text-align: center; }
 .card-title { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
 .card-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
 
