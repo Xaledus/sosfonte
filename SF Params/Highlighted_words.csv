@@ -1,14 +1,14 @@
 ﻿REF,Page,Title,Highlighted words,Color,Status
 1,Index,Là où les autres refusent d'intervenir,refusent,Orange,Active
-2,Index,Ce que nous faisons mieux que quiconque,mieux que quiconque,Orange,Active
-3,Index,Fonte cassée ou qui fuit,cassée fuit,Orange,Active
-4,Index,Urgence · Intervention sous 4h,urgence  4h,Orange,Active
-5,Index,Inspection caméra & diagnostic,inspection diagnostic,Orange,Active
+2,Index,Ce que nous faisons mieux que quiconque,"""mieux que quiconque""",Orange,Active
+3,Index,Fonte cassée ou qui fuit,cassée fuit,Turquoise,Active
+4,Index,Urgence · Intervention sous 4h,urgence  4h,Turquoise,Active
+5,Index,Inspection caméra & diagnostic,inspection diagnostic,Turquoise,Active
 6,Index,9 plombiers sur 10 refusent la fonte,9 refusent la fonte,Orange,Active
 7,Index,Qui fait appel à SOS FONTE ?,SOS FONTE,Orange,Active
-8,Index,Syndics & gestionnaires,Syndics  gestionnaires,Orange,Active
-9,Index,Propriétaires & CS,CS,Orange,Active
-10,Index,Particuliers en urgence,urgence,Orange,Active
+8,Index,Syndics & gestionnaires,Syndics  gestionnaires,Turquoise,Active
+9,Index,Propriétaires & CS,CS,Turquoise,Active
+10,Index,Particuliers en urgence,urgence,Turquoise,Active
 11,Index,Chantiers récents,Chantiers,Orange,Active
 12,Index,Ce que disent nos clients,disent clients,Orange,Active
 13,Index,Un contrat partenaire pour les gestionnaires IDF,partenaire IDF,Orange,Active
@@ -31,9 +31,9 @@
 30,Services,Un devis en moins de 24h,moins de 24h,Orange,Active
 31,Syndics,Le spécialiste fonte dont vos copropriétés ont besoin,spécialiste fonte  besoin,Orange,Active
 32,Syndics,"Syndics, copropriétés et établissements institutionnels",copropriétés,Orange,Active
-33,Syndics,Copropriétés & syndics,syndics,Orange,Active
-34,Syndics,Établissements de santé,santé,Orange,Active
-35,Syndics,Tertiaire & institutionnel,tertiaire,Orange,Active
+33,Syndics,Copropriétés & syndics,syndics,Turquoise,Active
+34,Syndics,Établissements de santé,santé,Turquoise,Active
+35,Syndics,Tertiaire & institutionnel,tertiaire,Turquoise,Active
 36,Syndics,Contrat de partenariat annuel,Contrat annuel,Orange,Active
 37,Syndics,Inspection annuelle,inspection,Orange,Active
 38,Syndics,Urgences prioritaires,Urgences,Orange,Active

@@ -82,8 +82,28 @@ function applyHL(innerHTML, wordsStr, color) {
   const ok    = [];
   const miss  = [];
 
-  // Token par token uniquement (suppression de la logique phrase-entière qui
-  // enroulait les séparateurs comme "&" à l'intérieur d'un seul <em>)
+  // 1. Essai phrase entière — uniquement si les tokens sont séparés par des espaces
+  //    (pas de [\s\S]{0,15} qui enroulait "&" et autres séparateurs)
+  if (tokens.length > 1) {
+    const phraseNorm = tokens.map(t => norm(t)).join(' ');
+    const textOnly   = norm(result.replace(/<[^>]+>/g, ' '));
+    if (textOnly.includes(phraseNorm)) {
+      const rxParts = tokens.map(t =>
+        norm(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      );
+      // \s+ entre tokens : seul l'espace blanc est toléré — "Syndics & gestionnaires"
+      // ne matche pas car "&" n'est pas un espace → tombe en token par token
+      const phraseRxHtml = new RegExp(rxParts.join('\\s+'), 'i');
+      const m = result.match(phraseRxHtml);
+      if (m) {
+        result = result.replace(phraseRxHtml, `${open}${m[0]}${close}`);
+        ok.push(tokens.join(' '));
+        return { html: result, ok, miss };
+      }
+    }
+  }
+
+  // 2. Token par token
   for (const token of tokens) {
     const tokenNorm = norm(token);
     if (!tokenNorm) continue;
