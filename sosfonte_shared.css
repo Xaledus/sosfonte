@@ -448,12 +448,6 @@ footer { background: var(--navy); padding: 64px 40px 32px; border-top: 1px solid
   }
 }
 
-/* ── PIÈCES JOINTES — masquées sur tous les formulaires ── */
-/* Masque le groupe entier (label + input + hint) */
-.form-group:has(input[type="file"]) {
-  display: none !important;
-}
-
 /* ── SERVICES — blocs pictogrammes placeholder sur mobile ── */
 /* Les 7 divs de 280px (futures photos) sont cachés sur mobile :
    les services s'affichent en texte pur, propre et lisible.
