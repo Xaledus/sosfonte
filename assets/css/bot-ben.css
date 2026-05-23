@@ -15,7 +15,9 @@
   box-shadow: 0 4px 20px rgba(255,90,0,0.45);
   padding: 0;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.35s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,6 +42,65 @@
   border-radius: 50%;
   border: 2px solid #0D0D0F;
 }
+
+/* ── POPUP INVITATION ── */
+#ben-popup {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 290px;
+  background: #111214;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+  z-index: 9997;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 40px 14px 14px;
+  cursor: pointer;
+  transform: translateY(16px) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+#ben-popup.ben-popup-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+#ben-popup img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FF5A00;
+  flex-shrink: 0;
+}
+#ben-popup p {
+  flex: 1;
+  font-size: 13px;
+  color: #E5E7EB;
+  line-height: 1.45;
+  margin: 0;
+}
+#ben-popup p strong { color: #FF5A00; }
+#ben-popup-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #6B7280;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+#ben-popup-close:hover { color: #F2F2F2; }
 
 /* ── WIDGET WINDOW ── */
 #ben-widget {
@@ -138,11 +199,13 @@
 .ben-body {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 18px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   scroll-behavior: smooth;
+  min-height: 80px;
 }
 .ben-body::-webkit-scrollbar { width: 4px; }
 .ben-body::-webkit-scrollbar-track { background: transparent; }
@@ -245,7 +308,9 @@
   padding: 12px 14px;
   border-top: 1px solid rgba(255,255,255,0.06);
   background: #111214;
-  flex-shrink: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  max-height: 220px;
 }
 
 /* Choice buttons */
@@ -387,6 +452,17 @@
   background: rgba(239,68,68,0.05);
 }
 
+/* ── COUNTDOWN ── */
+.ben-countdown {
+  align-self: center;
+  font-size: 11px;
+  color: #6B7280;
+  background: transparent !important;
+  padding: 2px 6px !important;
+  border-radius: 20px;
+  animation: none !important;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 480px) {
   #ben-widget {
@@ -399,5 +475,10 @@
   #ben-trigger {
     bottom: 16px;
     right: 16px;
+  }
+  #ben-popup {
+    width: calc(100vw - 32px);
+    right: 16px;
+    bottom: 90px;
   }
 }

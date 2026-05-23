@@ -90,6 +90,8 @@
   let typingEl = null, preloaded = false;
   let formData = {};
   let autoCloseTimer = null;
+  let countdownInterval = null;
+  let hasOpenedOnce = false;
 
   /* ── HELPERS ─────────────────────────────────────────────── */
   function isOffHours() { const h = new Date().getHours(); return h < 7 || h >= 22; }
@@ -122,8 +124,50 @@
     trigger.id = 'ben-trigger';
     trigger.setAttribute('aria-label', 'Ouvrir le chat avec Ben');
     trigger.innerHTML = `<img src="${IMG.face}" alt="Ben SOS FONTE" loading="lazy">
-      <span class="ben-notif"></span>`;
-    trigger.addEventListener('click', toggleWidget);
+      <span class="ben-notif" id="ben-notif" style="display:none"></span>`;
+
+    const showTrigger = () => {
+      trigger.style.opacity = '1';
+      trigger.style.pointerEvents = 'auto';
+    };
+
+    /* Popup invitation ─────────────────────────────── */
+    const popup = document.createElement('div');
+    popup.id = 'ben-popup';
+    popup.setAttribute('role', 'complementary');
+    popup.setAttribute('aria-label', 'Invitation à chatter avec Ben');
+    popup.innerHTML = `
+      <img src="${IMG.face}" alt="Ben">
+      <p>Je suis <strong>Ben</strong> — comment puis-je vous aider ? 👋</p>
+      <button id="ben-popup-close" aria-label="Fermer">✕</button>`;
+    document.body.appendChild(popup);
+
+    document.getElementById('ben-popup-close').addEventListener('click', e => {
+      e.stopPropagation();
+      popup.classList.remove('ben-popup-visible');
+      showTrigger();
+    });
+    popup.addEventListener('click', () => {
+      popup.classList.remove('ben-popup-visible');
+      showTrigger();
+      openWidget();
+    });
+
+    /* Afficher popup + trigger après 20-30s ─────────── */
+    const delay = 20000 + Math.floor(Math.random() * 10000);
+    setTimeout(() => {
+      if (!isOpen && !hasOpenedOnce) {
+        popup.classList.add('ben-popup-visible');
+        showTrigger();
+      }
+    }, delay);
+
+    /* Clic sur le trigger masque aussi le popup ────── */
+    trigger.addEventListener('click', () => {
+      popup.classList.remove('ben-popup-visible');
+      showTrigger();
+      toggleWidget();
+    });
     document.body.appendChild(trigger);
 
     const widget = document.createElement('div');
@@ -166,6 +210,12 @@
     isOpen = true;
     formData = {};
     clearAutoClose();
+    /* Voyant vert — visible dès la première ouverture */
+    if (!hasOpenedOnce) {
+      hasOpenedOnce = true;
+      const notif = document.getElementById('ben-notif');
+      if (notif) notif.style.display = 'block';
+    }
     document.getElementById('ben-widget').classList.add('ben-open');
     clearBody(); clearFooter();
     isOffHours() ? stepOffHours() : stepAccueil();
@@ -174,9 +224,8 @@
   function closeWidget() {
     clearAutoClose();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.aBientot);                         // sticker = "À bientôt"
-    addBubble('bot', '📞 ' + CFG.phoneDisplay);
-    setTimeout(closeWidgetSilent, 1800);
+    addSticker(STK.aBientot);                         // sticker seul, pas de texte
+    setTimeout(closeWidgetSilent, 1500);
   }
 
   function closeWidgetSilent() {
@@ -187,7 +236,10 @@
   }
 
   function clearAutoClose() {
-    if (autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null; }
+    if (autoCloseTimer)    { clearTimeout(autoCloseTimer);  autoCloseTimer = null; }
+    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+    const cb = document.querySelector('.ben-countdown');
+    if (cb) cb.remove();
   }
 
   /* ── DOM HELPERS ─────────────────────────────────────────── */
@@ -385,6 +437,22 @@
     await showTyping(300);
     await addBubble('bot', 'Avez-vous d\'autres questions ? 😊', 900);
 
+    /* Countdown visible ────────────────────────────── */
+    let secsLeft = Math.floor(CFG.autoCloseDelay / 1000);
+    const countdownEl = document.createElement('div');
+    countdownEl.className = 'ben-bubble bot ben-countdown';
+    countdownEl.innerHTML = `Ce chat se ferme dans <strong>${secsLeft}s</strong>`;
+    document.getElementById('ben-body').appendChild(countdownEl);
+    scrollBottom();
+
+    countdownInterval = setInterval(() => {
+      secsLeft--;
+      if (countdownEl.parentNode) {
+        countdownEl.innerHTML = `Ce chat se ferme dans <strong>${secsLeft}s</strong>`;
+      }
+      if (secsLeft <= 0) { clearInterval(countdownInterval); countdownInterval = null; }
+    }, 1000);
+
     autoCloseTimer = setTimeout(() => {
       if (isOpen) stepFarewell();
     }, CFG.autoCloseDelay);
@@ -412,9 +480,8 @@
   async function stepFarewell() {
     clearFooter();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.aBientot);                         // sticker = "À bientôt", remplace le texte émotionnel
-    await addBubble('bot', '📞 ' + CFG.phoneDisplay, 600);
-    setTimeout(closeWidgetSilent, 2000);
+    addSticker(STK.aBientot);                         // sticker seul — l'utilisateur ferme avec ✕
+    /* Pas d'auto-fermeture : l'utilisateur contrôle */
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -620,7 +687,7 @@
         clearFooter();
         setBenImage(IMG.bravo);
         addSticker(STK.bravo);                        // sticker = "Bravo / message reçu"
-        await addBubble('bot', `Khaled vous répond sous 48h.<br>📧 ${CFG.email}`, 600);
+        await addBubble('bot', `Un collègue vous répond sous 48h.<br>📧 ${CFG.email}`, 600);
         sendLead('Partenaire — ' + type, data);
         stepAutresQuestions();
       });
