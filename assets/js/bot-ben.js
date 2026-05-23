@@ -487,6 +487,12 @@
      STEPS
   ══════════════════════════════════════════════════════════ */
 
+  /* Bouton retour réutilisable dans tous les showChoices ── */
+  const RETOUR = {
+    label: '↩ Retour à l\'accueil',
+    action: () => { clearBody(); setBenImage(IMG.bonjour); stepAccueil(); },
+  };
+
   /* ── STEP 0 — ACCUEIL ─────────────────────────────────── */
   async function stepAccueil() {
     setBenImage(IMG.bonjour);
@@ -505,16 +511,13 @@
   async function stepUrgence() {
     clearFooter();
     setBenImage(IMG.cestChaud);
-    addSticker(STK.urgence);                       // sticker = message émotionnel
+    addSticker(STK.urgence);
     await addBubble('bot', '📞 Appelez maintenant :', 600);
     addCTABlock("Bonjour, j'ai une urgence sur une canalisation en fonte. Pouvez-vous intervenir ?");
-    setTimeout(async () => {
-      setBenImage(IMG.jinterviens);
-      addSticker(STK.enRoute);                     // sticker "En route" = confirmation visuelle
-      await addBubble('bot', 'Paris et IDF — <strong>sous 4h</strong>. 🚐', 800);
-      clearFooter();
-      stepAutresQuestions();
-    }, 3000);
+    setBenImage(IMG.jinterviens);
+    addSticker(STK.enRoute);
+    await addBubble('bot', 'Paris et IDF — <strong>sous 4h</strong>. 🚐', 800);
+    stepAutresQuestions();
   }
 
   /* ── STEP 1B — INTERVENTION FONTE ────────────────────── */
@@ -564,6 +567,7 @@
       { label: 'Inspection caméra — rapport assurance',        action: () => stepDiagForm('Inspection caméra') },
       { label: 'Curage haute pression',                        action: () => stepDiagForm('Curage haute pression') },
       { label: 'Diagnostic avant achat immobilier',            action: () => stepDiagForm('Diagnostic achat') },
+      RETOUR,
     ]);
   }
 
@@ -579,7 +583,11 @@
         validate: V.postal, errorMsg: V.msgs.postal,
       },
       {
-        key: 'email', placeholder: 'Votre email pour le devis *', type: 'email', required: true,
+        key: 'tel', placeholder: 'Téléphone (optionnel)', type: 'tel',
+        validate: V.phone, errorMsg: V.msgs.phone,
+      },
+      {
+        key: 'email', placeholder: 'Email pour le devis *', type: 'email', required: true,
         validate: V.email, errorMsg: V.msgs.email,
       },
     ], 'Recevoir le devis →', async (data) => {
@@ -598,11 +606,13 @@
     setBenImage(IMG.rassurant);
     await showTyping(300);
     await addBubble('bot', 'Bienvenue. Vous êtes au bon endroit.<br>Nous travaillons avec les grands gestionnaires IDF.', 800);
-    await addBubble('bot', 'Vous êtes :');
+    await showTyping(200);
+    await addBubble('bot', 'Vous êtes :', 600);
     showChoices([
       { label: 'Gestionnaire / Syndic professionnel', action: () => stepSyndicPortefeuille('Syndic professionnel') },
       { label: 'Membre du Conseil Syndical',          action: () => stepSyndicPortefeuille('Conseil Syndical') },
       { label: 'Administrateur de biens',             action: () => stepSyndicPortefeuille('Administrateur de biens') },
+      RETOUR,
     ]);
   }
 
@@ -616,6 +626,7 @@
       { label: '1 immeuble',          action: () => stepSyndicForm('1') },
       { label: '2 à 5 immeubles',     action: () => stepSyndicForm('2-5') },
       { label: 'Plus de 5 immeubles', action: () => stepSyndicForm('5+') },
+      RETOUR,
     ]);
   }
 
@@ -635,7 +646,7 @@
         key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
         validate: V.phone, errorMsg: V.msgs.phone,
       },
-    ], 'Recevoir notre offre partenaire →', async (data) => {
+    ], 'Envoyer ma demande →', async (data) => {
       clearFooter();
       setBenImage(IMG.merci);
       const prenom = data.nom.split(' ')[0];
@@ -659,6 +670,7 @@
       { label: "Bureau d'études / Architecte",  action: () => stepPartenaireForm("Bureau d'études") },
       { label: 'Gestionnaire immobilier',       action: () => stepPartenaireForm('Gestionnaire immobilier') },
       { label: 'Autre professionnel',           action: () => stepPartenaireForm('Autre professionnel') },
+      RETOUR,
     ]);
   }
 
@@ -706,9 +718,10 @@
     ], 'Me rappeler demain', async (data) => {
       clearFooter();
       setBenImage(IMG.reconnaissant);
-      addSticker(STK.ok);                             // sticker = "OK / noté", pas de doublon
+      addSticker(STK.ok);
       await addBubble('bot', 'Noté — rappel dès 7h. 📞 ' + CFG.phoneDisplay, 600);
       sendLead('Rappel hors-horaires', data);
+      stepAutresQuestions();
     });
   }
 
