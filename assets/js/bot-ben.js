@@ -7,15 +7,11 @@
 
   /* ── CONFIG ─────────────────────────────────────────────── */
   const CFG = {
-    emailjs: {
-      publicKey:  'YOUR_EMAILJS_PUBLIC_KEY',   // à remplacer
-      serviceId:  'YOUR_EMAILJS_SERVICE_ID',   // à remplacer
-      templateId: 'YOUR_EMAILJS_TEMPLATE_ID',  // à remplacer
-    },
-    phone:    'tel:0180846040',
+    formspree:   'https://formspree.io/f/xpqnzoyg',  // même endpoint que les formulaires du site
+    phone:       'tel:0180846040',
     phoneDisplay: '01 80 84 60 40',
-    wa:       'https://wa.me/33695494371?text=Bonjour%2C%20je%20souhaite%20un%20renseignement%20sur%20mes%20canalisations%20en%20fonte.',
-    email:    'contact@sosfonte.com',
+    wa:          'https://wa.me/33695494371?text=Bonjour%2C%20je%20souhaite%20un%20renseignement%20sur%20mes%20canalisations%20en%20fonte.',
+    email:       'contact@sosfonte.com',
   };
 
   /* ── ASSET PATHS ─────────────────────────────────────────── */
@@ -504,38 +500,40 @@
     });
   }
 
-  /* ── EMAIL SEND ───────────────────────────────────────── */
+  /* ── ENVOI FORMSPREE ─────────────────────────────────── */
   function sendEmail(branch, data) {
     const payload = {
+      _subject:  '[BOT BEN] ' + branch + ' — ' + (data.nom || data.tel || 'Inconnu'),
       branche:   branch,
-      nom:       data.nom       || data.tel || '—',
+      nom:       data.nom       || '—',
       telephone: data.tel       || '—',
       email:     data.email     || '—',
-      ville:     data.ville     || formData.ville || '—',
+      ville:     data.ville     || formData.ville     || '—',
       message:   data.message   || formData.situation || '—',
       cabinet:   data.cabinet   || '—',
       timestamp: new Date().toLocaleString('fr-FR'),
       page:      window.location.href,
     };
 
-    /* EmailJS — actif si les clés sont configurées */
-    if (
-      typeof emailjs !== 'undefined' &&
-      CFG.emailjs.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY'
-    ) {
-      emailjs.send(CFG.emailjs.serviceId, CFG.emailjs.templateId, payload)
-        .then(() => console.log('[BenBot] Email envoyé via EmailJS'))
-        .catch(err => console.warn('[BenBot] EmailJS error:', err));
-    } else {
-      /* Fallback : localStorage + console */
-      const leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
-      leads.push(payload);
-      localStorage.setItem('ben_leads', JSON.stringify(leads));
-      console.group('[BenBot] Lead capturé (EmailJS non configuré)');
-      console.table(payload);
-      console.info('Configurer CFG.emailjs dans bot-ben.js pour activer l\'envoi.');
-      console.groupEnd();
-    }
+    fetch(CFG.formspree, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body:    JSON.stringify(payload),
+    })
+      .then(r => r.json())
+      .then(r => {
+        if (r.ok) {
+          console.log('[BenBot] Lead envoyé via Formspree ✓');
+        } else {
+          throw new Error(JSON.stringify(r));
+        }
+      })
+      .catch(err => {
+        console.warn('[BenBot] Formspree error — fallback localStorage', err);
+        const leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
+        leads.push(payload);
+        localStorage.setItem('ben_leads', JSON.stringify(leads));
+      });
   }
 
   /* ── INIT ─────────────────────────────────────────────── */
