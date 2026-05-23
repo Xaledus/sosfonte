@@ -218,7 +218,7 @@
   function closeWidget() {
     clearAutoClose();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.aBientot);                         // sticker seul, pas de texte
+    addSticker(STK.auRevoir);                         // sticker "au revoir" — cohérent avec farewell
     setTimeout(closeWidgetSilent, 1500);
   }
 
@@ -318,7 +318,12 @@
       const btn = document.createElement('button');
       btn.className = 'ben-choice-btn';
       btn.innerHTML = c.label;
-      btn.addEventListener('click', () => { addBubble('user', c.label); c.action(); });
+      btn.addEventListener('click', async () => {
+        wrap.querySelectorAll('.ben-choice-btn').forEach(b => b.disabled = true);
+        clearFooter();                    // retire les boutons immédiatement
+        await addBubble('user', c.label); // bulle client visible avant l'action
+        c.action();
+      });
       wrap.appendChild(btn);
     });
     document.getElementById('ben-footer').appendChild(wrap);
@@ -337,7 +342,14 @@
         </svg>
       </button>`;
     const ta = row.querySelector('textarea');
-    const doSend = () => { const v = ta.value.trim(); if (v) onSend(v); };
+    const doSend = async () => {
+      const v = ta.value.trim();
+      if (!v) return;
+      ta.disabled = true;
+      clearFooter();
+      await addBubble('user', v);   // bulle client visible avant l'action
+      onSend(v);
+    };
     row.querySelector('.ben-send-btn').addEventListener('click', doSend);
     ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); } });
     document.getElementById('ben-footer').appendChild(row);
@@ -479,8 +491,8 @@
   async function stepFarewell() {
     clearFooter();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.aBientot);                         // sticker seul — l'utilisateur ferme avec ✕
-    /* Pas d'auto-fermeture : l'utilisateur contrôle */
+    addSticker(STK.auRevoir);                         // sticker unique "au revoir"
+    setTimeout(closeWidgetSilent, 5000);              // fermeture auto 5s
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -514,6 +526,7 @@
     addSticker(STK.urgence);
     await addBubble('bot', '📞 Appelez maintenant :', 600);
     addCTABlock("Bonjour, j'ai une urgence sur une canalisation en fonte. Pouvez-vous intervenir ?");
+    await showTyping(1200);                          // respiration avant le message de rassurence
     setBenImage(IMG.jinterviens);
     addSticker(STK.enRoute);
     await addBubble('bot', 'Paris et IDF — <strong>sous 4h</strong>. 🚐', 800);
@@ -592,9 +605,9 @@
       },
     ], 'Recevoir le devis →', async (data) => {
       clearFooter();
-      setBenImage(IMG.cestRegle);
-      addSticker(STK.cestRegle);                   // sticker = confirmation visuelle
-      await addBubble('bot', `Devis sous 24h. 📞 ${CFG.phoneDisplay}`, 500);
+      setBenImage(IMG.reconnaissant);
+      addSticker(STK.attendez);                    // "on note / on gère"
+      await addBubble('bot', `Noté ! On vous rappelle sous 24h pour votre devis.<br>📞 ${CFG.phoneDisplay}`, 700);
       sendLead(type, data);
       stepAutresQuestions();
     });
