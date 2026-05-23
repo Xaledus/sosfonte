@@ -32,16 +32,7 @@
   object-fit: cover;
   border-radius: 50%;
 }
-#ben-trigger .ben-notif {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background: #22c55e;
-  border-radius: 50%;
-  border: 2px solid #0D0D0F;
-}
+/* .ben-notif retiré du trigger : voyant vert uniquement dans le header du chat */
 
 /* ── POPUP INVITATION ── */
 #ben-popup {
@@ -424,19 +415,25 @@
 }
 
 /* ── STICKERS ── */
+/*
+ * Les PNGs de stickers ont un fond plein (blanc ou noir).
+ * On les affiche comme des "cartes flottantes" : overflow:hidden + border-radius
+ * pour clipper proprement, box-shadow pour l'effet floating.
+ * Pour un rendu parfait (fond transparent), exporter les PNGs avec canal alpha.
+ */
 .ben-sticker-wrap {
   align-self: flex-start;
-  background: transparent;
+  line-height: 0;
+  border-radius: 16px;
+  overflow: hidden;            /* clippe l'image aux coins arrondis       */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
   animation: benFadeUp 0.28s ease;
-  line-height: 0;   /* supprime l'espace sous l'img */
 }
 .ben-sticker {
   width: 160px;
   height: auto;
   display: block;
   object-fit: contain;
-  /* pas de border-radius : les stickers ont déjà leur propre forme */
-  /* pas de background : fond transparent ou intégré dans le PNG */
 }
 
 /* ── FIELD ERRORS ── */

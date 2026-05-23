@@ -123,8 +123,7 @@
     const trigger = document.createElement('button');
     trigger.id = 'ben-trigger';
     trigger.setAttribute('aria-label', 'Ouvrir le chat avec Ben');
-    trigger.innerHTML = `<img src="${IMG.face}" alt="Ben SOS FONTE" loading="lazy">
-      <span class="ben-notif" id="ben-notif" style="display:none"></span>`;
+    trigger.innerHTML = `<img src="${IMG.face}" alt="Ben SOS FONTE" loading="lazy">`;
 
     const showTrigger = () => {
       trigger.style.opacity = '1';
@@ -153,8 +152,8 @@
       openWidget();
     });
 
-    /* Afficher popup + trigger après 20-30s ─────────── */
-    const delay = 20000 + Math.floor(Math.random() * 10000);
+    /* Afficher popup + trigger après 10-15s ─────────── */
+    const delay = 10000 + Math.floor(Math.random() * 5000);
     setTimeout(() => {
       if (!isOpen && !hasOpenedOnce) {
         popup.classList.add('ben-popup-visible');
@@ -209,13 +208,8 @@
     preloadImages();
     isOpen = true;
     formData = {};
+    hasOpenedOnce = true;        // bloque le re-déclenchement du popup
     clearAutoClose();
-    /* Voyant vert — visible dès la première ouverture */
-    if (!hasOpenedOnce) {
-      hasOpenedOnce = true;
-      const notif = document.getElementById('ben-notif');
-      if (notif) notif.style.display = 'block';
-    }
     document.getElementById('ben-widget').classList.add('ben-open');
     clearBody(); clearFooter();
     isOffHours() ? stepOffHours() : stepAccueil();
@@ -245,7 +239,12 @@
   /* ── DOM HELPERS ─────────────────────────────────────────── */
   function clearBody()   { document.getElementById('ben-body').innerHTML = ''; }
   function clearFooter() { document.getElementById('ben-footer').innerHTML = ''; }
-  function scrollBottom() { const b = document.getElementById('ben-body'); b.scrollTop = b.scrollHeight; }
+  function scrollBottom() {
+    requestAnimationFrame(() => {
+      const b = document.getElementById('ben-body');
+      if (b) b.scrollTop = b.scrollHeight;
+    });
+  }
 
   function addBubble(who, html, delay) {
     return new Promise(resolve => {
