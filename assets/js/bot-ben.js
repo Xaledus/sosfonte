@@ -174,8 +174,8 @@
   function closeWidget() {
     clearAutoClose();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.aBientot);
-    addBubble('bot', 'À bientôt ! 👋<br>📞 ' + CFG.phoneDisplay);
+    addSticker(STK.aBientot);                         // sticker = "À bientôt"
+    addBubble('bot', '📞 ' + CFG.phoneDisplay);
     setTimeout(closeWidgetSilent, 1800);
   }
 
@@ -412,9 +412,8 @@
   async function stepFarewell() {
     clearFooter();
     setBenImage(IMG.auRevoir);
-    await showTyping(300);
-    addSticker(STK.aBientot);
-    await addBubble('bot', 'À bientôt ! 😊<br>📞 ' + CFG.phoneDisplay, 800);
+    addSticker(STK.aBientot);                         // sticker = "À bientôt", remplace le texte émotionnel
+    await addBubble('bot', '📞 ' + CFG.phoneDisplay, 600);
     setTimeout(closeWidgetSilent, 2000);
   }
 
@@ -440,16 +439,13 @@
   async function stepUrgence() {
     clearFooter();
     setBenImage(IMG.cestChaud);
-    await showTyping(300);
-    await addBubble('bot', "C'est urgent, on ne perd pas de temps !", 800);
-    addSticker(STK.urgence);
-    addBubble('bot', '📞 Appelez maintenant :');
+    addSticker(STK.urgence);                       // sticker = message émotionnel
+    await addBubble('bot', '📞 Appelez maintenant :', 600);
     addCTABlock("Bonjour, j'ai une urgence sur une canalisation en fonte. Pouvez-vous intervenir ?");
     setTimeout(async () => {
       setBenImage(IMG.jinterviens);
-      await showTyping(0);
-      addSticker(STK.enRoute);
-      await addBubble('bot', 'Nos techniciens interviennent<br>Paris et IDF <strong>sous 4h</strong>. 🚐', 1200);
+      addSticker(STK.enRoute);                     // sticker "En route" = confirmation visuelle
+      await addBubble('bot', 'Paris et IDF — <strong>sous 4h</strong>. 🚐', 800);
       clearFooter();
       stepAutresQuestions();
     }, 3000);
@@ -459,7 +455,6 @@
   async function stepIntervention() {
     clearFooter();
     setBenImage(IMG.jecoute);
-    addSticker(STK.jecoute);
     await showTyping(300);
     await addBubble('bot', 'Je vous écoute. Décrivez votre situation en quelques mots.', 800);
     showTextInput('Ex : fuite colonne EU cave immeuble 1920…', async (txt) => {
@@ -483,10 +478,9 @@
       ], 'Je veux être rappelé sous 2h →', async (data) => {
         clearFooter();
         setBenImage(IMG.okParfait);
-        addSticker(STK.rdv);
         const prenom = data.nom.split(' ')[0];
-        await showTyping(400);
-        await addBubble('bot', `Parfait <strong>${prenom}</strong> 👌<br>Un technicien vous rappelle sous 2h.<br>📞 ${CFG.phoneDisplay}`, 900);
+        addSticker(STK.rdv);                       // sticker = "RDV planifié", pas de bulle redondante
+        await addBubble('bot', `<strong>${prenom}</strong>, rappel sous 2h. 📞 ${CFG.phoneDisplay}`, 600);
         sendLead('Intervention fonte', data);
         stepAutresQuestions();
       });
@@ -511,7 +505,6 @@
     formData.typeDiag = type;
     clearFooter();
     setBenImage(IMG.jexplique);
-    addSticker(STK.diag);
     await showTyping(300);
     await addBubble('bot', 'On intervient partout en IDF.<br>Quel est le code postal du bien ?', 800);
     showForm([
@@ -526,9 +519,8 @@
     ], 'Recevoir le devis →', async (data) => {
       clearFooter();
       setBenImage(IMG.cestRegle);
-      addSticker(STK.cestRegle);
-      await showTyping(400);
-      await addBubble('bot', `C'est noté ✅<br>Vous recevez un devis sous 24h.<br>📞 ${CFG.phoneDisplay} pour toute urgence.`, 900);
+      addSticker(STK.cestRegle);                   // sticker = confirmation visuelle
+      await addBubble('bot', `Devis sous 24h. 📞 ${CFG.phoneDisplay}`, 500);
       sendLead(type, data);
       stepAutresQuestions();
     });
@@ -580,12 +572,11 @@
     ], 'Recevoir notre offre partenaire →', async (data) => {
       clearFooter();
       setBenImage(IMG.merci);
-      addSticker(STK.merci);
       const prenom = data.nom.split(' ')[0];
-      await showTyping(400);
+      addSticker(STK.merci);                       // sticker = merci, pas de doublon
       await addBubble('bot',
-        `Merci <strong>${prenom}</strong> 🙏<br>Notre responsable vous contacte sous 24h ouvrées.<br><br><a href="syndics.html" class="ben-page-link">Découvrez notre offre syndics →</a>`,
-        900);
+        `<strong>${prenom}</strong>, notre responsable vous contacte sous 24h.<br><a href="syndics.html" class="ben-page-link">Offre syndics →</a>`,
+        500);
       sendLead('Syndic', data);
       stepAutresQuestions();
     });
@@ -628,9 +619,8 @@
       ], 'Envoyer ma demande →', async (data) => {
         clearFooter();
         setBenImage(IMG.bravo);
-        addSticker(STK.bravo);
-        await showTyping(400);
-        await addBubble('bot', `Message reçu 🎉<br>Khaled vous répond personnellement sous 48h.<br>📧 ${CFG.email}`, 900);
+        addSticker(STK.bravo);                        // sticker = "Bravo / message reçu"
+        await addBubble('bot', `Khaled vous répond sous 48h.<br>📧 ${CFG.email}`, 600);
         sendLead('Partenaire — ' + type, data);
         stepAutresQuestions();
       });
@@ -640,9 +630,8 @@
   /* ── STEP HORS HORAIRES ───────────────────────────────── */
   async function stepOffHours() {
     setBenImage(IMG.deborde);
-    addSticker(STK.hs);
-    await showTyping(200);
-    await addBubble('bot', "On est hors ligne pour l'instant 😅<br>Laissez votre numéro, on vous rappelle dès demain matin !", 900);
+    addSticker(STK.hs);                               // sticker = "je suis HS", remplace le texte émotionnel
+    await addBubble('bot', "Hors ligne pour l'instant. Laissez votre numéro — rappel dès 7h !", 700);
     showForm([
       {
         key: 'tel', placeholder: 'Votre téléphone *', type: 'tel', required: true,
@@ -651,9 +640,8 @@
     ], 'Me rappeler demain', async (data) => {
       clearFooter();
       setBenImage(IMG.reconnaissant);
-      addSticker(STK.ok);
-      await showTyping(400);
-      await addBubble('bot', 'Noté 🙏 On vous rappelle dès 7h !', 900);
+      addSticker(STK.ok);                             // sticker = "OK / noté", pas de doublon
+      await addBubble('bot', 'Noté — rappel dès 7h. 📞 ' + CFG.phoneDisplay, 600);
       sendLead('Rappel hors-horaires', data);
     });
   }

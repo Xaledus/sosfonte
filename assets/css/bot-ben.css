@@ -361,14 +361,17 @@
 /* ── STICKERS ── */
 .ben-sticker-wrap {
   align-self: flex-start;
-  animation: benFadeUp 0.25s ease;
+  background: transparent;
+  animation: benFadeUp 0.28s ease;
+  line-height: 0;   /* supprime l'espace sous l'img */
 }
 .ben-sticker {
-  width: 120px;
+  width: 160px;
   height: auto;
   display: block;
-  border-radius: 8px;
   object-fit: contain;
+  /* pas de border-radius : les stickers ont déjà leur propre forme */
+  /* pas de background : fond transparent ou intégré dans le PNG */
 }
 
 /* ── FIELD ERRORS ── */
