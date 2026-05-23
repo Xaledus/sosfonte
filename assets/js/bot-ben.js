@@ -96,6 +96,28 @@
   /* ── HELPERS ─────────────────────────────────────────────── */
   function isOffHours() { const h = new Date().getHours(); return h < 7 || h >= 22; }
 
+  /* Ding notification (Web Audio API — aucun fichier externe) */
+  function playDing() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const play = (freq, t0, dur) => {
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, t0);
+        gain.gain.linearRampToValueAtTime(0.22, t0 + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+        osc.start(t0);
+        osc.stop(t0 + dur);
+      };
+      play(880,  ctx.currentTime,        0.38); // La5
+      play(1320, ctx.currentTime + 0.14, 0.32); // Mi6 — quinte → ding doux
+    } catch (e) { /* audio non disponible (politique autoplay) */ }
+  }
+
   function preloadImages() {
     if (preloaded) return;
     preloaded = true;
@@ -158,6 +180,7 @@
       if (!isOpen && !hasOpenedOnce) {
         popup.classList.add('ben-popup-visible');
         showTrigger();
+        playDing();                              // ding quand Ben apparaît
       }
     }, delay);
 
