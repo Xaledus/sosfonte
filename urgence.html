@@ -7,6 +7,7 @@
 <title>Urgence plomberie fonte Paris — Intervention sous 4h | SOS FONTE</title>
 <link rel="canonical" href="https://sosfonte.com/urgence/">
 <link rel="stylesheet" href="sosfonte_shared.css?v=12">
+<link rel="stylesheet" href="assets/css/bot-ben.css">
 </head>
 <body>
 <header>
@@ -201,4 +202,5 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
 document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('input[type="file"]').forEach(function(input){var uid='f_'+Math.random().toString(36).substr(2,5);var oldLabel=input.previousElementSibling;var wrap=document.createElement('div');wrap.style.cssText='display:flex;align-items:center;gap:0;';var lbl=document.createElement('label');lbl.setAttribute('for',uid);lbl.style.cssText='background:#0D1F35;color:white;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;flex-shrink:0;font-family:inherit;';lbl.textContent='Choisir des fichiers';var span=document.createElement('span');span.style.cssText='font-size:13px;color:#6B6B65;margin-left:12px;';span.textContent='Aucun fichier sélectionné';var clone=input.cloneNode(true);clone.id=uid;clone.style.display='none';clone.addEventListener('change',function(){span.textContent=this.files.length>1?this.files.length+' fichiers sélectionnés':(this.files[0]?this.files[0].name:'Aucun fichier sélectionné');});if(oldLabel&&oldLabel.tagName==='LABEL')oldLabel.setAttribute('for',uid);input.parentNode.insertBefore(wrap,input);wrap.appendChild(lbl);wrap.appendChild(span);wrap.appendChild(clone);input.remove();});});
 </script>
+<script src="assets/js/bot-ben.js"></script>
 </body></html>
