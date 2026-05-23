@@ -415,18 +415,10 @@
 }
 
 /* ── STICKERS ── */
-/*
- * Les PNGs de stickers ont un fond plein (blanc ou noir).
- * On les affiche comme des "cartes flottantes" : overflow:hidden + border-radius
- * pour clipper proprement, box-shadow pour l'effet floating.
- * Pour un rendu parfait (fond transparent), exporter les PNGs avec canal alpha.
- */
+/* PNGs exportés avec canal alpha (rembg) — fond 100% transparent */
 .ben-sticker-wrap {
   align-self: flex-start;
   line-height: 0;
-  border-radius: 16px;
-  overflow: hidden;            /* clippe l'image aux coins arrondis       */
-  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
   animation: benFadeUp 0.28s ease;
 }
 .ben-sticker {
@@ -434,6 +426,8 @@
   height: auto;
   display: block;
   object-fit: contain;
+  /* drop-shadow pour l'effet floating sans fond visible */
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,0.35));
 }
 
 /* ── FIELD ERRORS ── */
