@@ -358,6 +358,32 @@
   text-decoration: underline;
 }
 
+/* ── STICKERS ── */
+.ben-sticker-wrap {
+  align-self: flex-start;
+  animation: benFadeUp 0.25s ease;
+}
+.ben-sticker {
+  width: 120px;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* ── FIELD ERRORS ── */
+.ben-field-error {
+  font-size: 11px;
+  color: #ef4444;
+  display: none;
+  padding-left: 4px;
+  font-family: inherit;
+}
+.ben-form input[style*="border-color: rgb(239, 68, 68)"],
+.ben-form input[style*="border-color:#ef4444"] {
+  background: rgba(239,68,68,0.05);
+}
+
 /* ── MOBILE ── */
 @media (max-width: 480px) {
   #ben-widget {
