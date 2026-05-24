@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -72,7 +72,9 @@
   vertical-align: top;
 }
 .compare-table td:first-child { color: var(--text); font-weight: 500; }
-.compare-table td:nth-child(3) { color: var(--teal-light); font-weight: 600; }
+.compare-table td:nth-child(3) { color: var(--text); font-weight: 500; }
+.cmp-ok { color: var(--teal); font-weight: 700; margin-right: 5px; }
+.cmp-no { color: var(--orange); font-weight: 700; margin-right: 5px; }
 .compare-table tr:last-child td { border-bottom: none; }
 .compare-table tr:hover td { background: rgba(255,255,255,0.015); }
 
@@ -114,8 +116,8 @@
     <p class="page-hero-sub">Quand le lieu ne tolère ni l'approximation, ni la casse, ni l'imprévu — protocole renforcé, technicien dédié, zéro compromis.</p>
     <div class="btn-actions">
       <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 Appeler — intervention Prestige</a>
-      <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20sur%20un%20lieu%20sensible." data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
-      <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
+      <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20sur%20un%20lieu%20sensible." data-sfc="wa" class="btn-whatsapp"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+      <a href="contact.html" class="btn-secondary">Contactez-nous</a>
     </div>
   </div>
 </section>
@@ -142,32 +144,32 @@
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="reveal">
       <div class="card">
-        <div class="card-icon">🏛️</div>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><path d="M19 22V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16"/><path d="M2 22h20"/><path d="M14 11h1"/><path d="M14 15h1"/><path d="M9 11h1"/><path d="M9 15h1"/><rect width="4" height="6" x="10" y="16" rx="1"/></svg></div>
         <h3 class="card-title">Hôtels <span class="hl-teal">&amp; palaces</span></h3>
         <p class="card-text">Intervention hors heures de service, protection chambre par chambre, nettoyage au peigne fin.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🏢</div>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
         <h3 class="card-title">Sièges sociaux <span class="hl-teal">&amp; bureaux</span></h3>
         <p class="card-text">Coordination HSE, intervention nocturne ou week-end, zéro interruption de l'activité.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🏠</div>
-        <h3 class="card-title">Appartements <span class="hl-teal">luxueux</span></h3>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3 class="card-title">Appartements <span class="hl-teal">de luxe</span></h3>
         <p class="card-text">Surfaces sensibles, mobilier de valeur, discrétion absolue — prise en charge clé en main.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🏥</div>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
         <h3 class="card-title">Cliniques <span class="hl-teal">&amp; cabinets</span></h3>
         <p class="card-text">Protocole stérile, absence de particules, intervention planifiée hors horaires patients.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🏛️</div>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></div>
         <h3 class="card-title">Bâtiments <span class="hl-teal">classés</span></h3>
         <p class="card-text">Respect des contraintes architecturales, coordination ABF si nécessaire, matériaux conformes.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🎭</div>
+        <div class="card-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <h3 class="card-title">Théâtres <span class="hl-teal">&amp; lieux culturels</span></h3>
         <p class="card-text">Calage sur le planning de représentations, intervention entre les répétitions.</p>
       </div>
@@ -179,7 +181,7 @@
 <section class="section bg-cream">
   <div class="section-inner reveal">
     <p class="section-eyebrow" style="text-align:center">Le Protocole Prestige</p>
-    <h2 class="section-title" style="text-align:center;max-width:560px;margin:0 auto 14px">15 points qui font <em>la différence</em></h2>
+    <h2 class="section-title" style="text-align:center;max-width:560px;margin:0 auto 14px"><em>15</em> points qui font la <em>différence</em></h2>
     <p class="section-sub" style="text-align:center;margin:0 auto 0">Chaque intervention Prestige suit un protocole rigoureux, validé avec le responsable du site avant le premier coup d'outil.</p>
 
     <div class="protocol-grid">
@@ -213,19 +215,19 @@
       <thead>
         <tr>
           <th>Critère</th>
-          <th>Intervention standard</th>
-          <th>✓ SOS FONTE Prestige</th>
+          <th style="color:var(--orange)">Intervention standard</th>
+          <th style="color:var(--teal)">★ SOS FONTE Prestige</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Protection du site</td><td>Bâches sol</td><td>Protection totale sol + murs + mobilier</td></tr>
-        <tr><td>Bruit de chantier</td><td>Non maîtrisé</td><td>Outillage silencieux, plages horaires définies</td></tr>
-        <tr><td>Coordination</td><td>Gestionnaire seul</td><td>Multi-parties : syndic, archi, occupants, ABF</td></tr>
-        <tr><td>Nettoyage</td><td>Gros nettoyage</td><td>Aspirateur HEPA + contrôle visuel avant départ</td></tr>
-        <tr><td>Interlocuteur</td><td>Variable</td><td>Technicien référent unique du début à la fin</td></tr>
-        <tr><td>Rapport</td><td>Sur demande</td><td>Rapport photo complet livré sous 24h</td></tr>
-        <tr><td>Urgences post-chantier</td><td>File normale</td><td>Accès prioritaire 72h post-intervention</td></tr>
-        <tr><td>Discrétion</td><td>Standard</td><td>Véhicules neutres, pas de signalétique sur demande</td></tr>
+        <tr><td>Protection du site</td><td><span class="cmp-no">✗</span>Bâches sol uniquement</td><td><span class="cmp-ok">✓</span>Protection totale sol + murs + mobilier</td></tr>
+        <tr><td>Bruit de chantier</td><td><span class="cmp-no">✗</span>Non maîtrisé</td><td><span class="cmp-ok">✓</span>Outillage silencieux, plages horaires définies</td></tr>
+        <tr><td>Coordination</td><td><span class="cmp-no">✗</span>Gestionnaire seul</td><td><span class="cmp-ok">✓</span>Multi-parties : syndic, archi, occupants, ABF</td></tr>
+        <tr><td>Nettoyage</td><td><span class="cmp-no">✗</span>Gros nettoyage basique</td><td><span class="cmp-ok">✓</span>Aspirateur HEPA + contrôle visuel avant départ</td></tr>
+        <tr><td>Interlocuteur</td><td><span class="cmp-no">✗</span>Variable selon équipe</td><td><span class="cmp-ok">✓</span>Technicien référent unique du début à la fin</td></tr>
+        <tr><td>Rapport</td><td><span class="cmp-no">✗</span>Sur demande</td><td><span class="cmp-ok">✓</span>Rapport photo complet livré sous 24h</td></tr>
+        <tr><td>Urgences post-chantier</td><td><span class="cmp-no">✗</span>File normale</td><td><span class="cmp-ok">✓</span>Accès prioritaire 72h post-intervention</td></tr>
+        <tr><td>Discrétion</td><td><span class="cmp-no">✗</span>Standard</td><td><span class="cmp-ok">✓</span>Véhicules neutres, pas de signalétique sur demande</td></tr>
       </tbody>
     </table>
   </div>
@@ -237,8 +239,8 @@
   <p>Décrivez votre projet — nous vous proposons une solution sur mesure, avec un interlocuteur dédié dès le premier appel.</p>
   <div class="btn-actions">
     <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 01 80 84 60 40 — Devis Prestige</a>
-    <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20pour%20un%20lieu%20sensible.%20Pouvez-vous%20me%20rappeler%20%3F" data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
-    <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
+    <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20pour%20un%20lieu%20sensible.%20Pouvez-vous%20me%20rappeler%20%3F" data-sfc="wa" class="btn-whatsapp"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a href="contact.html" class="btn-secondary">Contactez-nous</a>
   </div>
 </div>
 
