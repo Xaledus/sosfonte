@@ -747,13 +747,17 @@
     });
   }
 
-  /* ── NORMALISATION — accent-strip robuste ────────────── */
-  /* ̀-ͯ = plage complète des diacritiques combinants NFD */
+  /* ── NORMALISATION — accent-strip robuste ─────────── */
   function _norm(s) {
-    return String(s).toLowerCase()
-      .normalize(‘NFD’).replace(/[̀-ͯ]/g, ‘’)
-      .replace(/[‘’‛`]/g, "’") // guillemets/backtick → ‘
-      .replace(/[–—\-]/g, ‘ ‘);           // tirets → espace
+    s = String(s).toLowerCase().normalize('NFD');
+    var out = '';
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charCodeAt(i);
+      if (c < 0x0300 || c > 0x036F) out += s[i]; // retire diacritiques
+    }
+    return out
+      .replace(/[‘’‛`]/g, "'") // guillemets -> apostrophe
+      .replace(/[–—-]/g, ' ');       // tirets -> espace
   }
 
   /* ── FAQ ENTRIES — référentiel ───────────────────────── */
