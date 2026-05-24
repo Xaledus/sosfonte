@@ -544,6 +544,7 @@
       { label: '🔍 Diagnostic / curage',           action: stepDiagnostic },
       { label: '📋 Syndic ou Conseil Syndical',    action: stepSyndic },
       { label: '🤝 Professionnel — partenariat',   action: stepPartenaire },
+      { label: '❓ J\'ai une question',             action: stepFAQ },
     ]);
   }
 
@@ -744,6 +745,70 @@
         stepAutresQuestions();
       });
     });
+  }
+
+  /* ── STEP 1F — FAQ ───────────────────────────────────── */
+  async function stepFAQ() {
+    clearFooter();
+    setBenImage(IMG.jexplique);
+    await showTyping(300);
+    await addBubble('bot', 'Quelle est votre question ? Je vous réponds directement.', 800);
+    showChoices([
+      { label: '⏱ Délais & urgences',           action: stepFAQUrgence },
+      { label: '💶 Tarifs & devis',              action: stepFAQTarif },
+      { label: '📍 Zone d\'intervention',        action: stepFAQZone },
+      { label: '🔧 Technique (fonte, chemisage)', action: stepFAQTechnique },
+      RETOUR,
+    ]);
+  }
+
+  async function stepFAQUrgence() {
+    clearFooter();
+    setBenImage(IMG.jinterviens);
+    await showTyping(300);
+    await addBubble('bot',
+      'On intervient <strong>24h/24 — 7j/7</strong>, week-ends et jours fériés inclus.<br>Délai : <strong>moins de 2h en IDF</strong> pour les urgences.', 900);
+    await showTyping(300);
+    await addBubble('bot',
+      '<a href="faq.html#urgence" class="ben-page-link">Toutes les questions Urgence →</a>', 700);
+    addCTABlock("Bonjour, j'ai une urgence sur une canalisation en fonte. Pouvez-vous intervenir ?");
+    stepAutresQuestions();
+  }
+
+  async function stepFAQTarif() {
+    clearFooter();
+    setBenImage(IMG.jexplique);
+    await showTyping(300);
+    await addBubble('bot',
+      'Le devis est <strong>gratuit</strong> pour les demandes en ligne avec photos.<br>Dépannage urgence : déplacement + 1h d\'intervention minimum. Échelonnement possible.', 900);
+    await showTyping(300);
+    await addBubble('bot',
+      '<a href="faq.html#tarif" class="ben-page-link">Toutes les questions Tarifs →</a>', 700);
+    stepAutresQuestions();
+  }
+
+  async function stepFAQZone() {
+    clearFooter();
+    setBenImage(IMG.rassurant);
+    await showTyping(300);
+    await addBubble('bot',
+      'Paris intra-muros + 92, 93, 94, 91, 95 — toute l\'Île-de-France.<br>On est aussi banlieusards 😄 Contactez-nous pour vérifier votre secteur.', 900);
+    await showTyping(300);
+    await addBubble('bot',
+      '<a href="faq.html#zone" class="ben-page-link">Toutes les questions Zone →</a>', 700);
+    stepAutresQuestions();
+  }
+
+  async function stepFAQTechnique() {
+    clearFooter();
+    setBenImage(IMG.pensif);
+    await showTyping(300);
+    await addBubble('bot',
+      'La fonte dure <strong>80 à 100 ans</strong>. Le chemisage est souvent 2 à 3× moins cher qu\'un remplacement et ne nécessite <strong>aucun relogement</strong>.', 900);
+    await showTyping(300);
+    await addBubble('bot',
+      '<a href="faq.html#technique" class="ben-page-link">Toutes les questions Technique →</a>', 700);
+    stepAutresQuestions();
   }
 
   /* ── STEP HORS HORAIRES ───────────────────────────────── */
