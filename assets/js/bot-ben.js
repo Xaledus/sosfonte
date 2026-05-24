@@ -582,9 +582,12 @@
          Si le texte ressemble à une question (? final ou
          verbe interrogatif) → on cherche dans la FAQ.   */
       const faqMatch = matchFAQ(txt);
+      /* Détection question : ? final OU mot interrogatif en tête
+         (après normalisation accents + majuscules)              */
+      const _txtN = _norm(txt.trim());
       const looksQ = /\?/.test(txt) ||
-        /^(vous|est.ce|pouvez|peut|comment|combien|o.|quand|intervenez|d.placez|venez|couvrez)/i
-          .test(txt.trim());
+        /^(quel(le)?s?|qu.est|qu.y|pourquoi|comment|combien|ou\b|quand|qui\b|lequel|laquelle|lesquel|est.ce|pouvez|peut.on|avez.vous|faites.vous|proposez.vous|intervenez|d.placez|venez|couvrez|vous\b|c.est.quoi|quelle.est|quel.est|difference|y.a.t.il)/i
+          .test(_txtN);
 
       if (faqMatch) {
         addSticker(STK.diag);                           // sticker diagnostic en cours
