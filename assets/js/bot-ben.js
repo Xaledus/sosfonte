@@ -607,7 +607,7 @@
       if (looksQ) {
         setBenImage(IMG.jexplique);
         await addBubble('bot',
-          'Cette ressemble à une question 🤔 Utilisez le bouton <strong>"❓ J\'ai une question"</strong> — je réponds à plus de 20 sujets.',
+          'Ça ressemble à une question 🤔 Utilisez le bouton <strong>"❓ J\'ai une question"</strong> — je réponds à plus de 20 sujets.',
           800);
         await showTyping(300);
         await addBubble('bot', 'Vous avez aussi une situation à me décrire ?', 600);
