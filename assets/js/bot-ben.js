@@ -747,90 +747,107 @@
     });
   }
 
-  /* ── MATCHING FAQ — moteur mots-clés ─────────────────── */
+  /* ── NORMALISATION — accent-strip robuste ────────────── */
+  /* ̀-ͯ = plage complète des diacritiques combinants NFD */
   function _norm(s) {
-    return s.toLowerCase()
-      .normalize('NFD').replace(/[̀-ͯ]/g, '') // retire accents
-      .replace(/['']/g, "'");
-  }
-  function matchFAQ(q) {
-    const l = _norm(q);
-    const entries = [
-      /* Urgence & disponibilité */
-      { keys: ['24h','24/7','nuit','weekend','week-end','ferie','dimanche','samedi'],
-        text: 'On intervient <strong>24h/24 — 7j/7</strong>, week-ends et jours fériés inclus. Les tarifs sont revalorisés hors horaires — on vous communique le détail à l\'appel.',
-        link: 'faq.html#urgence' },
-      { keys: ['delai','temps','arrive','vite','rapide','combien de temps','quand'],
-        text: 'En urgence : <strong>moins de 2h en IDF</strong>. Si nos équipes sont en cours d\'intervention, nous rappelons avec un horaire précis.',
-        link: 'faq.html#urgence' },
-      { keys: ['colonne montante','fuite colonne','urgence'],
-        text: 'Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <strong>Appelez immédiatement.</strong>',
-        link: 'faq.html#urgence' },
-      /* Zone */
-      { keys: ['banlieue','province','periph','banlieusard','hors paris'],
-        text: 'Oui, on est aussi banlieusards 😄 Nous couvrons toute l\'Île-de-France — Paris + 92, 93, 94, 91, 95. Contactez-nous pour vérifier votre secteur exact.',
-        link: 'faq.html#zone' },
-      { keys: ['hors idf','normandie','hors ile','region','departement'],
-        text: 'Plusieurs interventions hors IDF ont déjà été réalisées, notamment en Normandie. Envoyez votre demande — on l\'étudie et on revient vers vous rapidement.',
-        link: 'faq.html#zone' },
-      { keys: ['16e','paris 16','haussmann','classe','standing','patrimoine'],
-        text: 'Oui, c\'est notre cœur de métier. Immeubles classés, contraintes architecturales, copropriétés de standing — découvrez notre <a href="prestige.html" class="ben-page-link">offre Prestige</a>.',
-        link: null },
-      { keys: ['ville','zone','secteur','idf','ile-de-france','ile de france','couvert'],
-        text: 'Paris intra-muros + Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94) et grande couronne. Contactez-nous pour confirmer votre secteur.',
-        link: 'faq.html#zone' },
-      /* Tarifs & paiement */
-      { keys: ['gratuit','devis','estimation','prix','combien','cout','tarif'],
-        text: 'Le devis est <strong>gratuit</strong> pour les demandes en ligne avec photos claires (WhatsApp bienvenu). Pour les projets complexes sur place, les conditions sont définies ensemble.',
-        link: 'faq.html#tarif' },
-      { keys: ['paiement','payer','virement','cheque','cb','carte','echelon'],
-        text: 'Virement bancaire, CB via lien sécurisé, chèque. Un <strong>échelonnement</strong> est possible — on étudie chaque situation.',
-        link: 'faq.html#tarif' },
-      { keys: ['assurance','degat des eaux','sinistre','declaration','anah','aide'],
-        text: 'Souvent oui pour les dégâts des eaux. Nous fournissons un <strong>rapport d\'intervention complet</strong> reconnu par les assureurs et les notaires.',
-        link: 'faq.html#tarif' },
-      /* Technique */
-      { keys: ['chemisage','chemiser','rehabilitation','sans demolition','relogement','sans travaux'],
-        text: 'Le chemisage insère une gaine dans la canalisation existante — <strong>aucune démolition, aucun relogement</strong>. Souvent 2 à 3× moins coûteux qu\'un remplacement, durée de vie 30-50 ans.',
-        link: 'faq.html#technique' },
-      { keys: ['duree chantier','combien de jours','temps remplacement','etages'],
-        text: 'En moyenne <strong>3 à 5 jours</strong> pour une colonne de 6 étages — planning établi avec le syndic pour minimiser la gêne des résidents.',
-        link: 'faq.html#technique' },
-      { keys: ['plomb','pb','tuyau plomb'],
-        text: 'Le plomb est interdit depuis 1995. Nous remplaçons par du <strong>cuivre ou du multicouche</strong> selon la configuration et les contraintes techniques.',
-        link: 'faq.html#technique' },
-      { keys: ['diagnostic','inspection','camera','endoscop','rapport'],
-        text: 'Diagnostic visuel, test mécanique ou inspection caméra selon la situation. Résultat : rapport écrit avec photos et recommandations chiffrées, reconnu par les assureurs et notaires.',
-        link: 'faq.html#technique' },
-      { keys: ['fonte','pvc','reconnaitre','identifier','son','materiau','metal'],
-        text: 'Frappez doucement le tuyau : la fonte rend un son <strong>sourd et mat</strong>, le plastique sonne creux. La fonte est gris foncé (souvent peinte). Immeubles <strong>avant 1980</strong> : forte probabilité fonte.',
-        link: 'faq.html#technique' },
-      { keys: ['pourquoi fonte','avantage fonte','bruit','acoustique','feu','reglementation'],
-        text: 'La fonte dure <strong>80 à 100 ans</strong>, amortit les bruits d\'écoulement et résiste au feu. Elle est parfois imposée par la réglementation dans les immeubles haussmanniens.',
-        link: 'faq.html#technique' },
-      /* Syndic */
-      { keys: ['syndic','contrat','maintenance','gestionnaire','ag','assemblee'],
-        text: 'Oui : contrats annuels avec visite préventive, accès prioritaire 24h/7j et tarifs bloqués sur 12 mois. Rapport technique pour votre AG inclus.',
-        link: 'faq.html#syndic' },
-      { keys: ['gardien','mandate','accord-cadre','mandat'],
-        text: 'Oui, on intervient sur appel du gardien avec mandat du syndic. Plusieurs cabinets en accord-cadre.',
-        link: 'faq.html#syndic' },
-      /* Partenaires / RH */
-      { keys: ['recrut','emploi','rejoindre','travail','embauche','rh','candidat'],
-        text: 'Notre communauté grandit ! Envoyez votre dossier à <strong>contact@sosfonte.com</strong> — technicien, sous-traitant ou profil complémentaire. On revient vers vous rapidement.',
-        link: 'faq.html#partenaires' },
-      { keys: ['sous-traitant','partenaire','sous traitant','sous traite'],
-        text: 'Oui, nous travaillons avec un réseau de partenaires sélectionnés pour leur sérieux et leur expertise technique.',
-        link: 'faq.html#partenaires' },
-    ];
-    for (var i = 0; i < entries.length; i++) {
-      var e = entries[i];
-      if (e.keys.some(function(k){ return l.indexOf(_norm(k)) !== -1; })) return e;
-    }
-    return null;
+    return String(s).toLowerCase()
+      .normalize(‘NFD’).replace(/[̀-ͯ]/g, ‘’)
+      .replace(/[‘’‛`]/g, "’") // guillemets/backtick → ‘
+      .replace(/[–—\-]/g, ‘ ‘);           // tirets → espace
   }
 
-  /* ── STEP 1F — FAQ (texte libre) ─────────────────────── */
+  /* ── FAQ ENTRIES — référentiel ───────────────────────── */
+  /* Scoring : phrase multi-mots = 3 pts, mot seul = 1 pt.
+     Retourne l'entrée avec le MEILLEUR score.             */
+  var FAQ_ENTRIES = [
+    /* Urgence & disponibilité */
+    { keys: ['24h','24/7','nuit','weekend','week end','ferie','dimanche','samedi','heure'],
+      text: 'On intervient <strong>24h/24 — 7j/7</strong>, week-ends et jours fériés inclus. Les tarifs sont revalorisés hors horaires — on vous communique le détail à l\'appel.',
+      link: 'faq.html#urgence' },
+    { keys: ['delai','arrive','vite','rapide','combien de temps','quand','attendre','temps reponse'],
+      text: 'En urgence : <strong>moins de 2h en IDF</strong>. Si nos équipes sont en cours d\'intervention, nous rappelons avec un horaire précis.',
+      link: 'faq.html#urgence' },
+    { keys: ['colonne montante','fuite colonne','urgence','eau partout','inondation'],
+      text: 'Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <strong>Appelez immédiatement.</strong>',
+      link: 'faq.html#urgence' },
+    /* Zone & déplacement */
+    { keys: ['banlieue','province','periph','banlieusard','hors paris',
+             'deplacez','deployez','venez','intervenez','couvrez','desservez',
+             'deplacement','vous venez','vous intervenez','vous deplacez',
+             'couvert','desservi','passez'],
+      text: 'Oui, on est aussi banlieusards 😄 Nous couvrons toute l\'Île-de-France — Paris + 92, 93, 94, 91, 95. Contactez-nous pour vérifier votre secteur exact.',
+      link: 'faq.html#zone' },
+    { keys: ['hors idf','normandie','hors ile','region','province','departement','loin'],
+      text: 'Plusieurs interventions hors IDF ont déjà été réalisées, notamment en Normandie. Envoyez votre demande — on l\'étudie et on revient vers vous rapidement.',
+      link: 'faq.html#zone' },
+    { keys: ['16e','paris 16','haussmann','classe','standing','patrimoine','prestige','hotel particulier','monument'],
+      text: 'Oui, c\'est notre cœur de métier. Immeubles classés, contraintes architecturales, copropriétés de standing — découvrez notre <a href="prestige.html" class="ben-page-link">offre Prestige</a>.',
+      link: null },
+    { keys: ['zone','secteur','idf','ile de france','couvert','ville','paris'],
+      text: 'Paris intra-muros + Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94) et grande couronne. Contactez-nous pour confirmer votre secteur.',
+      link: 'faq.html#zone' },
+    /* Tarifs & paiement */
+    { keys: ['gratuit','devis','estimation','prix','combien','cout','tarif','cher'],
+      text: 'Le devis est <strong>gratuit</strong> pour les demandes en ligne avec photos claires (WhatsApp bienvenu). Pour les projets complexes sur place, les conditions sont définies ensemble.',
+      link: 'faq.html#tarif' },
+    { keys: ['paiement','payer','virement','cheque','carte bancaire','cb','echelon','facilite de paiement'],
+      text: 'Virement bancaire, CB via lien sécurisé, chèque. Un <strong>échelonnement</strong> est possible — on étudie chaque situation.',
+      link: 'faq.html#tarif' },
+    { keys: ['assurance','degat des eaux','sinistre','declaration','anah','aide','rembourse'],
+      text: 'Souvent oui pour les dégâts des eaux. Nous fournissons un <strong>rapport d\'intervention complet</strong> reconnu par les assureurs et les notaires.',
+      link: 'faq.html#tarif' },
+    /* Technique */
+    { keys: ['chemisage','chemiser','rehabilitation','sans demolition','relogement','sans travaux','gaine'],
+      text: 'Le chemisage insère une gaine dans la canalisation existante — <strong>aucune démolition, aucun relogement</strong>. Souvent 2 à 3× moins coûteux qu\'un remplacement, durée de vie 30-50 ans.',
+      link: 'faq.html#technique' },
+    { keys: ['duree chantier','combien de jours','temps remplacement','etages','chantier dure'],
+      text: 'En moyenne <strong>3 à 5 jours</strong> pour une colonne de 6 étages — planning établi avec le syndic pour minimiser la gêne des résidents.',
+      link: 'faq.html#technique' },
+    { keys: ['plomb','tuyau plomb','canalisation plomb'],
+      text: 'Le plomb est interdit depuis 1995. Nous remplaçons par du <strong>cuivre ou du multicouche</strong> selon la configuration et les contraintes techniques.',
+      link: 'faq.html#technique' },
+    { keys: ['diagnostic','inspection','camera','endoscop','rapport','expertise'],
+      text: 'Diagnostic visuel, test mécanique ou inspection caméra selon la situation. Résultat : rapport écrit avec photos et recommandations chiffrées, reconnu par les assureurs et notaires.',
+      link: 'faq.html#technique' },
+    { keys: ['fonte','pvc','reconnaitre','identifier','materiau','metal','tuyau'],
+      text: 'Frappez doucement le tuyau : la fonte rend un son <strong>sourd et mat</strong>, le plastique sonne creux. La fonte est gris foncé (souvent peinte). Immeubles <strong>avant 1980</strong> : forte probabilité fonte.',
+      link: 'faq.html#technique' },
+    { keys: ['pourquoi fonte','avantage fonte','bruit','acoustique','feu','reglementation','solide','dure longtemps'],
+      text: 'La fonte dure <strong>80 à 100 ans</strong>, amortit les bruits d\'écoulement et résiste au feu. Elle est parfois imposée par la réglementation dans les immeubles haussmanniens.',
+      link: 'faq.html#technique' },
+    /* Syndic */
+    { keys: ['syndic','contrat','maintenance','gestionnaire','assemblee generale','copropriete'],
+      text: 'Oui : contrats annuels avec visite préventive, accès prioritaire 24h/7j et tarifs bloqués sur 12 mois. Rapport technique pour votre AG inclus.',
+      link: 'faq.html#syndic' },
+    { keys: ['gardien','mandate','accord cadre','mandat syndic','gardiennage'],
+      text: 'Oui, on intervient sur appel du gardien avec mandat du syndic. Plusieurs cabinets en accord-cadre.',
+      link: 'faq.html#syndic' },
+    /* Partenaires / RH */
+    { keys: ['recrut','emploi','rejoindre','travail','embauche','candidat','poste','offre emploi'],
+      text: 'Notre communauté grandit ! Envoyez votre dossier à <strong>contact@sosfonte.com</strong> — technicien, sous-traitant ou profil complémentaire. On revient vers vous rapidement.',
+      link: 'faq.html#partenaires' },
+    { keys: ['sous traitant','partenaire','partenariat','sous traite','reseau pro'],
+      text: 'Oui, nous travaillons avec un réseau de partenaires sélectionnés pour leur sérieux et leur expertise technique.',
+      link: 'faq.html#partenaires' },
+  ];
+
+  function matchFAQ(q) {
+    var l = _norm(q);
+    var best = null, bestScore = 0;
+    FAQ_ENTRIES.forEach(function(e) {
+      var score = 0;
+      e.keys.forEach(function(k) {
+        var nk = _norm(k);
+        if (nk.length > 2 && l.indexOf(nk) !== -1) {
+          score += (nk.indexOf(' ') !== -1) ? 3 : 1; // phrase > mot seul
+        }
+      });
+      if (score > bestScore) { bestScore = score; best = e; }
+    });
+    return bestScore > 0 ? best : null;
+  }
+
+  /* ── STEP 1F — FAQ (texte libre + retry) ─────────────── */
   async function stepFAQ() {
     clearFooter();
     setBenImage(IMG.jexplique);
@@ -839,27 +856,49 @@
     await showTyping(200);
     await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "Vous déplacez-vous en banlieue ?" · "Le devis est gratuit ?" · "Combien de temps dure le chantier ?"</span>', 400);
 
+    /* Affiche la réponse trouvée + lien FAQ optionnel */
+    async function showAnswer(match) {
+      setBenImage(IMG.jexplique);
+      await addBubble('bot', match.text, 600);
+      if (match.link) {
+        await showTyping(200);
+        await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
+      }
+      stepAutresQuestions();
+    }
+
+    /* 1re saisie */
     showTextInput('Tapez votre question…', async (question) => {
       clearFooter();
       setBenImage(IMG.pensif);
       await showTyping(700);
 
       const match = matchFAQ(question);
-      if (match) {
-        setBenImage(IMG.jexplique);
-        await addBubble('bot', match.text, 600);
-        if (match.link) {
-          await showTyping(200);
-          await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
-        }
-      } else {
+      if (match) { await showAnswer(match); return; }
+
+      /* ── Raté #1 : on demande de reformuler ─────────── */
+      setBenImage(IMG.pensif);
+      await addBubble('bot', 'Je n\'ai pas bien saisi votre question 🤔<br>Pouvez-vous la reformuler en quelques mots-clés ?', 800);
+      await showTyping(200);
+      await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "devis gratuit" · "couvert 92" · "durée chantier" · "paiement échelonné"</span>', 300);
+
+      /* 2e saisie */
+      showTextInput('Reformulez votre question…', async (question2) => {
+        clearFooter();
+        setBenImage(IMG.pensif);
+        await showTyping(700);
+
+        const match2 = matchFAQ(question2);
+        if (match2) { await showAnswer(match2); return; }
+
+        /* ── Raté #2 : orientation équipe (sans demander coordonnées) */
         setBenImage(IMG.sourire);
-        await addBubble('bot', 'Je n\'ai pas la réponse exacte sous la main — notre FAQ couvre plus de 20 questions.', 800);
-        await showTyping(200);
-        await addBubble('bot', '<a href="faq.html" class="ben-page-link">Consulter la FAQ complète →</a>', 500);
+        await addBubble('bot', 'Votre question sort de mon périmètre — l\'équipe vous répondra précisément 😊', 900);
+        await showTyping(300);
+        await addBubble('bot', '<a href="faq.html" class="ben-page-link">📖 FAQ complète (20 questions) →</a>', 400);
         addCTABlock("Bonjour, j'ai une question concernant vos services.");
-      }
-      stepAutresQuestions();
+        stepAutresQuestions();
+      });
     });
   }
 
