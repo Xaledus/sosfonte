@@ -7,14 +7,19 @@
   'use strict';
 
   /* ── CONFIG ─────────────────────────────────────────────── */
+  /* Lecture depuis site-config.js (window.SFC) si disponible,
+     sinon valeurs de repli intégrées — NE PAS modifier ici,
+     mettre à jour assets/js/site-config.js uniquement.       */
+  const _S = window.SFC || {};
+  const _p = (_S.phone) || {};
   const CFG = {
-    formspree:    'https://formspree.io/f/xpqnzoyg',
-    phone:        'tel:0180846040',
-    phoneDisplay: '01 80 84 60 40',
-    wa:           'https://wa.me/33695494371?text=Bonjour%2C%20j%27ai%20une%20urgence%20sur%20une%20canalisation%20en%20fonte.',
-    email:        'contact@sosfonte.com',
-    autreQDelay:  10000,   // ms avant "avez-vous d'autres questions ?"
-    autoCloseDelay: 30000, // ms d'inactivité avant fermeture auto après cette question
+    formspree:      (_S.formspree)  || 'https://formspree.io/f/xpqnzoyg',
+    phone:          'tel:' + (_p.raw     || '0180846040'),
+    phoneDisplay:   (_p.display          || '01 80 84 60 40'),
+    wa:             _S.waUrl ? _S.waUrl('urgence') : 'https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20urgence%20sur%20une%20canalisation%20en%20fonte.',
+    email:          (_S.email            || 'contact@sosfonte.com'),
+    autreQDelay:    10000,   // ms avant "avez-vous d'autres questions ?"
+    autoCloseDelay: 30000,   // ms d'inactivité avant fermeture auto
   };
 
   /* ── VALIDATION ─────────────────────────────────────────── */
@@ -318,7 +323,7 @@
 
   function addCTABlock(waMsg) {
     const waUrl = waMsg
-      ? 'https://wa.me/33695494371?text=' + encodeURIComponent(waMsg)
+      ? 'https://wa.me/' + ((_S.phone && _S.phone.wa) || '33180846040') + '?text=' + encodeURIComponent(waMsg)
       : CFG.wa;
     const block = document.createElement('div');
     block.className = 'ben-cta-block';

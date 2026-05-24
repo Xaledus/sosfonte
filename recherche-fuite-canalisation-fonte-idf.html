@@ -10,6 +10,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Service","name":"Recherche fuite canalisation fonte IDF","provider":{"@type":"LocalBusiness","name":"SOS FONTE","telephone":"+33180846040"},"areaServed":{"@type":"AdministrativeArea","name":"Île-de-France"},"offers":[{"@type":"Offer","name":"Recherche fuite par colorant traceur","price":"156","priceCurrency":"EUR"},{"@type":"Offer","name":"Inspection caméra canalisation fonte","price":"350","priceCurrency":"EUR"}]}
 </script>
+<script src="assets/js/site-config.js"></script>
 </head>
 <body>
 <header>
@@ -20,7 +21,7 @@
     <a href="realisations.html">Réalisations</a><a href="contact.html">Contact</a>
   </nav>
   <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  <a href="tel:0180846040" class="header-cta">📞 01 80 84 60 40</a>
+  <a href="tel:0180846040" data-sfc="tel" class="header-cta">📞 01 80 84 60 40</a>
 </header>
 
 <section class="page-hero">
@@ -31,7 +32,7 @@
     <h1>Recherche de fuite<br><em>canalisation fonte IDF</em></h1>
     <p class="page-hero-sub">Colorant traceur à partir de 156 € · Inspection caméra à 350 €. On localise la fuite sans démontage ni dégradation. Rapport technique reconnu par les assureurs.</p>
     <div class="btn-actions" style="margin-top:32px">
-      <a href="tel:0180846040" class="btn-primary">📞 Appeler pour un diagnostic</a>
+      <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 Appeler pour un diagnostic</a>
       <a href="contact.html" class="btn-secondary">Demander un devis →</a>
     </div>
   </div>
@@ -131,8 +132,8 @@
   <h2>Une fuite sur votre réseau fonte ?</h2>
   <p>Diagnostic non destructif — rapport sous 24h. Appelez ou envoyez une photo WhatsApp.</p>
   <div class="btn-actions">
-    <a href="tel:0180846040" class="btn-primary">📞 01 80 84 60 40</a>
-    <a href="https://wa.me/33695494371?text=Bonjour%2C%20je%20cherche%20%C3%A0%20localiser%20une%20fuite%20sur%20ma%20canalisation%20en%20fonte." class="btn-secondary">💬 Photo WhatsApp</a>
+    <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 01 80 84 60 40</a>
+    <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20cherche%20%C3%A0%20localiser%20une%20fuite%20sur%20ma%20canalisation%20en%20fonte." data-sfc="wa" class="btn-secondary">💬 Photo WhatsApp</a>
   </div>
 </div>
 
@@ -149,9 +150,9 @@
     </div>
     <div class="footer-col">
       <span class="footer-col-title">Contact</span>
-      <a href="tel:0180846040">📞 01 80 84 60 40</a>
-      <a href="https://wa.me/33695494371?text=Bonjour%2C%20je%20cherche%20%C3%A0%20localiser%20une%20fuite%20sur%20ma%20canalisation%20en%20fonte.">💬 +33 6 95 49 43 71</a>
-      <a href="mailto:contact@sosfonte.com">✉ contact@sosfonte.com</a>
+      <a href="tel:0180846040" data-sfc="tel">📞 01 80 84 60 40</a>
+      <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20cherche%20%C3%A0%20localiser%20une%20fuite%20sur%20ma%20canalisation%20en%20fonte." data-sfc="wa">💬 +33 6 95 49 43 71</a>
+      <a href="mailto:contact@sosfonte.com" data-sfc="email">✉ contact@sosfonte.com</a>
     </div>
     <div class="footer-col"><span class="footer-col-title">Zone</span><p>Paris · IDF · 92 · 93 · 94 · 91 · 95</p></div>
   </div>
@@ -160,7 +161,7 @@
     <div class="footer-links"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></div>
   </div>
 </footer>
-<a href="tel:0180846040" class="mobile-sticky">🔴 Urgence — Appeler maintenant</a>
+<a href="tel:0180846040" data-sfc="tel" class="mobile-sticky">🔴 Urgence — Appeler maintenant</a>
 <script>
 if ('IntersectionObserver' in window && window.innerWidth > 768) {
   document.body.classList.add('js-reveal');
@@ -175,4 +176,5 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 <script>
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
 </script>
+<script src="assets/js/site-init.js"></script>
 </body></html>
