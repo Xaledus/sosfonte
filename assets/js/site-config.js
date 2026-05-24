@@ -46,6 +46,18 @@ window.SFC = {
   /* ── FORMSPREE ──────────────────────────────────────────────────────────── */
   formspree: 'https://formspree.io/f/xpqnzoyg',
 
+  /* ── COPY CLÉ — titres modifiables sans toucher au HTML ─────────────────── */
+  copy: {
+    prestige: {
+      ctaTitle:    'Votre lieu mérite une intervention à sa hauteur',  // prestige.html CTA h2
+      heroTitle:   "L'intervention d'exception pour les lieux sensibles", // services.html service 08
+      teaserTitle: 'Copropriétés de prestige & lieux sensibles',          // syndics.html teaser
+    },
+    faq: {
+      heroTitle: 'Tout ce que vous voulez savoir sur la fonte & nos interventions',
+    },
+  },
+
 };
 
 /* Helper : construit une URL WhatsApp complète */

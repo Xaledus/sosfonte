@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -37,7 +37,7 @@
 
 /* ── Section FAQ ── */
 .faq-section {
-  padding: 0 40px 56px;
+  padding: 0 40px 0;
 }
 .faq-category {
   max-width: 820px;
@@ -137,7 +137,12 @@
   font-weight: 700;
   color: var(--text);
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.4;
 }
+.autodiag-bloc-title span.adiag-em { color: var(--orange); font-style: normal; }
 .autodiag-bloc ol {
   padding-left: 20px;
   color: var(--text-muted);
@@ -190,7 +195,7 @@
   <div class="page-hero-grid"></div>
   <div class="page-hero-inner">
     <div class="page-eyebrow">Questions fréquentes</div>
-    <h1>Tout ce que vous voulez savoir<br>sur la <em>fonte</em> & nos interventions</h1>
+    <h1>Tout ce que vous voulez <em>savoir</em><br>sur la <em>fonte</em> &amp; nos <em>interventions</em></h1>
     <p class="page-hero-sub">Des réponses claires, sans jargon. Urgences, tarifs, diagnostic, zones, syndics et recrutement.</p>
     <div class="faq-anchors">
       <a href="#urgence" class="faq-anchor-btn">🚨 Urgence</a>
@@ -441,10 +446,8 @@
     <div class="faq-category" id="autodiag">
       <div class="faq-category-title">🔍 Auto-diagnostic</div>
 
-      <div style="height:24px"></div>
-
       <div class="autodiag-bloc">
-        <div class="autodiag-bloc-title">🔊 Comment savoir si ma canalisation est en fonte ?</div>
+        <div class="autodiag-bloc-title"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span><span class="adiag-em">Comment</span> savoir si ma canalisation <span class="adiag-em">est en fonte ?</span></span></div>
         <ol>
           <li><strong>Le son</strong> — frappez doucement le tuyau. La fonte rend un son <em>sourd et mat</em> ; le plastique sonne creux.</li>
           <li><strong>L'âge du bâtiment</strong> — un immeuble construit avant 1980 est souvent équipé de colonnes en fonte ou en plomb.</li>
@@ -455,7 +458,7 @@
       </div>
 
       <div class="autodiag-bloc">
-        <div class="autodiag-bloc-title">🚨 Que faire en attendant le technicien ?</div>
+        <div class="autodiag-bloc-title"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Que faire <span class="adiag-em">en attendant</span> le technicien ?</span></div>
         <ol>
           <li><strong>Contactez votre syndic ou gardien</strong> — ils ont souvent accès aux vannes d'arrêt principales de l'immeuble.</li>
           <li><strong>Fermez l'arrivée d'eau</strong> si vous y avez accès (robinet général, généralement en cave ou au compteur).</li>
@@ -464,7 +467,7 @@
           <li><strong>Ne touchez pas</strong> aux prises électriques proches d'une zone inondée.</li>
         </ol>
         <p class="autodiag-note">Notre technicien arrive avec tout le matériel nécessaire — votre rôle est de <strong>limiter les dégâts</strong>, pas de réparer.</p>
-        <a href="tel:0180846040" data-sfc="tel" class="faq-link-cta">📞 Appeler maintenant — 01 80 84 60 40 →</a>
+
       </div>
     </div>
 
