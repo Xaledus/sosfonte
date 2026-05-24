@@ -10,24 +10,54 @@
 <link rel="stylesheet" href="assets/css/bot-ben.css">
 <script src="assets/js/site-config.js"></script>
 <style>
-.faq-section { padding: 56px 0 24px; }
+/* ── Ancres rapides ── */
+.faq-anchors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.faq-anchor-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.faq-anchor-btn:hover {
+  background: var(--teal-bg);
+  border-color: var(--teal-border);
+  color: var(--teal-light);
+}
+
+/* ── Section FAQ ── */
+.faq-section {
+  padding: 0 40px 56px;
+}
 .faq-category {
   max-width: 820px;
   margin: 0 auto 48px;
+  scroll-margin-top: 100px;
 }
 .faq-category-title {
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .12em;
+  font-weight: 600;
+  letter-spacing: .15em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: rgba(255,255,255,0.38);
   border-bottom: 1px solid var(--border);
   padding-bottom: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
+
+/* ── Accordéon ── */
 .faq-item {
   border-bottom: 1px solid var(--border);
-  padding: 20px 0;
   cursor: pointer;
 }
 .faq-item:last-child { border-bottom: none; }
@@ -36,127 +66,106 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
+  padding: 20px 0;
 }
 .faq-q h3 {
   font-size: 15px;
   font-weight: 600;
-  color: var(--white);
+  color: var(--text);
   line-height: 1.45;
   margin: 0;
 }
 .faq-chevron {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   color: var(--teal);
-  transition: transform 0.2s, background 0.2s;
-  margin-top: 2px;
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  margin-top: 1px;
 }
-.faq-item.open .faq-chevron { transform: rotate(180deg); background: rgba(23,181,166,0.15); }
+.faq-item.open .faq-chevron {
+  transform: rotate(180deg);
+  background: var(--teal-bg);
+  border-color: var(--teal-border);
+}
 .faq-a {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.2s;
+  transition: max-height 0.32s ease;
 }
-.faq-item.open .faq-a { max-height: 600px; }
+.faq-item.open .faq-a { max-height: 700px; }
 .faq-a-inner {
-  padding-top: 14px;
+  padding: 0 0 20px;
   font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
+  color: var(--text-muted);
+  line-height: 1.75;
+  font-weight: 300;
 }
-.faq-a-inner a { color: var(--teal); }
-.faq-a-inner strong { color: var(--white); }
-.faq-a-inner em { color: rgba(255,255,255,0.55); font-style: italic; font-size: 12px; }
-
-/* Hero FAQ */
-.faq-hero {
-  padding: 80px 24px 48px;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
-.faq-hero h1 { font-size: clamp(28px,5vw,44px); font-weight: 800; line-height: 1.2; color: var(--white); margin-bottom: 16px; }
-.faq-hero h1 em { color: var(--teal); font-style: normal; }
-.faq-hero p { font-size: 15px; color: var(--muted); line-height: 1.6; }
-
-/* Ancres rapides */
-.faq-anchors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin: 32px auto 0;
-  max-width: 700px;
-  padding: 0 24px;
-}
-.faq-anchor-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 7px 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-  font-family: inherit;
-}
-.faq-anchor-btn:hover { background: rgba(23,181,166,0.12); border-color: var(--teal); color: var(--teal); }
-
-/* Auto-diag blocs */
-.autodiag {
-  background: rgba(23,181,166,0.07);
-  border: 1px solid rgba(23,181,166,0.2);
-  border-radius: 14px;
-  padding: 28px 32px;
-  max-width: 820px;
-  margin: 0 auto 48px;
-}
-.autodiag-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.autodiag ol, .autodiag ul {
-  padding-left: 22px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
-.autodiag li strong { color: var(--white); }
-.autodiag li em { font-style: italic; color: rgba(255,255,255,0.45); font-size: 12.5px; }
-.autodiag .autodiag-cta {
+.faq-a-inner a { color: var(--teal); font-weight: 500; }
+.faq-a-inner strong { color: var(--text); font-weight: 600; }
+.faq-a-inner em { font-style: italic; color: var(--steel-gray); font-size: 12.5px; }
+.faq-a-inner .faq-link-cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 18px;
+  gap: 6px;
+  margin-top: 12px;
   font-size: 13px;
   font-weight: 600;
   color: var(--teal);
   text-decoration: none;
 }
-.autodiag .autodiag-cta:hover { text-decoration: underline; }
+.faq-a-inner .faq-link-cta:hover { text-decoration: underline; }
 
-@media(max-width:600px){
+/* ── Blocs auto-diagnostic ── */
+.autodiag-bloc {
+  background: var(--cream);
+  border: 1px solid var(--teal-border);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  max-width: 820px;
+  margin: 0 auto 24px;
+}
+.autodiag-bloc-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.autodiag-bloc ol {
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.9;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+.autodiag-bloc li strong { color: var(--text); font-weight: 600; }
+.autodiag-bloc li em { font-style: italic; color: var(--steel-gray); font-size: 12.5px; }
+.autodiag-note {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .faq-section { padding: 0 20px 40px; }
   .faq-q h3 { font-size: 14px; }
   .faq-a-inner { font-size: 13px; }
-  .autodiag { padding: 20px 18px; }
+  .autodiag-bloc { padding: 22px 18px; }
 }
 </style>
 </head>
 <body>
+
 <header>
   <a href="index.html" class="logo">
     <img src="images/logo-sosfonte.png" alt="SOS FONTE" class="logo-img">
@@ -175,369 +184,299 @@
   <a href="tel:0180846040" data-sfc="tel" class="header-cta">📞 01 80 84 60 40</a>
 </header>
 
-<div class="faq-hero">
-  <div class="page-eyebrow">Questions fréquentes</div>
-  <h1>Tout ce que vous voulez savoir<br>sur la <em>fonte</em> & nos interventions</h1>
-  <p>Des réponses claires, sans jargon. Urgences, tarifs, diagnostic, zones, syndics et recrutement.</p>
-  <div class="faq-anchors">
-    <a href="#urgence" class="faq-anchor-btn">🚨 Urgence</a>
-    <a href="#technique" class="faq-anchor-btn">🔧 Technique</a>
-    <a href="#tarif" class="faq-anchor-btn">💶 Tarifs</a>
-    <a href="#zone" class="faq-anchor-btn">📍 Zone</a>
-    <a href="#syndic" class="faq-anchor-btn">🏢 Syndic</a>
-    <a href="#partenaires" class="faq-anchor-btn">🤝 Partenaires & RH</a>
-    <a href="#autodiag" class="faq-anchor-btn">🔍 Auto-diagnostic</a>
-  </div>
-</div>
-
-<div class="faq-section">
-
-  <!-- ── URGENCE ── -->
-  <div class="faq-category" id="urgence">
-    <div class="faq-category-title">🚨 Urgence</div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Vous intervenez vraiment 24h/24 ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, 7j/7 y compris week-ends et jours fériés. Appelez le <a href="tel:0180846040" data-sfc="tel"><strong>01 80 84 60 40</strong></a> — nous nous efforçons de vous répondre dès que possible.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Quel est votre délai d'intervention en urgence ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        En principe moins de 2h en Île-de-France. Si nos équipes sont déjà en intervention, nous vous rappelons pour vous donner un horaire précis tenant compte de l'urgence, de votre zone et de la situation.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Que faire en attendant votre arrivée ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        <strong>1.</strong> Prévenez d'abord votre syndic ou gardien — ils peuvent avoir accès aux vannes d'arrêt principales.<br>
-        <strong>2.</strong> Si vous y avez accès vous-même, fermez le robinet d'arrêt général.<br>
-        <strong>3.</strong> Éloignez meubles et appareils électriques de la zone humide.<br>
-        <strong>4.</strong> Photographiez les dégâts pour votre assurance.<br>
-        <strong>5.</strong> Ne touchez pas aux prises électriques proches d'une zone inondée.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Intervenez-vous aussi le week-end ? Les tarifs sont-ils différents ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, 7j/7. Nos techniciens font un effort particulier pour intervenir en dehors des horaires habituels — nos tarifs sont revalorisés en soirée, nuit et week-end. Nous vous communiquons le détail lors de l'appel. <em>Les tarifs indiqués sur le site correspondent à des interventions en journée, en semaine.</em>
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Une fuite sur colonne montante est-elle une urgence ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui. Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <a href="tel:0180846040" data-sfc="tel">Appelez immédiatement.</a>
-      </div></div>
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Questions fréquentes</div>
+    <h1>Tout ce que vous voulez savoir<br>sur la <em>fonte</em> & nos interventions</h1>
+    <p class="page-hero-sub">Des réponses claires, sans jargon. Urgences, tarifs, diagnostic, zones, syndics et recrutement.</p>
+    <div class="faq-anchors">
+      <a href="#urgence" class="faq-anchor-btn">🚨 Urgence</a>
+      <a href="#technique" class="faq-anchor-btn">🔧 Technique</a>
+      <a href="#tarif" class="faq-anchor-btn">💶 Tarifs</a>
+      <a href="#zone" class="faq-anchor-btn">📍 Zone</a>
+      <a href="#syndic" class="faq-anchor-btn">🏢 Syndic</a>
+      <a href="#partenaires" class="faq-anchor-btn">🤝 Partenaires &amp; RH</a>
+      <a href="#autodiag" class="faq-anchor-btn">🔍 Auto-diagnostic</a>
     </div>
   </div>
+</section>
 
-  <!-- ── TECHNIQUE ── -->
-  <div class="faq-category" id="technique">
-    <div class="faq-category-title">🔧 Technique</div>
+<!-- ── FAQ BODY ── -->
+<section class="section">
+  <div class="faq-section">
 
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Pourquoi choisir la fonte plutôt que le PVC pour une rénovation ?</h3>
-        <span class="faq-chevron">▾</span>
+    <!-- URGENCE -->
+    <div class="faq-category" id="urgence">
+      <div class="faq-category-title">🚨 Urgence</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Vous intervenez vraiment 24h/24 ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, 7j/7 y compris week-ends et jours fériés. Appelez le <a href="tel:0180846040" data-sfc="tel"><strong>01 80 84 60 40</strong></a> — nous nous efforçons de vous répondre dès que possible.
+        </div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        La fonte dure 80-100 ans, amortit les bruits d'écoulement et résiste au feu. Elle est parfois imposée par des contraintes réglementaires ou architecturales dans les immeubles haussmanniens.
-        <a href="la-fonte.html" class="autodiag-cta">→ En savoir plus sur la canalisation fonte</a>
-      </div></div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Quel est votre délai d'intervention en urgence ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          En principe moins de 2h en Île-de-France. Si nos équipes sont déjà en intervention, nous vous rappelons pour vous donner un horaire précis tenant compte de l'urgence, de votre zone et de la situation.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Que faire en attendant votre arrivée ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          <strong>1.</strong> Prévenez d'abord votre syndic ou gardien — ils ont souvent accès aux vannes d'arrêt principales.<br>
+          <strong>2.</strong> Si vous y avez accès vous-même, fermez le robinet d'arrêt général.<br>
+          <strong>3.</strong> Éloignez meubles et appareils électriques de la zone humide.<br>
+          <strong>4.</strong> Photographiez les dégâts pour votre déclaration assurance.<br>
+          <strong>5.</strong> Ne touchez pas aux prises électriques proches d'une zone inondée.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Intervenez-vous aussi le week-end ? Les tarifs sont-ils différents ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, 7j/7. Nos techniciens font un effort particulier pour intervenir en dehors des horaires habituels — nos tarifs sont revalorisés en soirée, nuit et week-end. Nous vous communiquons le détail lors de l'appel. <em>Les tarifs indiqués sur le site correspondent à des interventions en journée, en semaine.</em>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Une fuite sur colonne montante est-elle une urgence ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui. Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <a href="tel:0180846040" data-sfc="tel">Appelez immédiatement.</a>
+        </div></div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Qu'est-ce que le chemisage et dans quels cas l'utiliser ?</h3>
-        <span class="faq-chevron">▾</span>
+    <!-- TECHNIQUE -->
+    <div class="faq-category" id="technique">
+      <div class="faq-category-title">🔧 Technique</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Pourquoi choisir la fonte plutôt que le PVC pour une rénovation ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          La fonte dure 80-100 ans, amortit les bruits d'écoulement et résiste au feu. Elle est parfois imposée par des contraintes réglementaires ou architecturales dans les immeubles haussmanniens.
+          <a href="la-fonte.html" class="faq-link-cta">→ En savoir plus sur la canalisation fonte</a>
+        </div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Technique sans démolition : on insère une gaine flexible dans la canalisation existante, qui gagne ainsi 30 à 50 ans de durée de vie. Idéal pour les murs porteurs ou façades qu'on ne peut pas ouvrir, souvent 2 à 3× moins coûteux qu'un remplacement complet.
-      </div></div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Qu'est-ce que le chemisage et dans quels cas l'utiliser ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Technique sans démolition : on insère une gaine flexible dans la canalisation existante, qui gagne 30 à 50 ans de durée de vie. Idéal pour les murs porteurs ou façades qu'on ne peut pas ouvrir, souvent 2 à 3× moins coûteux qu'un remplacement complet.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Combien de temps dure le remplacement d'une colonne montante ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Cela dépend de plusieurs paramètres : l'accès au chantier, les branchements annexes à déplacer, les finitions à réaliser. En moyenne 3 à 5 jours pour une colonne de 6 étages — planning établi avec le syndic pour minimiser la gêne des copropriétaires.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Mes canalisations en plomb sont-elles dangereuses ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Le plomb est interdit depuis 1995. Nous les remplaçons par du <strong>cuivre ou du multicouche</strong> selon la configuration et les contraintes techniques.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Que comprend un diagnostic canalisation fonte ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Nous adaptons la méthode à la situation : diagnostic visuel, test mécanique, ou inspection caméra endoscopique si nécessaire. Résultat : un rapport écrit avec photos et recommandations chiffrées, reconnu par les assureurs et les notaires.
+        </div></div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Combien de temps dure le remplacement d'une colonne montante ?</h3>
-        <span class="faq-chevron">▾</span>
+    <!-- TARIF -->
+    <div class="faq-category" id="tarif">
+      <div class="faq-category-title">💶 Tarifs & paiement</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Combien coûte un dépannage urgence ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Nous facturons systématiquement un <strong>déplacement + 1h d'intervention</strong>. Sur place, nous sécurisons la situation et établissons un diagnostic. Si la résolution peut se faire dans cette première heure, nous ne facturons en plus que le coût des fournitures.
+        </div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Cela dépend de plusieurs paramètres : l'accès au chantier, les branchements annexes à déplacer, les finitions à réaliser. En moyenne 3 à 5 jours pour une colonne de 6 étages — planning établi avec le syndic pour minimiser la gêne des copropriétaires.
-      </div></div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Le devis est-il gratuit ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Pour les interventions simples et les demandes en ligne avec <strong>photos claires</strong> (WhatsApp bienvenu), nous établissons une estimation sans frais*.<br>
+          Pour les projets complexes nécessitant une analyse approfondie sur place, les conditions sont définies ensemble avant toute intervention.<br>
+          <em>* Sous réserve de la nature du projet.</em>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Quels moyens de paiement acceptez-vous ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Virement bancaire, paiement CB via lien sécurisé, chèque. Un <strong>échelonnement</strong> est possible — nous étudions chaque situation.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Mon assurance peut-elle prendre en charge les travaux ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Souvent oui pour les dégâts des eaux. Nous fournissons un <strong>rapport d'intervention complet</strong> pour faciliter votre déclaration. Notre couverture assurance pro et décennale est détaillée sur notre page <a href="partenaires.html">Partenaires</a>.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Y a-t-il des aides pour le remplacement des canalisations vétustes ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Hmm ! De mémoire oui — selon le type de logement, certaines aides ANAH ou dispositifs de copropriété peuvent s'appliquer. Renseignez-vous auprès de votre syndic ou directement auprès de l'ANAH.
+        </div></div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Mes canalisations en plomb sont-elles dangereuses ?</h3>
-        <span class="faq-chevron">▾</span>
+    <!-- ZONE -->
+    <div class="faq-category" id="zone">
+      <div class="faq-category-title">📍 Zone d'intervention</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Quelles villes d'Île-de-France couvrez-vous ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Paris intra-muros + Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94) et grande couronne. Contactez-nous pour vérifier la couverture de votre secteur.
+        </div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Le plomb est interdit depuis 1995. Nous les remplaçons par du <strong>cuivre ou du multicouche</strong> selon la configuration et les contraintes techniques.
-      </div></div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Intervenez-vous dans le 16e et les quartiers haussmanniens ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, c'est notre cœur de métier. Immeubles classés, contraintes architecturales, copropriétés de standing — nous connaissons parfaitement ces contextes. Découvrez notre <a href="prestige.html">offre Prestige</a> pour les lieux d'exception.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Vous déplacez-vous en banlieue ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, nous sommes également banlieusards ! Contactez-nous pour vérifier la couverture de votre secteur.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Intervenez-vous dans les résidences privées et copropriétés fermées ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, avec protocole d'accès coordonné en amont avec le gardien ou le syndic.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Travaillez-vous hors Île-de-France ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Nous avons déjà réalisé plusieurs interventions hors IDF, notamment en Normandie. N'hésitez pas à nous envoyer votre demande — nous l'étudions avec soin et revenons vers vous rapidement !
+        </div></div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Que comprend un diagnostic canalisation fonte ?</h3>
-        <span class="faq-chevron">▾</span>
+    <!-- SYNDIC -->
+    <div class="faq-category" id="syndic">
+      <div class="faq-category-title">🏢 Syndics & copropriétés</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Proposez-vous des contrats de maintenance pour syndics ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui : contrats annuels avec visite préventive, priorité d'intervention et tarif préférentiel.
+          <a href="syndics.html" class="faq-link-cta">→ Découvrir notre offre syndics</a>
+        </div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Nous adaptons la méthode à la situation : diagnostic visuel, test mécanique, ou inspection caméra endoscopique si nécessaire. Résultat : un rapport écrit avec photos et recommandations chiffrées, reconnu par les assureurs et les notaires.
-      </div></div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Pouvez-vous intervenir sur appel du gardien sans passer par le propriétaire ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, avec mandat du syndic. Nous travaillons avec plusieurs cabinets en accord-cadre.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Fournissez-vous un rapport d'intervention pour l'AG de copropriété ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Toujours : rapport technique daté, photos avant/après, matériaux utilisés et garanties. Document reconnu par les assureurs et les notaires.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Comment se passe la coordination pour les travaux dans les parties communes ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Nous planifions avec le syndic et prévenons les résidents par affichage. Nos équipes respectent les horaires de chantier réglementaires. Pour les immeubles occupés, nous adaptons le planning pour minimiser les nuisances.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Avez-vous des références de syndics avec qui vous travaillez ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui — vous pouvez consulter notre page <a href="partenaires.html">Partenaires</a> pour un aperçu de nos collaborations. Sur demande, nous pouvons également fournir des contacts de référence.
+        </div></div>
+      </div>
     </div>
+
+    <!-- PARTENAIRES & RH -->
+    <div class="faq-category" id="partenaires">
+      <div class="faq-category-title">🤝 Partenaires & recrutement</div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Faites-vous appel à des sous-traitants ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Oui, nous travaillons avec un réseau de partenaires sélectionnés pour leur sérieux et leur expertise technique.
+          <a href="partenaires.html" class="faq-link-cta">→ Découvrir nos partenaires</a>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><h3>Recrutez-vous ? Comment rejoindre votre équipe ?</h3><span class="faq-chevron">▾</span></div>
+        <div class="faq-a"><div class="faq-a-inner">
+          Notre communauté grandit ! Si vous souhaitez nous rejoindre — technicien, sous-traitant ou profil complémentaire — envoyez-nous votre dossier à <a href="mailto:contact@sosfonte.com" data-sfc="email"><strong>contact@sosfonte.com</strong></a>.<br>
+          Nous l'étudions avec soin et revenons vers vous dans les plus brefs délais. D'ici là, découvrez <a href="partenaires.html">notre univers partenaires</a>.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- AUTO-DIAGNOSTIC -->
+    <div class="faq-category" id="autodiag">
+      <div class="faq-category-title">🔍 Auto-diagnostic</div>
+
+      <div style="height:24px"></div>
+
+      <div class="autodiag-bloc">
+        <div class="autodiag-bloc-title">🔊 Comment savoir si ma canalisation est en fonte ?</div>
+        <ol>
+          <li><strong>Le son</strong> — frappez doucement le tuyau. La fonte rend un son <em>sourd et mat</em> ; le plastique sonne creux.</li>
+          <li><strong>L'âge du bâtiment</strong> — un immeuble construit avant 1980 est souvent équipé de colonnes en fonte ou en plomb.</li>
+          <li><strong>La couleur</strong> — la fonte est gris foncé, parfois noirâtre ou rouge si récente. Le PVC est gris ou blanc. <em>Attention : la fonte est souvent peinte !</em></li>
+        </ol>
+        <p class="autodiag-note">Si la canalisation est encastrée dans un coffrage, impossible de trancher sans ouverture — <strong>consultez-nous</strong>.</p>
+        <a href="https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20photo%20de%20ma%20canalisation%2C%20pouvez-vous%20m%27aider%20%C3%A0%20l%27identifier%20%3F" data-sfc="wa" class="faq-link-cta">📸 Envoyer une photo sur WhatsApp — réponse rapide →</a>
+      </div>
+
+      <div class="autodiag-bloc">
+        <div class="autodiag-bloc-title">🚨 Que faire en attendant le technicien ?</div>
+        <ol>
+          <li><strong>Contactez votre syndic ou gardien</strong> — ils ont souvent accès aux vannes d'arrêt principales de l'immeuble.</li>
+          <li><strong>Fermez l'arrivée d'eau</strong> si vous y avez accès (robinet général, généralement en cave ou au compteur).</li>
+          <li><strong>Protégez vos affaires</strong> — éloignez meubles et appareils électriques de la zone humide.</li>
+          <li><strong>Photographiez les dégâts</strong> sous plusieurs angles — indispensable pour votre déclaration assurance.</li>
+          <li><strong>Ne touchez pas</strong> aux prises électriques proches d'une zone inondée.</li>
+        </ol>
+        <p class="autodiag-note">Notre technicien arrive avec tout le matériel nécessaire — votre rôle est de <strong>limiter les dégâts</strong>, pas de réparer.</p>
+        <a href="tel:0180846040" data-sfc="tel" class="faq-link-cta">📞 Appeler maintenant — 01 80 84 60 40 →</a>
+      </div>
+    </div>
+
   </div>
+</section>
 
-  <!-- ── TARIF ── -->
-  <div class="faq-category" id="tarif">
-    <div class="faq-category-title">💶 Tarifs & paiement</div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Combien coûte un dépannage urgence ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Nous facturons systématiquement un <strong>déplacement + 1h d'intervention</strong>. Sur place, nous sécurisons la situation et établissons un diagnostic. Si la résolution peut se faire dans cette première heure, nous ne facturons en plus que le coût des fournitures.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Le devis est-il gratuit ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Pour les interventions simples et les demandes en ligne avec <strong>photos claires</strong> (WhatsApp bienvenu), nous établissons une estimation sans frais*.<br>
-        Pour les projets complexes nécessitant une analyse approfondie sur place, les conditions sont définies ensemble avant toute intervention.<br>
-        <em>* Sous réserve de la nature du projet.</em>
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Quels moyens de paiement acceptez-vous ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Virement bancaire, paiement CB via lien sécurisé, chèque. Un <strong>échelonnement</strong> est possible — nous étudions chaque situation.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Mon assurance peut-elle prendre en charge les travaux ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Souvent oui pour les dégâts des eaux. Nous fournissons un <strong>rapport d'intervention complet</strong> pour faciliter votre déclaration. À noter : notre page <a href="partenaires.html">Partenaires</a> vous informe sur notre couverture assurance pro et décennale.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Y a-t-il des aides pour le remplacement des canalisations vétustes ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Hmm ! De mémoire oui — selon le type de logement, certaines aides ANAH ou dispositifs de copropriété peuvent s'appliquer. Nous vous conseillons de vous renseigner auprès de votre syndic ou directement auprès de l'ANAH.
-      </div></div>
-    </div>
-  </div>
-
-  <!-- ── ZONE ── -->
-  <div class="faq-category" id="zone">
-    <div class="faq-category-title">📍 Zone d'intervention</div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Quelles villes d'Île-de-France couvrez-vous ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Paris intra-muros + Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94) et grande couronne. Contactez-nous pour vérifier la couverture de votre secteur.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Intervenez-vous dans le 16e et les quartiers haussmanniens ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, c'est notre cœur de métier. Immeubles classés, contraintes architecturales, copropriétés de standing — nous connaissons parfaitement ces contextes. Découvrez notre <a href="prestige.html">offre Prestige</a> pour les lieux d'exception.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Vous déplacez-vous en banlieue ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, nous sommes également banlieusards ! Contactez-nous pour vérifier la couverture de votre secteur.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Intervenez-vous dans les résidences privées et copropriétés fermées ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, avec protocole d'accès coordonné en amont avec le gardien ou le syndic.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Travaillez-vous hors Île-de-France ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Nous avons déjà réalisé plusieurs interventions hors IDF, notamment en Normandie. N'hésitez pas à nous envoyer votre demande — nous l'étudions avec soin et revenons vers vous rapidement !
-      </div></div>
-    </div>
-  </div>
-
-  <!-- ── SYNDIC ── -->
-  <div class="faq-category" id="syndic">
-    <div class="faq-category-title">🏢 Syndics & copropriétés</div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Proposez-vous des contrats de maintenance pour syndics ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui : contrats annuels avec visite préventive, priorité d'intervention et tarif préférentiel.
-        <a href="syndics.html" class="autodiag-cta">→ Découvrir notre offre syndics</a>
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Pouvez-vous intervenir sur appel du gardien sans passer par le propriétaire ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, avec mandat du syndic. Nous travaillons avec plusieurs cabinets en accord-cadre.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Fournissez-vous un rapport d'intervention pour l'AG de copropriété ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Toujours : rapport technique daté, photos avant/après, matériaux utilisés et garanties. Document reconnu par les assureurs et les notaires.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Comment se passe la coordination pour les travaux dans les parties communes ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Nous planifions avec le syndic et prévenons les résidents par affichage. Nos équipes respectent les horaires de chantier réglementaires. Pour les immeubles occupés, nous adaptons le planning pour minimiser les nuisances.
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Avez-vous des références de syndics avec qui vous travaillez ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui — vous pouvez consulter notre page <a href="partenaires.html">Partenaires</a> pour un aperçu de nos collaborations. Sur demande, nous pouvons également vous fournir des contacts de référence.
-      </div></div>
-    </div>
-  </div>
-
-  <!-- ── PARTENAIRES & RH ── -->
-  <div class="faq-category" id="partenaires">
-    <div class="faq-category-title">🤝 Partenaires & recrutement</div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Faites-vous appel à des sous-traitants ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Oui, nous travaillons avec un réseau de partenaires sélectionnés pour leur sérieux et leur expertise technique.
-        <a href="partenaires.html" class="autodiag-cta">→ Découvrir nos partenaires</a>
-      </div></div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">
-        <h3>Recrutez-vous ? Comment rejoindre votre équipe ?</h3>
-        <span class="faq-chevron">▾</span>
-      </div>
-      <div class="faq-a"><div class="faq-a-inner">
-        Notre communauté grandit ! Si vous souhaitez nous rejoindre — technicien, sous-traitant ou profil complémentaire — envoyez-nous votre dossier à <a href="mailto:contact@sosfonte.com" data-sfc="email"><strong>contact@sosfonte.com</strong></a>.<br>
-        Nous l'étudions avec soin et revenons vers vous dans les plus brefs délais. D'ici là, nous vous invitons à découvrir <a href="partenaires.html">notre univers partenaires</a>.
-      </div></div>
-    </div>
-  </div>
-
-  <!-- ── AUTO-DIAGNOSTIC ── -->
-  <div class="faq-category" id="autodiag">
-    <div class="faq-category-title">🔍 Auto-diagnostic</div>
-
-    <div class="autodiag">
-      <div class="autodiag-title">🔊 Comment savoir si ma canalisation est en fonte ?</div>
-      <ol>
-        <li><strong>Le son</strong> — frappez doucement le tuyau. La fonte rend un son <em>sourd et mat</em> ; le plastique sonne creux.</li>
-        <li><strong>L'âge du bâtiment</strong> — un immeuble construit avant 1980 est souvent équipé de colonnes en fonte ou en plomb.</li>
-        <li><strong>La couleur</strong> — la fonte est gris foncé, parfois noirâtre ou rouge si récente. Le PVC est gris ou blanc. <em>Attention : la fonte est souvent peinte !</em></li>
-      </ol>
-      <p style="margin-top:14px;font-size:13.5px;color:var(--muted)">Si la canalisation est encastrée dans un coffrage, impossible de trancher sans ouverture — <strong>consultez-nous</strong>.</p>
-      <a href="https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20photo%20de%20ma%20canalisation%2C%20pouvez-vous%20m%27aider%20%C3%A0%20l%27identifier%20%3F" data-sfc="wa" class="autodiag-cta">📸 Envoyer une photo sur WhatsApp — réponse rapide →</a>
-    </div>
-
-    <div class="autodiag">
-      <div class="autodiag-title">🚨 Que faire en attendant le technicien ?</div>
-      <ol>
-        <li><strong>Contactez votre syndic ou gardien</strong> — ils ont souvent accès aux vannes d'arrêt principales de l'immeuble.</li>
-        <li><strong>Fermez l'arrivée d'eau</strong> si vous y avez accès (robinet général, généralement en cave ou au compteur).</li>
-        <li><strong>Protégez vos affaires</strong> — éloignez meubles et appareils électriques de la zone humide.</li>
-        <li><strong>Photographiez les dégâts</strong> sous plusieurs angles — indispensable pour votre déclaration assurance.</li>
-        <li><strong>Ne touchez pas</strong> aux prises électriques proches d'une zone inondée.</li>
-      </ol>
-      <p style="margin-top:14px;font-size:13.5px;color:var(--muted)">Notre technicien arrive avec tout le matériel nécessaire — votre rôle est de limiter les dégâts, pas de réparer.</p>
-      <a href="tel:0180846040" data-sfc="tel" class="autodiag-cta">📞 Appeler maintenant — 01 80 84 60 40 →</a>
-    </div>
-  </div>
-
-</div>
-
+<!-- ── CTA ── -->
 <div class="cta-bottom">
-  <h2>Vous n'avez pas trouvé votre réponse ?</h2>
-  <p>Posez-nous la question directement — par téléphone, WhatsApp ou via le formulaire.</p>
+  <h2>Vous n'avez pas trouvé<br>votre <em>réponse</em> ?</h2>
+  <p>Posez-nous la question directement — par téléphone, WhatsApp ou formulaire.</p>
   <div class="btn-actions">
-    <a href="tel:0180846040" data-sfc="tel" class="btn-teal">📞 Appeler maintenant</a>
+    <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 Appeler maintenant</a>
     <a href="https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20question%20concernant%20mes%20canalisations." data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
     <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
   </div>
@@ -597,7 +536,6 @@
 
 <script>
 (function(){
-  // Accordéon FAQ
   document.querySelectorAll('.faq-item').forEach(function(item){
     item.addEventListener('click', function(){
       var wasOpen = item.classList.contains('open');
@@ -606,13 +544,6 @@
     });
   });
 })();
-</script>
-<script>
-if ('IntersectionObserver' in window && window.innerWidth > 768) {
-  document.body.classList.add('js-reveal');
-  const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:0,rootMargin:'60px 0px 60px 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-}
 </script>
 <script>(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();</script>
 <script src="assets/js/bot-ben.js"></script>

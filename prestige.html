@@ -3,244 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="SOS FONTE Prestige — L'intervention d'exception pour les lieux d'exception. Hôtels de luxe, appartements haussmanniens, sièges sociaux, résidences sensibles. Protocole XXL, techniciens dédiés, zéro compromis.">
+<meta name="description" content="SOS FONTE Prestige — L'intervention d'exception pour les lieux d'exception. Hôtels, appartements haussmanniens, sièges sociaux, cliniques. Protocole XXL, technicien dédié, zéro compromis.">
 <title>SOS FONTE Prestige — Intervention d'exception pour lieux sensibles | Paris IDF</title>
 <link rel="canonical" href="https://sosfonte.com/prestige.html">
 <link rel="stylesheet" href="sosfonte_shared.css?v=12">
 <link rel="stylesheet" href="assets/css/bot-ben.css">
 <script src="assets/js/site-config.js"></script>
 <style>
-
-/* ── HERO PRESTIGE ─────────────────────────────────────────── */
-.prestige-hero {
-  position: relative;
-  padding: 120px 24px 96px;
-  text-align: center;
-  overflow: hidden;
-  background: var(--black);
-}
-.prestige-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(184,134,11,0.10) 0%, transparent 70%);
-  pointer-events: none;
-}
-.prestige-hero-inner {
-  position: relative;
-  max-width: 760px;
-  margin: 0 auto;
-}
-.prestige-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: #B8860B;
-  margin-bottom: 20px;
-}
-.prestige-hero h1 {
-  font-size: clamp(32px, 6vw, 58px);
-  font-weight: 800;
-  line-height: 1.12;
-  color: var(--white);
-  margin-bottom: 22px;
-}
-.prestige-hero h1 em {
-  color: #D4A017;
-  font-style: normal;
-}
-.prestige-hero .tagline {
-  font-size: clamp(14px, 2.5vw, 18px);
-  color: rgba(255,255,255,0.55);
-  font-style: italic;
-  margin-bottom: 40px;
-  line-height: 1.5;
-}
-.prestige-hero .hero-badges {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 44px;
-}
-.prestige-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(212,160,23,0.1);
-  border: 1px solid rgba(212,160,23,0.28);
-  border-radius: 20px;
-  padding: 7px 16px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #D4A017;
-}
-
-/* ── SECTION STYLES ─────────────────────────────────────────── */
-.prestige-section {
-  padding: 72px 24px;
-  max-width: 1080px;
-  margin: 0 auto;
-}
-.prestige-section + .prestige-section {
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-.prestige-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #B8860B;
-  margin-bottom: 12px;
-}
-.prestige-h2 {
-  font-size: clamp(22px, 4vw, 36px);
-  font-weight: 800;
-  color: var(--white);
-  line-height: 1.2;
-  margin-bottom: 18px;
-}
-.prestige-h2 em { color: #D4A017; font-style: normal; }
-.prestige-sub {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 640px;
-}
-
-/* ── CIBLES ─────────────────────────────────────────────────── */
-.prestige-targets {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 40px;
-}
-.prestige-target {
-  background: rgba(212,160,23,0.06);
-  border: 1px solid rgba(212,160,23,0.18);
-  border-radius: 14px;
-  padding: 24px 22px;
-  text-align: center;
-}
-.prestige-target .t-icon { font-size: 32px; margin-bottom: 12px; }
-.prestige-target h3 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-.prestige-target p  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
-
-/* ── PROTOCOLE ──────────────────────────────────────────────── */
-.prestige-protocol {
+/* ── Protocole numéroté ── */
+.protocol-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-  margin-top: 40px;
+  gap: 12px;
+  margin-top: 36px;
 }
-.protocol-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.protocol-list li {
+.protocol-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
   font-size: 14px;
-  color: var(--muted);
+  color: var(--text-muted);
   line-height: 1.55;
+  padding: 16px;
+  background: var(--cream);
+  border-radius: 10px;
+  border: 1px solid var(--border);
 }
-.protocol-list li .p-num {
+.protocol-num {
   flex-shrink: 0;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: rgba(212,160,23,0.12);
-  border: 1px solid rgba(212,160,23,0.3);
+  background: var(--teal-bg);
+  border: 1px solid var(--teal-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  color: #D4A017;
+  color: var(--teal);
   margin-top: 1px;
 }
-.protocol-list li strong { color: var(--white); }
+.protocol-item strong { color: var(--text); }
 
-.prestige-visual {
-  background: linear-gradient(135deg, #1a1408, #241c0a);
-  border: 1px solid rgba(212,160,23,0.2);
-  border-radius: 20px;
-  padding: 48px 40px;
-  text-align: center;
-}
-.prestige-visual .pv-icon { font-size: 64px; margin-bottom: 20px; }
-.prestige-visual h3 { font-size: 18px; font-weight: 700; color: #D4A017; margin-bottom: 12px; }
-.prestige-visual p  { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
-
-/* ── DIFFÉRENCES TABLE ──────────────────────────────────────── */
-.prestige-compare {
+/* ── Comparatif ── */
+.compare-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 36px;
+  margin-top: 32px;
+  font-size: 14px;
 }
-.prestige-compare th {
-  padding: 12px 18px;
-  font-size: 12px;
+.compare-table th {
+  padding: 14px 20px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
 }
-.prestige-compare th:first-child { text-align: left; color: var(--muted); }
-.prestige-compare th:nth-child(2) { color: var(--muted); }
-.prestige-compare th:nth-child(3) { color: #D4A017; }
-.prestige-compare td {
-  padding: 14px 18px;
-  font-size: 13.5px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+.compare-table th:first-child { color: var(--steel-gray); }
+.compare-table th:nth-child(2) { color: var(--muted); }
+.compare-table th:nth-child(3) { color: var(--teal); }
+.compare-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
   color: var(--muted);
+  vertical-align: top;
 }
-.prestige-compare td:first-child { color: var(--white); font-weight: 500; }
-.prestige-compare td:nth-child(3) { color: #D4A017; font-weight: 600; }
-.prestige-compare tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { color: var(--text); font-weight: 500; }
+.compare-table td:nth-child(3) { color: var(--teal-light); font-weight: 600; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.015); }
 
-/* ── CTA PRESTIGE ───────────────────────────────────────────── */
-.prestige-cta {
-  background: linear-gradient(135deg, #1a1408, #1e180a);
-  border: 1px solid rgba(212,160,23,0.25);
-  border-radius: 24px;
-  padding: 64px 48px;
-  text-align: center;
-  margin: 72px 24px;
-  max-width: 880px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.prestige-cta h2 { font-size: clamp(22px,4vw,36px); font-weight: 800; color: var(--white); margin-bottom: 14px; }
-.prestige-cta h2 em { color: #D4A017; font-style: normal; }
-.prestige-cta p  { font-size: 15px; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
-.btn-prestige {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #D4A017;
-  color: #0D0F12;
-  border-radius: 12px;
-  padding: 14px 28px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-  font-family: inherit;
-}
-.btn-prestige:hover { background: #e8b420; transform: translateY(-1px); }
-
-@media (max-width: 700px) {
-  .prestige-protocol { grid-template-columns: 1fr; }
-  .prestige-cta { padding: 40px 24px; margin: 40px 16px; }
-  .prestige-compare th, .prestige-compare td { padding: 10px 12px; font-size: 12.5px; }
+@media (max-width: 768px) {
+  .protocol-grid { grid-template-columns: 1fr; gap: 8px; }
+  .compare-table { font-size: 12.5px; }
+  .compare-table th, .compare-table td { padding: 10px 12px; }
+  .compare-table th:nth-child(2), .compare-table td:nth-child(2) { display: none; }
 }
 </style>
 </head>
@@ -265,128 +105,138 @@
 </header>
 
 <!-- ── HERO ── -->
-<section class="prestige-hero">
-  <div class="prestige-hero-inner">
-    <div class="prestige-eyebrow">SOS FONTE Prestige</div>
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">★ Offre Prestige</div>
     <h1>L'intervention <em>d'exception</em><br>pour les lieux <em>d'exception</em></h1>
-    <p class="tagline">Quand le lieu ne tolère ni l'approximation, ni la casse, ni l'imprévu.</p>
-    <div class="hero-badges">
-      <span class="prestige-badge">🛡️ Protection XXL</span>
-      <span class="prestige-badge">🔇 Protocole silence</span>
-      <span class="prestige-badge">📋 Coordination totale</span>
-      <span class="prestige-badge">✨ Chantier chirurgical</span>
-    </div>
+    <p class="page-hero-sub">Quand le lieu ne tolère ni l'approximation, ni la casse, ni l'imprévu — protocole renforcé, technicien dédié, zéro compromis.</p>
     <div class="btn-actions">
-      <a href="tel:0180846040" data-sfc="tel" class="btn-prestige">📞 Appeler — intervention Prestige</a>
+      <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 Appeler — intervention Prestige</a>
       <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20sur%20un%20lieu%20sensible." data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
+      <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
     </div>
   </div>
 </section>
+
+<!-- ── TRUST BAND ── -->
+<div class="trust-band">
+  <div class="trust-band-inner">
+    <div class="trust-item"><span class="ti-icon">🛡️</span> Protection totale du site</div>
+    <div class="trust-item"><span class="ti-icon">🔇</span> Protocole silence & discrétion</div>
+    <div class="trust-item"><span class="ti-icon">👤</span> Technicien référent unique</div>
+    <div class="trust-item"><span class="ti-icon">✨</span> Nettoyage chirurgical garanti</div>
+    <div class="trust-item"><span class="ti-icon">📋</span> Rapport photo sous 24h</div>
+  </div>
+</div>
 
 <!-- ── POUR QUI ── -->
-<section class="prestige-section">
-  <div class="prestige-label">Pour qui ?</div>
-  <h2 class="prestige-h2">Des lieux où la moindre<br>erreur est <em>inacceptable</em></h2>
-  <p class="prestige-sub">Certains immeubles ne peuvent se permettre ni la poussière, ni le bruit, ni l'aléa. SOS FONTE Prestige a été conçu pour ces contextes.</p>
+<section class="section">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:48px">
+      <p class="section-eyebrow">Pour qui ?</p>
+      <h2 class="section-title">Des lieux où la moindre erreur<br>est <em>inacceptable</em></h2>
+      <p class="section-sub" style="margin:0 auto">Certains immeubles ne peuvent se permettre ni la poussière, ni le bruit, ni l'aléa. SOS FONTE Prestige est conçu pour ces contextes.</p>
+    </div>
 
-  <div class="prestige-targets">
-    <div class="prestige-target">
-      <div class="t-icon">🏛️</div>
-      <h3>Hôtels & palaces</h3>
-      <p>Intervention hors heures de service, protection chambre par chambre, nettoyage au peigne fin.</p>
-    </div>
-    <div class="prestige-target">
-      <div class="t-icon">🏢</div>
-      <h3>Sièges sociaux & bureaux</h3>
-      <p>Coordination avec les équipes HSE, intervention nocturne ou week-end pour zéro interruption.</p>
-    </div>
-    <div class="prestige-target">
-      <div class="t-icon">🏠</div>
-      <h3>Appartements luxueux</h3>
-      <p>Surfaces sensibles, mobilier de valeur, discrétion absolue — prise en charge clé en main.</p>
-    </div>
-    <div class="prestige-target">
-      <div class="t-icon">🏥</div>
-      <h3>Cliniques & cabinets médicaux</h3>
-      <p>Protocole stérile, absence de particules, intervention planifiée hors horaires patients.</p>
-    </div>
-    <div class="prestige-target">
-      <div class="t-icon">🏛️</div>
-      <h3>Bâtiments classés</h3>
-      <p>Respect des contraintes architecturales, coordination avec ABF si nécessaire, matériaux conformes.</p>
-    </div>
-    <div class="prestige-target">
-      <div class="t-icon">🎭</div>
-      <h3>Théâtres & lieux culturels</h3>
-      <p>Calage sur le planning de représentations, intervention en dehors des répétitions.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── PROTOCOLE ── -->
-<section class="prestige-section" style="background:rgba(212,160,23,0.02);border-top:1px solid rgba(212,160,23,0.1);border-bottom:1px solid rgba(212,160,23,0.1)">
-  <div style="max-width:1080px;margin:0 auto">
-    <div class="prestige-label">Le Protocole Prestige</div>
-    <h2 class="prestige-h2">15 points qui font la <em>différence</em></h2>
-
-    <div class="prestige-protocol">
-      <ul class="protocol-list">
-        <li><span class="p-num">1</span><span><strong>Visite préalable systématique</strong> — analyse complète avant le premier coup d'outil.</span></li>
-        <li><span class="p-num">2</span><span><strong>Technicien dédié et référent unique</strong> — un seul interlocuteur du diagnostic à la réception.</span></li>
-        <li><span class="p-num">3</span><span><strong>Protection totale des surfaces</strong> — bâches, tapis, protection mobilier et revêtements précieux.</span></li>
-        <li><span class="p-num">4</span><span><strong>Outillage silencieux</strong> — matériel sélectionné pour le bruit minimal, scies à faibles vibrations.</span></li>
-        <li><span class="p-num">5</span><span><strong>Planification sur mesure</strong> — intervention calée sur vos contraintes : nuit, week-end, entre saisons.</span></li>
-        <li><span class="p-num">6</span><span><strong>Coordination multi-parties</strong> — syndic, gestionnaire, architecte des bâtiments, occupants.</span></li>
-        <li><span class="p-num">7</span><span><strong>Nettoyage chirurgical</strong> — aspirateur HEPA, nettoyage fin de chantier inclus, contrôle visuel avant départ.</span></li>
-        <li><span class="p-num">8</span><span><strong>Rapport photographique complet</strong> — avant / pendant / après, remis dans les 24h.</span></li>
-      </ul>
-      <div>
-        <ul class="protocol-list">
-          <li><span class="p-num">9</span><span><strong>Matériaux premium</strong> — fonte qualifiée, joints renforcés, raccords certifiés.</span></li>
-          <li><span class="p-num">10</span><span><strong>Discrétion garantie</strong> — pas de signalétique visible, véhicules neutres sur demande.</span></li>
-          <li><span class="p-num">11</span><span><strong>Zéro sous-traitance opaque</strong> — nos équipes internes ou partenaires certifiés, identifiés.</span></li>
-          <li><span class="p-num">12</span><span><strong>Assurance décennale renforcée</strong> — couverture adaptée aux montants en jeu.</span></li>
-          <li><span class="p-num">13</span><span><strong>Astreinte dédiée post-intervention</strong> — contact direct 72h après la réception de chantier.</span></li>
-          <li><span class="p-num">14</span><span><strong>Accès prioritaire aux urgences</strong> — file dédiée 24h/7j pour les clients Prestige.</span></li>
-          <li><span class="p-num">15</span><span><strong>Devis transparent et validé avant tout démarrage</strong> — aucun imprévu non communiqué.</span></li>
-        </ul>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="reveal">
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <h3 class="card-title">Hôtels <span class="hl-teal">&amp; palaces</span></h3>
+        <p class="card-text">Intervention hors heures de service, protection chambre par chambre, nettoyage au peigne fin.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3 class="card-title">Sièges sociaux <span class="hl-teal">&amp; bureaux</span></h3>
+        <p class="card-text">Coordination HSE, intervention nocturne ou week-end, zéro interruption de l'activité.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <h3 class="card-title">Appartements <span class="hl-teal">luxueux</span></h3>
+        <p class="card-text">Surfaces sensibles, mobilier de valeur, discrétion absolue — prise en charge clé en main.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3 class="card-title">Cliniques <span class="hl-teal">&amp; cabinets</span></h3>
+        <p class="card-text">Protocole stérile, absence de particules, intervention planifiée hors horaires patients.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <h3 class="card-title">Bâtiments <span class="hl-teal">classés</span></h3>
+        <p class="card-text">Respect des contraintes architecturales, coordination ABF si nécessaire, matériaux conformes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎭</div>
+        <h3 class="card-title">Théâtres <span class="hl-teal">&amp; lieux culturels</span></h3>
+        <p class="card-text">Calage sur le planning de représentations, intervention entre les répétitions.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── COMPARATIF ── -->
-<section class="prestige-section">
-  <div class="prestige-label">Standard vs Prestige</div>
-  <h2 class="prestige-h2">Ce qui change <em>concrètement</em></h2>
+<!-- ── PROTOCOLE 15 POINTS ── -->
+<section class="section bg-cream">
+  <div class="section-inner reveal">
+    <p class="section-eyebrow" style="text-align:center">Le Protocole Prestige</p>
+    <h2 class="section-title" style="text-align:center;max-width:560px;margin:0 auto 14px">15 points qui font <em>la différence</em></h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto 0">Chaque intervention Prestige suit un protocole rigoureux, validé avec le responsable du site avant le premier coup d'outil.</p>
 
-  <table class="prestige-compare">
-    <thead>
-      <tr>
-        <th>Critère</th>
-        <th>Intervention standard</th>
-        <th>★ SOS FONTE Prestige</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Protection du site</td><td>Bâches sol</td><td>Protection totale sol + murs + mobilier</td></tr>
-      <tr><td>Bruit de chantier</td><td>Non maîtrisé</td><td>Outillage silencieux, plages horaires définies</td></tr>
-      <tr><td>Coordination</td><td>Gestionnaire seul</td><td>Multi-parties : syndic, archi, occupants, ABF</td></tr>
-      <tr><td>Nettoyage</td><td>Gros nettoyage</td><td>Aspirateur HEPA + contrôle visuel avant départ</td></tr>
-      <tr><td>Interlocuteur</td><td>Variable</td><td>Technicien référent unique du début à la fin</td></tr>
-      <tr><td>Rapport</td><td>Sur demande</td><td>Rapport photo complet livré sous 24h</td></tr>
-      <tr><td>Urgences post-chantier</td><td>File normale</td><td>Accès prioritaire 72h post-intervention</td></tr>
-      <tr><td>Discrétion</td><td>Standard</td><td>Véhicules neutres, pas de signalétique sur demande</td></tr>
-    </tbody>
-  </table>
+    <div class="protocol-grid">
+      <div class="protocol-item"><span class="protocol-num">1</span><span><strong>Visite préalable systématique</strong> — analyse complète avant le premier coup d'outil.</span></div>
+      <div class="protocol-item"><span class="protocol-num">2</span><span><strong>Technicien dédié et référent unique</strong> — un seul interlocuteur du diagnostic à la réception.</span></div>
+      <div class="protocol-item"><span class="protocol-num">3</span><span><strong>Protection totale des surfaces</strong> — bâches, tapis, protection mobilier et revêtements précieux.</span></div>
+      <div class="protocol-item"><span class="protocol-num">4</span><span><strong>Outillage silencieux</strong> — matériel sélectionné pour le bruit minimal, scies à faibles vibrations.</span></div>
+      <div class="protocol-item"><span class="protocol-num">5</span><span><strong>Planification sur mesure</strong> — intervention calée sur vos contraintes : nuit, week-end, entre saisons.</span></div>
+      <div class="protocol-item"><span class="protocol-num">6</span><span><strong>Coordination multi-parties</strong> — syndic, gestionnaire, architecte des bâtiments, occupants.</span></div>
+      <div class="protocol-item"><span class="protocol-num">7</span><span><strong>Nettoyage chirurgical</strong> — aspirateur HEPA, nettoyage fin de chantier inclus, contrôle visuel avant départ.</span></div>
+      <div class="protocol-item"><span class="protocol-num">8</span><span><strong>Rapport photographique complet</strong> — avant / pendant / après, remis sous 24h.</span></div>
+      <div class="protocol-item"><span class="protocol-num">9</span><span><strong>Matériaux premium</strong> — fonte qualifiée, joints renforcés, raccords certifiés.</span></div>
+      <div class="protocol-item"><span class="protocol-num">10</span><span><strong>Discrétion garantie</strong> — pas de signalétique visible, véhicules neutres sur demande.</span></div>
+      <div class="protocol-item"><span class="protocol-num">11</span><span><strong>Zéro sous-traitance opaque</strong> — nos équipes internes ou partenaires certifiés, identifiés.</span></div>
+      <div class="protocol-item"><span class="protocol-num">12</span><span><strong>Assurance décennale renforcée</strong> — couverture adaptée aux montants en jeu.</span></div>
+      <div class="protocol-item"><span class="protocol-num">13</span><span><strong>Astreinte dédiée post-intervention</strong> — contact direct 72h après la réception de chantier.</span></div>
+      <div class="protocol-item"><span class="protocol-num">14</span><span><strong>Accès prioritaire aux urgences</strong> — file dédiée 24h/7j pour les clients Prestige.</span></div>
+      <div class="protocol-item"><span class="protocol-num">15</span><span><strong>Devis transparent et validé avant tout démarrage</strong> — aucun imprévu non communiqué.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARATIF ── -->
+<section class="section">
+  <div class="section-inner reveal">
+    <p class="section-eyebrow">Standard vs Prestige</p>
+    <h2 class="section-title">Ce qui change <em>concrètement</em></h2>
+    <p class="section-sub">Un même résultat technique — une expérience radicalement différente pour le lieu, les occupants et le gestionnaire.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Critère</th>
+          <th>Intervention standard</th>
+          <th>✓ SOS FONTE Prestige</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Protection du site</td><td>Bâches sol</td><td>Protection totale sol + murs + mobilier</td></tr>
+        <tr><td>Bruit de chantier</td><td>Non maîtrisé</td><td>Outillage silencieux, plages horaires définies</td></tr>
+        <tr><td>Coordination</td><td>Gestionnaire seul</td><td>Multi-parties : syndic, archi, occupants, ABF</td></tr>
+        <tr><td>Nettoyage</td><td>Gros nettoyage</td><td>Aspirateur HEPA + contrôle visuel avant départ</td></tr>
+        <tr><td>Interlocuteur</td><td>Variable</td><td>Technicien référent unique du début à la fin</td></tr>
+        <tr><td>Rapport</td><td>Sur demande</td><td>Rapport photo complet livré sous 24h</td></tr>
+        <tr><td>Urgences post-chantier</td><td>File normale</td><td>Accès prioritaire 72h post-intervention</td></tr>
+        <tr><td>Discrétion</td><td>Standard</td><td>Véhicules neutres, pas de signalétique sur demande</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- ── CTA ── -->
-<div class="prestige-cta">
-  <h2>Votre lieu mérite<br>une intervention <em>à sa hauteur</em></h2>
+<div class="cta-bottom">
+  <h2>Votre lieu mérite une intervention<br><em>à sa hauteur</em></h2>
   <p>Décrivez votre projet — nous vous proposons une solution sur mesure, avec un interlocuteur dédié dès le premier appel.</p>
-  <div class="btn-actions" style="justify-content:center">
-    <a href="tel:0180846040" data-sfc="tel" class="btn-prestige">📞 01 80 84 60 40 — Demander un devis Prestige</a>
+  <div class="btn-actions">
+    <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 01 80 84 60 40 — Devis Prestige</a>
     <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20pour%20un%20lieu%20sensible.%20Pouvez-vous%20me%20rappeler%20%3F" data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
     <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
   </div>
