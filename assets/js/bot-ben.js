@@ -281,11 +281,7 @@
         const b = document.createElement('div');
         b.className = 'ben-bubble ' + who;
         b.innerHTML = html;
-        /* Tous les liens → nouvel onglet, widget reste ouvert */
-        b.querySelectorAll('a[href]').forEach(function(a) {
-          a.target = '_blank';
-          a.rel    = 'noopener noreferrer';
-        });
+        /* Les liens naviguent dans le même onglet (comportement natif) */
         document.getElementById('ben-body').appendChild(b);
         scrollBottom();
         resolve();
@@ -816,7 +812,8 @@
      Retourne l'entrée avec le MEILLEUR score.             */
   var FAQ_ENTRIES = [
     /* Urgence & disponibilité */
-    { keys: ['24h','24/7','nuit','weekend','week end','ferie','dimanche','samedi','heure'],
+    { keys: ['24h','24/7','nuit','weekend','week end','we','wkd','ferie','feries',
+             'dimanche','samedi','heure','hors horaire','intervenez vous le','venez le'],
       text: 'On intervient <strong>24h/24 — 7j/7</strong>, week-ends et jours fériés inclus. Les tarifs sont revalorisés hors horaires — on vous communique le détail à l\'appel.',
       link: 'faq.html#urgence' },
     { keys: ['delai','arrive','vite','rapide','combien de temps','quand','attendre','temps reponse'],
@@ -825,11 +822,10 @@
     { keys: ['colonne montante','fuite colonne','urgence','eau partout','inondation'],
       text: 'Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <strong>Appelez immédiatement.</strong>',
       link: 'faq.html#urgence' },
-    /* Zone & déplacement */
+    /* Zone & déplacement — uniquement termes géographiques, pas de verbes ambigus */
     { keys: ['banlieue','province','periph','banlieusard','hors paris',
-             'deplacez','deployez','venez','intervenez','couvrez','desservez',
-             'deplacement','vous venez','vous intervenez','vous deplacez',
-             'couvert','desservi','passez'],
+             'vous deplacez','vous intervenez en','vous venez dans',
+             'deplacement','couvert','desservi','zone couverte'],
       text: 'Oui, on est aussi banlieusards 😄 Nous couvrons toute l\'Île-de-France — Paris + 92, 93, 94, 91, 95. Contactez-nous pour vérifier votre secteur exact.',
       link: 'faq.html#zone' },
     { keys: ['hors idf','normandie','hors ile','region','province','departement','loin'],
@@ -911,12 +907,13 @@
     await showTyping(200);
     await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "Vous déplacez-vous en banlieue ?" · "Le devis est gratuit ?" · "Combien de temps dure le chantier ?"</span>', 400);
 
-    /* Affiche la réponse trouvée + lien FAQ optionnel */
+    /* Affiche la réponse trouvée : sticker diag + délai + réponse */
     async function showAnswer(match) {
+      addSticker(STK.diag);
+      await new Promise(r => setTimeout(r, 3000));
       setBenImage(IMG.jexplique);
-      await addBubble('bot', match.text, 600);
+      await addBubble('bot', match.text, 0);
       if (match.link) {
-        await showTyping(200);
         await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
       }
       stepAutresQuestions();
@@ -925,17 +922,16 @@
     /* 1re saisie */
     showTextInput('Tapez votre question…', async (question) => {
       clearFooter();
-      setBenImage(IMG.pensif);
-      await showTyping(700);
-
       const match = matchFAQ(question);
       if (match) { await showAnswer(match); return; }
 
-      /* ── Raté #1 : on demande de reformuler ─────────── */
+      /* ── Raté #1 : sticker diag + demande de reformulation ── */
+      addSticker(STK.diag);
+      await new Promise(r => setTimeout(r, 2500));
       setBenImage(IMG.pensif);
-      await addBubble('bot', 'Je n\'ai pas bien saisi votre question 🤔<br>Pouvez-vous la reformuler en quelques mots-clés ?', 800);
+      await addBubble('bot', 'Je n\'ai pas trouvé de réponse précise à votre question 🤔<br>Pouvez-vous la reformuler en quelques mots-clés ?', 800);
       await showTyping(200);
-      await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "devis gratuit" · "couvert 92" · "durée chantier" · "paiement échelonné"</span>', 300);
+      await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "devis gratuit" · "week-end" · "durée chantier" · "banlieue"</span>', 300);
 
       /* 2e saisie */
       showTextInput('Reformulez votre question…', async (question2) => {

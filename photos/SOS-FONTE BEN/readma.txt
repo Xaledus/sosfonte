@@ -1,0 +1,52 @@
+/master
+	ben-face.png
+	ben_idle.png
+	ben-halfbody.png
+	ben-fullbody.png
+	ben-transparent.png
+	ben-face_large_fond_transparent.png
+	ben-face_large_fond_noir.png
+	ben-profil_badge_orange_fond_noir.png
+/expressions
+	ben-expression-sourire.png
+	ben-expression-clin_doeil.png
+	ben-expression-pensif.png
+	ben-expression-rassurant.png
+	ben-expression-reconnaissant.png
+/Animations
+	Ben-Animation-Bonjour.png
+	Ben-Animation-jecoute.png
+	Ben-Animation-jexplique.png
+	Ben-Animation-ok_parfait.png
+	Ben-Animation-jinterviens.png
+	Ben-Animation-c-est-regle.png
+	Ben-Animation-deborde.png
+	Ben-Animation-c-est-chaud.png
+	Ben-Animation-merci.png
+	Ben-Animation-bravo.png
+	Ben-Animation-au_revoir.png
+	
+
+/stickers
+	Ben-stickers-on_gere.png	
+	Ben-stickers-diagnostic_en_cours.png	
+	Ben-stickers-urgence.png	
+	Ben-stickers-rdv_planifie.png	
+	Ben-stickers-c_est_regle.png	
+	Ben-stickers-bon_courage.png	
+	Ben-stickers-au_revoir.png
+	Ben-stickers-bravo.png
+	Ben-stickers-Je-reviens.png
+	Ben-stickers-En-route.png	
+	Ben-stickers-Attendez.png	
+	Ben-stickers-Tout-va-bien.png
+	Ben-stickers-OK.png	
+	Ben-stickers-Débordé.png
+	Ben-stickers-Merci.png
+	Ben-stickers-Bonjour.png
+	Ben-stickers-je_suis_en_pause.png
+	Ben-stickers-C_est_chaud.png
+	Ben-stickers-Je_vous_rappelle.png
+	Ben-stickers-je_suis_HS.png
+	Ben-stickers-j_ecoute.png
+	Ben-stickers-A_bientot.png
