@@ -224,16 +224,6 @@
     imgB = document.getElementById('ben-img-b');
     document.getElementById('ben-close').addEventListener('click', closeWidget);
 
-    /* Tous les liens dans le chat → nouvel onglet (évite la fermeture du widget) */
-    document.getElementById('ben-body').addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a[href]') : null;
-      if (!a && e.target.tagName === 'A') a = e.target;
-      if (a) {
-        e.preventDefault();
-        window.open(a.getAttribute('href'), '_blank', 'noopener,noreferrer');
-      }
-    });
-
     const dot  = document.getElementById('ben-dot');
     const text = document.getElementById('ben-status-text');
     if (isOffHours()) { dot.classList.add('offline'); text.textContent = 'Hors ligne · rappel demain'; }
@@ -291,6 +281,11 @@
         const b = document.createElement('div');
         b.className = 'ben-bubble ' + who;
         b.innerHTML = html;
+        /* Tous les liens → nouvel onglet, widget reste ouvert */
+        b.querySelectorAll('a[href]').forEach(function(a) {
+          a.target = '_blank';
+          a.rel    = 'noopener noreferrer';
+        });
         document.getElementById('ben-body').appendChild(b);
         scrollBottom();
         resolve();
