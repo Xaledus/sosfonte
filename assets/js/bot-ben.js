@@ -569,10 +569,52 @@
     await showTyping(300);
     await addBubble('bot', 'Je vous écoute. Décrivez votre situation en quelques mots.', 800);
     showTextInput('Ex : fuite colonne EU cave immeuble 1920…', async (txt) => {
-      formData.situation = txt;
       clearFooter();
       setBenImage(IMG.pensif);
       await showTyping(400);
+
+      /* ── Analyse contextuelle ─────────────────────────
+         Si le texte ressemble à une question (? final ou
+         verbe interrogatif) → on cherche dans la FAQ.   */
+      const faqMatch = matchFAQ(txt);
+      const looksQ = /\?/.test(txt) ||
+        /^(vous|est.ce|pouvez|peut|comment|combien|o.|quand|intervenez|d.placez|venez|couvrez)/i
+          .test(txt.trim());
+
+      if (faqMatch) {
+        setBenImage(IMG.jexplique);
+        await addBubble('bot', 'Je capte une question — voilà la réponse :', 600);
+        await addBubble('bot', faqMatch.text, 500);
+        if (faqMatch.link) {
+          await addBubble('bot',
+            '<a href="' + faqMatch.link + '" class="ben-page-link">En savoir plus →</a>', 300);
+        }
+        await showTyping(300);
+        await addBubble('bot', 'Vous avez aussi une situation à me décrire ?', 600);
+        showChoices([
+          { label: '🔧 Oui, j\'ai un problème à régler', action: stepIntervention },
+          RETOUR,
+        ]);
+        return;
+      }
+
+      if (looksQ) {
+        setBenImage(IMG.jexplique);
+        await addBubble('bot',
+          'Cette ressemble à une question 🤔 Utilisez le bouton <strong>"❓ J\'ai une question"</strong> — je réponds à plus de 20 sujets.',
+          800);
+        await showTyping(300);
+        await addBubble('bot', 'Vous avez aussi une situation à me décrire ?', 600);
+        showChoices([
+          { label: '❓ Poser ma question',              action: stepFAQ },
+          { label: '🔧 Non, décrire mon problème',      action: stepIntervention },
+          RETOUR,
+        ]);
+        return;
+      }
+
+      /* ── Situation normale : formulaire de rappel ─── */
+      formData.situation = txt;
       await addBubble('bot', 'Compris. Pour vous rappeler rapidement :', 900);
       showForm([
         {
@@ -590,7 +632,7 @@
         clearFooter();
         setBenImage(IMG.okParfait);
         const prenom = data.nom.split(' ')[0];
-        addSticker(STK.rdv);                       // sticker = "RDV planifié", pas de bulle redondante
+        addSticker(STK.rdv);
         await addBubble('bot', `<strong>${prenom}</strong>, rappel sous 2h. 📞 ${CFG.phoneDisplay}`, 600);
         sendLead('Intervention fonte', data);
         stepAutresQuestions();
