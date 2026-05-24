@@ -10,6 +10,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://sosfonte.com","name":"SOS FONTE","description":"Plombier spécialiste des réseaux en fonte à Paris et Île-de-France depuis 20 ans","telephone":"+33180846040","email":"contact@sosfonte.com","address":{"@type":"PostalAddress","streetAddress":"108B rue des Maraîchers","addressLocality":"Villebon-sur-Yvette","postalCode":"91140","addressCountry":"FR"},"areaServed":[{"@type":"City","name":"Paris"},{"@type":"AdministrativeArea","name":"Île-de-France"}],"priceRange":"€€","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}}
 </script>
+<script src="assets/js/site-config.js"></script>
 </head>
 <body>
 <header>
@@ -17,10 +18,12 @@
   <nav>
     <a href="index.html">Accueil</a><a href="urgence.html">Urgence</a>
     <a href="services.html">Services</a><a href="syndics.html">Syndics</a>
-    <a href="realisations.html">Réalisations</a><a href="contact.html">Contact</a>
+    <a href="realisations.html">Réalisations</a>
+      <a href="prestige.html">Prestige</a>
+      <a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
   </nav>
   <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  <a href="tel:0180846040" class="header-cta">📞 01 80 84 60 40</a>
+  <a href="tel:0180846040" data-sfc="tel" class="header-cta">📞 01 80 84 60 40</a>
 </header>
 
 <section class="page-hero">
@@ -31,7 +34,7 @@
     <h1>Plombier spécialiste fonte<br><em>Île-de-France</em></h1>
     <p class="page-hero-sub">SOS FONTE est la référence en Île-de-France pour tout ce qui concerne les réseaux EU/EV en fonte ancienne : diagnostic, réparation, remplacement, recherche de fuite, inspection caméra. Syndics, assureurs et notaires nous font confiance.</p>
     <div class="btn-actions" style="margin-top:32px">
-      <a href="tel:0180846040" class="btn-teal">📞 01 80 84 60 40</a>
+      <a href="tel:0180846040" data-sfc="tel" class="btn-teal">📞 01 80 84 60 40</a>
       <a href="contact.html" class="btn-secondary">Demander un devis →</a>
     </div>
   </div>
@@ -163,7 +166,7 @@
       </details>
       <details style="padding:24px 0">
         <summary style="font-size:16px;font-weight:600;color:var(--text);cursor:pointer;list-style:none">Puis-je obtenir un devis en urgence le week-end ?</summary>
-        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;font-weight:300;margin-top:16px">Oui. Notre ligne est disponible 7j/7. En urgence (fuite active, odeurs, dégât des eaux), appelez le 01 80 84 60 40 — nous intervenons sous 4h sur Paris et petite couronne. Pour les devis non urgents le week-end, envoyez une photo WhatsApp au +33 6 95 49 43 71 et nous vous recontactons le lundi matin.</p>
+        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;font-weight:300;margin-top:16px">Oui. Notre ligne est disponible 7j/7. En urgence (fuite active, odeurs, dégât des eaux), appelez le 01 80 84 60 40 — nous intervenons sous 4h sur Paris et petite couronne. Pour les devis non urgents le week-end, envoyez une photo WhatsApp au WhatsApp et nous vous recontactons le lundi matin.</p>
       </details>
     </div>
   </div>
@@ -173,7 +176,7 @@
   <h2>Le spécialiste fonte en Île-de-France</h2>
   <p>20 ans d'expérience · RC Décennale · Paris et tous les départements IDF</p>
   <div class="btn-actions">
-    <a href="tel:0180846040" class="btn-primary">📞 01 80 84 60 40</a>
+    <a href="tel:0180846040" data-sfc="tel" class="btn-primary">📞 01 80 84 60 40</a>
     <a href="contact.html" class="btn-secondary">Formulaire de contact →</a>
   </div>
 </div>
@@ -187,13 +190,15 @@
     <div class="footer-col">
       <span class="footer-col-title">Navigation</span>
       <a href="index.html">Accueil</a><a href="urgence.html">Urgence</a><a href="services.html">Services</a>
-      <a href="syndics.html">Syndics</a><a href="realisations.html">Réalisations</a><a href="contact.html">Contact</a>
+      <a href="syndics.html">Syndics</a><a href="realisations.html">Réalisations</a>
+      <a href="prestige.html">Prestige</a>
+      <a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
     </div>
     <div class="footer-col">
       <span class="footer-col-title">Contact</span>
-      <a href="tel:0180846040">📞 01 80 84 60 40</a>
-      <a href="https://wa.me/33695494371?text=Bonjour%2C%20je%20recherche%20un%20plombier%20sp%C3%A9cialis%C3%A9%20fonte%20en%20%C3%8Ele-de-France.">💬 +33 6 95 49 43 71</a>
-      <a href="mailto:contact@sosfonte.com">✉ contact@sosfonte.com</a>
+      <a href="tel:0180846040" data-sfc="tel">📞 01 80 84 60 40</a>
+      <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20recherche%20un%20plombier%20sp%C3%A9cialis%C3%A9%20fonte%20en%20%C3%8Ele-de-France." data-sfc="wa">💬 WhatsApp</a>
+      <a href="mailto:contact@sosfonte.com" data-sfc="email">✉ contact@sosfonte.com</a>
     </div>
     <div class="footer-col"><span class="footer-col-title">Zone</span><p>Paris · IDF · 92 · 93 · 94 · 91 · 95</p></div>
   </div>
@@ -202,7 +207,7 @@
     <div class="footer-links"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></div>
   </div>
 </footer>
-<a href="tel:0180846040" class="mobile-sticky">🔴 Urgence — Appeler maintenant</a>
+<a href="tel:0180846040" data-sfc="tel" class="mobile-sticky">🔴 Urgence — Appeler maintenant</a>
 <script>
 if ('IntersectionObserver' in window && window.innerWidth > 768) {
   document.body.classList.add('js-reveal');
@@ -217,4 +222,5 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 <script>
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
 </script>
+<script src="assets/js/site-init.js"></script>
 </body></html>
