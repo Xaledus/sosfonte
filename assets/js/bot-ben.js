@@ -224,6 +224,16 @@
     imgB = document.getElementById('ben-img-b');
     document.getElementById('ben-close').addEventListener('click', closeWidget);
 
+    /* Tous les liens dans le chat → nouvel onglet (évite la fermeture du widget) */
+    document.getElementById('ben-body').addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a && e.target.tagName === 'A') a = e.target;
+      if (a) {
+        e.preventDefault();
+        window.open(a.getAttribute('href'), '_blank', 'noopener,noreferrer');
+      }
+    });
+
     const dot  = document.getElementById('ben-dot');
     const text = document.getElementById('ben-status-text');
     if (isOffHours()) { dot.classList.add('offline'); text.textContent = 'Hors ligne · rappel demain'; }
@@ -582,9 +592,10 @@
           .test(txt.trim());
 
       if (faqMatch) {
+        addSticker(STK.diag);                           // sticker diagnostic en cours
+        await new Promise(r => setTimeout(r, 3500));   // 3,5 s de "réflexion"
         setBenImage(IMG.jexplique);
-        await addBubble('bot', 'Je capte une question — voilà la réponse :', 600);
-        await addBubble('bot', faqMatch.text, 500);
+        await addBubble('bot', faqMatch.text, 0);
         if (faqMatch.link) {
           await addBubble('bot',
             '<a href="' + faqMatch.link + '" class="ben-page-link">En savoir plus →</a>', 300);
