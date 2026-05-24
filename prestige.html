@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SOS FONTE Prestige — L'intervention d'exception pour les lieux d'exception. Hôtels de luxe, appartements haussmanniens, sièges sociaux, résidences sensibles. Protocole XXL, techniciens dédiés, zéro compromis.">
+<title>SOS FONTE Prestige — Intervention d'exception pour lieux sensibles | Paris IDF</title>
+<link rel="canonical" href="https://sosfonte.com/prestige.html">
+<link rel="stylesheet" href="sosfonte_shared.css?v=12">
+<link rel="stylesheet" href="assets/css/bot-ben.css">
+<script src="assets/js/site-config.js"></script>
+<style>
+
+/* ── HERO PRESTIGE ─────────────────────────────────────────── */
+.prestige-hero {
+  position: relative;
+  padding: 120px 24px 96px;
+  text-align: center;
+  overflow: hidden;
+  background: var(--black);
+}
+.prestige-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(184,134,11,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.prestige-hero-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.prestige-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #B8860B;
+  margin-bottom: 20px;
+}
+.prestige-hero h1 {
+  font-size: clamp(32px, 6vw, 58px);
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--white);
+  margin-bottom: 22px;
+}
+.prestige-hero h1 em {
+  color: #D4A017;
+  font-style: normal;
+}
+.prestige-hero .tagline {
+  font-size: clamp(14px, 2.5vw, 18px);
+  color: rgba(255,255,255,0.55);
+  font-style: italic;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+.prestige-hero .hero-badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+.prestige-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(212,160,23,0.1);
+  border: 1px solid rgba(212,160,23,0.28);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #D4A017;
+}
+
+/* ── SECTION STYLES ─────────────────────────────────────────── */
+.prestige-section {
+  padding: 72px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.prestige-section + .prestige-section {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.prestige-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #B8860B;
+  margin-bottom: 12px;
+}
+.prestige-h2 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.prestige-h2 em { color: #D4A017; font-style: normal; }
+.prestige-sub {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* ── CIBLES ─────────────────────────────────────────────────── */
+.prestige-targets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+.prestige-target {
+  background: rgba(212,160,23,0.06);
+  border: 1px solid rgba(212,160,23,0.18);
+  border-radius: 14px;
+  padding: 24px 22px;
+  text-align: center;
+}
+.prestige-target .t-icon { font-size: 32px; margin-bottom: 12px; }
+.prestige-target h3 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.prestige-target p  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+/* ── PROTOCOLE ──────────────────────────────────────────────── */
+.prestige-protocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 40px;
+}
+.protocol-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.protocol-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.protocol-list li .p-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(212,160,23,0.12);
+  border: 1px solid rgba(212,160,23,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #D4A017;
+  margin-top: 1px;
+}
+.protocol-list li strong { color: var(--white); }
+
+.prestige-visual {
+  background: linear-gradient(135deg, #1a1408, #241c0a);
+  border: 1px solid rgba(212,160,23,0.2);
+  border-radius: 20px;
+  padding: 48px 40px;
+  text-align: center;
+}
+.prestige-visual .pv-icon { font-size: 64px; margin-bottom: 20px; }
+.prestige-visual h3 { font-size: 18px; font-weight: 700; color: #D4A017; margin-bottom: 12px; }
+.prestige-visual p  { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+/* ── DIFFÉRENCES TABLE ──────────────────────────────────────── */
+.prestige-compare {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 36px;
+}
+.prestige-compare th {
+  padding: 12px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.prestige-compare th:first-child { text-align: left; color: var(--muted); }
+.prestige-compare th:nth-child(2) { color: var(--muted); }
+.prestige-compare th:nth-child(3) { color: #D4A017; }
+.prestige-compare td {
+  padding: 14px 18px;
+  font-size: 13.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--muted);
+}
+.prestige-compare td:first-child { color: var(--white); font-weight: 500; }
+.prestige-compare td:nth-child(3) { color: #D4A017; font-weight: 600; }
+.prestige-compare tr:last-child td { border-bottom: none; }
+
+/* ── CTA PRESTIGE ───────────────────────────────────────────── */
+.prestige-cta {
+  background: linear-gradient(135deg, #1a1408, #1e180a);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: 24px;
+  padding: 64px 48px;
+  text-align: center;
+  margin: 72px 24px;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.prestige-cta h2 { font-size: clamp(22px,4vw,36px); font-weight: 800; color: var(--white); margin-bottom: 14px; }
+.prestige-cta h2 em { color: #D4A017; font-style: normal; }
+.prestige-cta p  { font-size: 15px; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
+.btn-prestige {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #D4A017;
+  color: #0D0F12;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+.btn-prestige:hover { background: #e8b420; transform: translateY(-1px); }
+
+@media (max-width: 700px) {
+  .prestige-protocol { grid-template-columns: 1fr; }
+  .prestige-cta { padding: 40px 24px; margin: 40px 16px; }
+  .prestige-compare th, .prestige-compare td { padding: 10px 12px; font-size: 12.5px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="images/logo-sosfonte.png" alt="SOS FONTE" class="logo-img">
+  </a>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="urgence.html">Urgence</a>
+    <a href="services.html">Services</a>
+    <a href="syndics.html">Syndics</a>
+    <a href="realisations.html">Réalisations</a>
+    <a href="prestige.html" class="active">Prestige</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a href="tel:0180846040" data-sfc="tel" class="header-cta">📞 01 80 84 60 40</a>
+</header>
+
+<!-- ── HERO ── -->
+<section class="prestige-hero">
+  <div class="prestige-hero-inner">
+    <div class="prestige-eyebrow">SOS FONTE Prestige</div>
+    <h1>L'intervention <em>d'exception</em><br>pour les lieux <em>d'exception</em></h1>
+    <p class="tagline">Quand le lieu ne tolère ni l'approximation, ni la casse, ni l'imprévu.</p>
+    <div class="hero-badges">
+      <span class="prestige-badge">🛡️ Protection XXL</span>
+      <span class="prestige-badge">🔇 Protocole silence</span>
+      <span class="prestige-badge">📋 Coordination totale</span>
+      <span class="prestige-badge">✨ Chantier chirurgical</span>
+    </div>
+    <div class="btn-actions">
+      <a href="tel:0180846040" data-sfc="tel" class="btn-prestige">📞 Appeler — intervention Prestige</a>
+      <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20sur%20un%20lieu%20sensible." data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── POUR QUI ── -->
+<section class="prestige-section">
+  <div class="prestige-label">Pour qui ?</div>
+  <h2 class="prestige-h2">Des lieux où la moindre<br>erreur est <em>inacceptable</em></h2>
+  <p class="prestige-sub">Certains immeubles ne peuvent se permettre ni la poussière, ni le bruit, ni l'aléa. SOS FONTE Prestige a été conçu pour ces contextes.</p>
+
+  <div class="prestige-targets">
+    <div class="prestige-target">
+      <div class="t-icon">🏛️</div>
+      <h3>Hôtels & palaces</h3>
+      <p>Intervention hors heures de service, protection chambre par chambre, nettoyage au peigne fin.</p>
+    </div>
+    <div class="prestige-target">
+      <div class="t-icon">🏢</div>
+      <h3>Sièges sociaux & bureaux</h3>
+      <p>Coordination avec les équipes HSE, intervention nocturne ou week-end pour zéro interruption.</p>
+    </div>
+    <div class="prestige-target">
+      <div class="t-icon">🏠</div>
+      <h3>Appartements luxueux</h3>
+      <p>Surfaces sensibles, mobilier de valeur, discrétion absolue — prise en charge clé en main.</p>
+    </div>
+    <div class="prestige-target">
+      <div class="t-icon">🏥</div>
+      <h3>Cliniques & cabinets médicaux</h3>
+      <p>Protocole stérile, absence de particules, intervention planifiée hors horaires patients.</p>
+    </div>
+    <div class="prestige-target">
+      <div class="t-icon">🏛️</div>
+      <h3>Bâtiments classés</h3>
+      <p>Respect des contraintes architecturales, coordination avec ABF si nécessaire, matériaux conformes.</p>
+    </div>
+    <div class="prestige-target">
+      <div class="t-icon">🎭</div>
+      <h3>Théâtres & lieux culturels</h3>
+      <p>Calage sur le planning de représentations, intervention en dehors des répétitions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROTOCOLE ── -->
+<section class="prestige-section" style="background:rgba(212,160,23,0.02);border-top:1px solid rgba(212,160,23,0.1);border-bottom:1px solid rgba(212,160,23,0.1)">
+  <div style="max-width:1080px;margin:0 auto">
+    <div class="prestige-label">Le Protocole Prestige</div>
+    <h2 class="prestige-h2">15 points qui font la <em>différence</em></h2>
+
+    <div class="prestige-protocol">
+      <ul class="protocol-list">
+        <li><span class="p-num">1</span><span><strong>Visite préalable systématique</strong> — analyse complète avant le premier coup d'outil.</span></li>
+        <li><span class="p-num">2</span><span><strong>Technicien dédié et référent unique</strong> — un seul interlocuteur du diagnostic à la réception.</span></li>
+        <li><span class="p-num">3</span><span><strong>Protection totale des surfaces</strong> — bâches, tapis, protection mobilier et revêtements précieux.</span></li>
+        <li><span class="p-num">4</span><span><strong>Outillage silencieux</strong> — matériel sélectionné pour le bruit minimal, scies à faibles vibrations.</span></li>
+        <li><span class="p-num">5</span><span><strong>Planification sur mesure</strong> — intervention calée sur vos contraintes : nuit, week-end, entre saisons.</span></li>
+        <li><span class="p-num">6</span><span><strong>Coordination multi-parties</strong> — syndic, gestionnaire, architecte des bâtiments, occupants.</span></li>
+        <li><span class="p-num">7</span><span><strong>Nettoyage chirurgical</strong> — aspirateur HEPA, nettoyage fin de chantier inclus, contrôle visuel avant départ.</span></li>
+        <li><span class="p-num">8</span><span><strong>Rapport photographique complet</strong> — avant / pendant / après, remis dans les 24h.</span></li>
+      </ul>
+      <div>
+        <ul class="protocol-list">
+          <li><span class="p-num">9</span><span><strong>Matériaux premium</strong> — fonte qualifiée, joints renforcés, raccords certifiés.</span></li>
+          <li><span class="p-num">10</span><span><strong>Discrétion garantie</strong> — pas de signalétique visible, véhicules neutres sur demande.</span></li>
+          <li><span class="p-num">11</span><span><strong>Zéro sous-traitance opaque</strong> — nos équipes internes ou partenaires certifiés, identifiés.</span></li>
+          <li><span class="p-num">12</span><span><strong>Assurance décennale renforcée</strong> — couverture adaptée aux montants en jeu.</span></li>
+          <li><span class="p-num">13</span><span><strong>Astreinte dédiée post-intervention</strong> — contact direct 72h après la réception de chantier.</span></li>
+          <li><span class="p-num">14</span><span><strong>Accès prioritaire aux urgences</strong> — file dédiée 24h/7j pour les clients Prestige.</span></li>
+          <li><span class="p-num">15</span><span><strong>Devis transparent et validé avant tout démarrage</strong> — aucun imprévu non communiqué.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARATIF ── -->
+<section class="prestige-section">
+  <div class="prestige-label">Standard vs Prestige</div>
+  <h2 class="prestige-h2">Ce qui change <em>concrètement</em></h2>
+
+  <table class="prestige-compare">
+    <thead>
+      <tr>
+        <th>Critère</th>
+        <th>Intervention standard</th>
+        <th>★ SOS FONTE Prestige</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Protection du site</td><td>Bâches sol</td><td>Protection totale sol + murs + mobilier</td></tr>
+      <tr><td>Bruit de chantier</td><td>Non maîtrisé</td><td>Outillage silencieux, plages horaires définies</td></tr>
+      <tr><td>Coordination</td><td>Gestionnaire seul</td><td>Multi-parties : syndic, archi, occupants, ABF</td></tr>
+      <tr><td>Nettoyage</td><td>Gros nettoyage</td><td>Aspirateur HEPA + contrôle visuel avant départ</td></tr>
+      <tr><td>Interlocuteur</td><td>Variable</td><td>Technicien référent unique du début à la fin</td></tr>
+      <tr><td>Rapport</td><td>Sur demande</td><td>Rapport photo complet livré sous 24h</td></tr>
+      <tr><td>Urgences post-chantier</td><td>File normale</td><td>Accès prioritaire 72h post-intervention</td></tr>
+      <tr><td>Discrétion</td><td>Standard</td><td>Véhicules neutres, pas de signalétique sur demande</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── CTA ── -->
+<div class="prestige-cta">
+  <h2>Votre lieu mérite<br>une intervention <em>à sa hauteur</em></h2>
+  <p>Décrivez votre projet — nous vous proposons une solution sur mesure, avec un interlocuteur dédié dès le premier appel.</p>
+  <div class="btn-actions" style="justify-content:center">
+    <a href="tel:0180846040" data-sfc="tel" class="btn-prestige">📞 01 80 84 60 40 — Demander un devis Prestige</a>
+    <a href="https://wa.me/33180846040?text=Bonjour%2C%20je%20souhaite%20une%20intervention%20Prestige%20pour%20un%20lieu%20sensible.%20Pouvez-vous%20me%20rappeler%20%3F" data-sfc="wa" class="btn-secondary">💬 WhatsApp</a>
+    <a href="contact.html" class="btn-secondary">✉ Formulaire</a>
+  </div>
+</div>
+
+<div class="urgence-band">
+  <p>🚨 Urgence sur un site Prestige ? Ligne prioritaire disponible 24h/7j.</p>
+  <a href="tel:0180846040" data-sfc="tel">Appeler maintenant</a>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><img src="images/logo-sosfonte.png" alt="SOS FONTE" class="logo-img"></a>
+      <p>Spécialiste des réseaux en fonte à Paris et IDF.<br>Exploitée par FX Services · 108B rue des Maraîchers, 91140 Villebon-sur-Yvette</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Navigation</span>
+      <a href="index.html">Accueil</a>
+      <a href="urgence.html">Urgence</a>
+      <a href="services.html">Services</a>
+      <a href="syndics.html">Syndics</a>
+      <a href="realisations.html">Réalisations</a>
+      <a href="prestige.html">Prestige</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="la-fonte.html">La fonte</a>
+      <a href="partenaires.html">Partenaires</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Contact</span>
+      <a href="tel:0180846040" data-sfc="tel">📞 01 80 84 60 40</a>
+      <a href="https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20question%20concernant%20mes%20canalisations%20en%20fonte." data-sfc="wa">💬 WhatsApp</a>
+      <a href="mailto:contact@sosfonte.com" data-sfc="email">✉ contact@sosfonte.com</a>
+      <p>Urgences 24h/7j · Lun–Sam 7h–20h</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Zone</span>
+      <p>Paris (75)</p>
+      <p>Hauts-de-Seine (92)</p>
+      <p>Seine-St-Denis (93)</p>
+      <p>Val-de-Marne (94)</p>
+      <p>Essonne (91)</p>
+      <p>Val-d'Oise (95)</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 SOS FONTE — Marque propriété d'AIFOS (SIREN 948 147 962) · Exploitée par FX Services SAS · SIRET 950 771 527 · 108B rue des Maraîchers, 91140 Villebon-sur-Yvette</p>
+    <div class="footer-links">
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="confidentialite.html">Confidentialité</a>
+    </div>
+  </div>
+</footer>
+
+<a href="tel:0180846040" data-sfc="tel" class="mobile-sticky">📞 Appeler SOS FONTE</a>
+
+<script>
+if ('IntersectionObserver' in window && window.innerWidth > 768) {
+  document.body.classList.add('js-reveal');
+  const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:0,rootMargin:'60px 0px 60px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+</script>
+<script>(function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();</script>
+<script src="assets/js/bot-ben.js"></script>
+<script src="assets/js/site-init.js"></script>
+</body>
+</html>
