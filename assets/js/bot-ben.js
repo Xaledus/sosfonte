@@ -1,6 +1,6 @@
-﻿/* ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    BOT BEN — SOS FONTE  |  JS Vanilla  |  No dependencies
-   v2 — validation, stickers, boucle "autres questions"
+   v2.0 — Dual priority · 7 branches · WhatsApp engine
    ═══════════════════════════════════════════════════════════ */
 
 (function () {
@@ -14,14 +14,15 @@
   const _p = (_S.phone) || {};
   const CFG = {
     formspree:      (_S.formspree)  || 'https://formspree.io/f/xpqnzoyg',
-    ingestUrl:      (_S.supabase && _S.supabase.ingestUrl) || null,   // Edge Function
-    anonKey:        (_S.supabase && _S.supabase.anonKey)   || null,   // clé publique Supabase
+    ingestUrl:      (_S.supabase && _S.supabase.ingestUrl) || null,
+    anonKey:        (_S.supabase && _S.supabase.anonKey)   || null,
     phone:          'tel:' + (_p.raw     || '0180846040'),
     phoneDisplay:   (_p.display          || '01 80 84 60 40'),
     wa:             _S.waUrl ? _S.waUrl('urgence') : 'https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20urgence%20sur%20une%20canalisation%20en%20fonte.',
     email:          (_S.email            || 'contact@sosfonte.com'),
-    autreQDelay:    10000,   // ms avant "avez-vous d'autres questions ?"
-    autoCloseDelay: 30000,   // ms d'inactivité avant fermeture auto
+    waNumber:       (_p.wa               || '33180846040'),
+    autreQDelay:    10000,
+    autoCloseDelay: 30000,
   };
 
   /* ── VALIDATION ─────────────────────────────────────────── */
@@ -99,7 +100,8 @@
   let autoCloseTimer = null;
   let countdownInterval = null;
   let hasOpenedOnce = false;
-  let botSessionId = null;   // UUID v4 généré à l'ouverture du bot (RGPD — mémoire seule)
+  let botSessionId = null;
+  let faqAttempts = 0;
 
   /* ── HELPERS ─────────────────────────────────────────────── */
   function isOffHours() { const h = new Date().getHours(); return h < 7 || h >= 22; }
@@ -121,8 +123,8 @@
         osc.start(t0);
         osc.stop(t0 + dur);
       };
-      play(880,  ctx.currentTime,        0.38); // La5
-      play(1320, ctx.currentTime + 0.14, 0.32); // Mi6 — quinte → ding doux
+      play(880,  ctx.currentTime,        0.38);
+      play(1320, ctx.currentTime + 0.14, 0.32);
     } catch (e) { /* audio non disponible (politique autoplay) */ }
   }
 
@@ -188,7 +190,7 @@
       if (!isOpen && !hasOpenedOnce) {
         popup.classList.add('ben-popup-visible');
         showTrigger();
-        playDing();                              // ding quand Ben apparaît
+        playDing();
       }
     }, delay);
 
@@ -239,29 +241,34 @@
     preloadImages();
     isOpen = true;
     formData = {};
-    hasOpenedOnce = true;        // bloque le re-déclenchement du popup
+    faqAttempts = 0;
+    hasOpenedOnce = true;
     clearAutoClose();
-
-    // Session UUID v4 — jamais persisté, réinitialisé à chaque ouverture du widget
     botSessionId = (crypto && crypto.randomUUID)
       ? crypto.randomUUID()
       : 'xxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, c => {
           const r = Math.random() * 16 | 0;
           return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
-    // API publique minimale : permet à site-init.js de lire la session courante
     window.__BEN = window.__BEN || {};
     window.__BEN.sessionId = botSessionId;
-
     document.getElementById('ben-widget').classList.add('ben-open');
     clearBody(); clearFooter();
-    isOffHours() ? stepOffHours() : stepAccueil();
+    trackEvent('bot_opened');
+    // Détection hors-horaires EN PREMIER à l'accueil
+    if (isOffHours()) {
+      stepOffHours();
+    } else {
+      // Détection returning user (localStorage)
+      var ru = loadReturningUser();
+      ru ? stepReturningUser(ru) : stepAccueil();
+    }
   }
 
   function closeWidget() {
     clearAutoClose();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.auRevoir);                         // sticker "au revoir" — cohérent avec farewell
+    addSticker(STK.auRevoir);
     setTimeout(closeWidgetSilent, 1500);
   }
 
@@ -296,7 +303,6 @@
         const b = document.createElement('div');
         b.className = 'ben-bubble ' + who;
         b.innerHTML = html;
-        /* Les liens naviguent dans le même onglet (comportement natif) */
         document.getElementById('ben-body').appendChild(b);
         scrollBottom();
         resolve();
@@ -337,22 +343,6 @@
   }
   function removeTyping() { if (typingEl) { typingEl.remove(); typingEl = null; } }
 
-  function addCTABlock(waMsg) {
-    const waUrl = waMsg
-      ? 'https://wa.me/' + ((_S.phone && _S.phone.wa) || '33180846040') + '?text=' + encodeURIComponent(waMsg)
-      : CFG.wa;
-    const block = document.createElement('div');
-    block.className = 'ben-cta-block';
-    block.innerHTML = `
-      <a href="${CFG.phone}" class="ben-cta-phone">📞 ${CFG.phoneDisplay}</a>
-      <a href="${waUrl}" class="ben-cta-wa" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp
-      </a>`;
-    document.getElementById('ben-body').appendChild(block);
-    scrollBottom();
-  }
-
   /* ── CHOICES ─────────────────────────────────────────────── */
   function showChoices(choices) {
     clearFooter();
@@ -364,8 +354,8 @@
       btn.innerHTML = c.label;
       btn.addEventListener('click', async () => {
         wrap.querySelectorAll('.ben-choice-btn').forEach(b => b.disabled = true);
-        clearFooter();                    // retire les boutons immédiatement
-        await addBubble('user', c.label); // bulle client visible avant l'action
+        clearFooter();
+        await addBubble('user', c.label);
         c.action();
       });
       wrap.appendChild(btn);
@@ -391,7 +381,7 @@
       if (!v) return;
       ta.disabled = true;
       clearFooter();
-      await addBubble('user', v);   // bulle client visible avant l'action
+      await addBubble('user', v);
       onSend(v);
     };
     row.querySelector('.ben-send-btn').addEventListener('click', doSend);
@@ -401,10 +391,6 @@
   }
 
   /* ── VALIDATED FORM ──────────────────────────────────────── */
-  /*
-   * fields: [{ key, placeholder, type, required, validate, errorMsg }]
-   * validate: function(value) → boolean
-   */
   function showForm(fields, submitLabel, onSubmit) {
     clearFooter();
     const form = document.createElement('div');
@@ -428,7 +414,6 @@
       err.style.cssText = 'font-size:11px;color:#ef4444;display:none;padding-left:4px';
       errors[f.key] = err;
 
-      /* Validate on blur */
       inp.addEventListener('blur', () => {
         if (f.validate) {
           const ok = !inp.value.trim() && !f.required ? true : f.validate(inp.value);
@@ -437,7 +422,6 @@
           err.style.display = ok ? 'none' : 'block';
         }
       });
-      /* Clear error on focus */
       inp.addEventListener('focus', () => {
         inp.style.borderColor = '#FF5A00';
         err.style.display = 'none';
@@ -492,7 +476,6 @@
     await showTyping(300);
     await addBubble('bot', 'Avez-vous d\'autres questions ? 😊', 900);
 
-    /* Countdown visible ────────────────────────────── */
     let secsLeft = Math.floor(CFG.autoCloseDelay / 1000);
     const countdownEl = document.createElement('div');
     countdownEl.className = 'ben-bubble bot ben-countdown';
@@ -535,298 +518,27 @@
   async function stepFarewell() {
     clearFooter();
     setBenImage(IMG.auRevoir);
-    addSticker(STK.auRevoir);                         // sticker unique "au revoir"
-    setTimeout(closeWidgetSilent, 5000);              // fermeture auto 5s
+    addSticker(STK.auRevoir);
+    setTimeout(closeWidgetSilent, 5000);
   }
 
   /* ══════════════════════════════════════════════════════════
-     STEPS
+     NORMALISATION
   ══════════════════════════════════════════════════════════ */
-
-  /* Bouton retour réutilisable dans tous les showChoices ── */
-  const RETOUR = {
-    label: '↩ Retour à l\'accueil',
-    action: () => { clearBody(); setBenImage(IMG.bonjour); stepAccueil(); },
-  };
-
-  /* ── STEP 0 — ACCUEIL ─────────────────────────────────── */
-  async function stepAccueil() {
-    setBenImage(IMG.bonjour);
-    await showTyping(200);
-    await addBubble('bot', 'Bonjour 👋 Je suis <strong>Ben</strong>, technicien SOS FONTE.<br>Comment puis-je vous aider ?', 900);
-    showChoices([
-      { label: '🔴 Urgence — fuite active',       action: stepUrgence },
-      { label: '🔧 Intervention fonte',            action: stepIntervention },
-      { label: '🔍 Diagnostic / curage',           action: stepDiagnostic },
-      { label: '📋 Syndic ou Conseil Syndical',    action: stepSyndic },
-      { label: '🤝 Professionnel — partenariat',   action: stepPartenaire },
-      { label: '❓ J\'ai une question',             action: stepFAQ },
-    ]);
-  }
-
-  /* ── STEP 1A — URGENCE ────────────────────────────────── */
-  async function stepUrgence() {
-    clearFooter();
-    setBenImage(IMG.cestChaud);
-    addSticker(STK.urgence);
-    await addBubble('bot', '📞 Appelez maintenant :', 600);
-    addCTABlock("Bonjour, j'ai une urgence sur une canalisation en fonte. Pouvez-vous intervenir ?");
-    await showTyping(1200);                          // respiration avant le message de rassurence
-    setBenImage(IMG.jinterviens);
-    addSticker(STK.enRoute);
-    await addBubble('bot', 'Paris et IDF — <strong>sous 4h</strong>. 🚐', 800);
-    stepAutresQuestions();
-  }
-
-  /* ── STEP 1B — INTERVENTION FONTE ────────────────────── */
-  async function stepIntervention() {
-    clearFooter();
-    setBenImage(IMG.jecoute);
-    await showTyping(300);
-    await addBubble('bot', 'Je vous écoute. Décrivez votre situation en quelques mots.', 800);
-    showTextInput('Ex : fuite colonne EU cave immeuble 1920…', async (txt) => {
-      clearFooter();
-      setBenImage(IMG.pensif);
-      await showTyping(400);
-
-      /* ── Analyse contextuelle ─────────────────────────
-         Si le texte ressemble à une question (? final ou
-         verbe interrogatif) → on cherche dans la FAQ.   */
-      const faqMatch = matchFAQ(txt);
-      /* Détection question : ? final OU mot interrogatif en tête
-         (après normalisation accents + majuscules)              */
-      const _txtN = _norm(txt.trim());
-      const looksQ = /\?/.test(txt) ||
-        /^(quel(le)?s?|qu.est|qu.y|pourquoi|comment|combien|ou\b|quand|qui\b|lequel|laquelle|lesquel|est.ce|pouvez|peut.on|avez.vous|faites.vous|proposez.vous|intervenez|d.placez|venez|couvrez|vous\b|c.est.quoi|quelle.est|quel.est|difference|y.a.t.il)/i
-          .test(_txtN);
-
-      if (faqMatch) {
-        addSticker(STK.diag);                           // sticker diagnostic en cours
-        await new Promise(r => setTimeout(r, 3500));   // 3,5 s de "réflexion"
-        setBenImage(IMG.jexplique);
-        await addBubble('bot', faqMatch.text, 0);
-        if (faqMatch.link) {
-          await addBubble('bot',
-            '<a href="' + faqMatch.link + '" class="ben-page-link">En savoir plus →</a>', 300);
-        }
-        await showTyping(300);
-        await addBubble('bot', 'Vous avez aussi une situation à me décrire ?', 600);
-        showChoices([
-          { label: '🔧 Oui, j\'ai un problème à régler', action: stepIntervention },
-          RETOUR,
-        ]);
-        return;
-      }
-
-      if (looksQ) {
-        setBenImage(IMG.jexplique);
-        await addBubble('bot',
-          'Ça ressemble à une question 🤔 Utilisez le bouton <strong>"❓ J\'ai une question"</strong> — je réponds à plus de 20 sujets.',
-          800);
-        await showTyping(300);
-        await addBubble('bot', 'Vous avez aussi une situation à me décrire ?', 600);
-        showChoices([
-          { label: '❓ Poser ma question',              action: stepFAQ },
-          { label: '🔧 Non, décrire mon problème',      action: stepIntervention },
-          RETOUR,
-        ]);
-        return;
-      }
-
-      /* ── Situation normale : formulaire de rappel ─── */
-      formData.situation = txt;
-      await addBubble('bot', 'Compris. Pour vous rappeler rapidement :', 900);
-      showForm([
-        {
-          key: 'nom', placeholder: 'Prénom et Nom *', required: true,
-        },
-        {
-          key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
-          validate: V.phone, errorMsg: V.msgs.phone,
-        },
-        {
-          key: 'codepostal', placeholder: 'Code postal * (ex : 75017)', required: true,
-          validate: V.postal, errorMsg: V.msgs.postal,
-        },
-      ], 'Je veux être rappelé sous 2h →', async (data) => {
-        clearFooter();
-        setBenImage(IMG.okParfait);
-        const prenom = data.nom.split(' ')[0];
-        addSticker(STK.rdv);
-        await addBubble('bot', `<strong>${prenom}</strong>, rappel sous 2h. 📞 ${CFG.phoneDisplay}`, 600);
-        sendLead('Intervention fonte', data);
-        stepAutresQuestions();
-      });
-    });
-  }
-
-  /* ── STEP 1C — DIAGNOSTIC / CURAGE ───────────────────── */
-  async function stepDiagnostic() {
-    clearFooter();
-    setBenImage(IMG.pensif);
-    await showTyping(300);
-    await addBubble('bot', 'Quel type de diagnostic vous concerne ?', 800);
-    showChoices([
-      { label: 'Recherche de fuite — colorant / gaz traceur', action: () => stepDiagForm('Recherche de fuite') },
-      { label: 'Inspection caméra — rapport assurance',        action: () => stepDiagForm('Inspection caméra') },
-      { label: 'Curage haute pression',                        action: () => stepDiagForm('Curage haute pression') },
-      { label: 'Diagnostic avant achat immobilier',            action: () => stepDiagForm('Diagnostic achat') },
-      RETOUR,
-    ]);
-  }
-
-  async function stepDiagForm(type) {
-    formData.typeDiag = type;
-    clearFooter();
-    setBenImage(IMG.jexplique);
-    await showTyping(300);
-    await addBubble('bot', 'On intervient partout en IDF.<br>Quel est le code postal du bien ?', 800);
-    showForm([
-      {
-        key: 'codepostal', placeholder: 'Code postal * (ex : 92200)', required: true,
-        validate: V.postal, errorMsg: V.msgs.postal,
-      },
-      {
-        key: 'tel', placeholder: 'Téléphone (optionnel)', type: 'tel',
-        validate: V.phone, errorMsg: V.msgs.phone,
-      },
-      {
-        key: 'email', placeholder: 'Email pour le devis *', type: 'email', required: true,
-        validate: V.email, errorMsg: V.msgs.email,
-      },
-    ], 'Recevoir le devis →', async (data) => {
-      clearFooter();
-      setBenImage(IMG.reconnaissant);
-      addSticker(STK.attendez);                    // "on note / on gère"
-      await addBubble('bot', `Noté ! On vous rappelle sous 24h pour votre devis.<br>📞 ${CFG.phoneDisplay}`, 700);
-      sendLead(type, data);
-      stepAutresQuestions();
-    });
-  }
-
-  /* ── STEP 1D — SYNDIC ─────────────────────────────────── */
-  async function stepSyndic() {
-    clearFooter();
-    setBenImage(IMG.rassurant);
-    await showTyping(300);
-    await addBubble('bot', 'Bienvenue. Vous êtes au bon endroit.<br>Nous travaillons avec les grands gestionnaires IDF.', 800);
-    await showTyping(200);
-    await addBubble('bot', 'Vous êtes :', 600);
-    showChoices([
-      { label: 'Gestionnaire / Syndic professionnel', action: () => stepSyndicPortefeuille('Syndic professionnel') },
-      { label: 'Membre du Conseil Syndical',          action: () => stepSyndicPortefeuille('Conseil Syndical') },
-      { label: 'Administrateur de biens',             action: () => stepSyndicPortefeuille('Administrateur de biens') },
-      RETOUR,
-    ]);
-  }
-
-  async function stepSyndicPortefeuille(profil) {
-    formData.profil = profil;
-    clearFooter();
-    setBenImage(IMG.jexplique);
-    await showTyping(300);
-    await addBubble('bot', 'Combien d\'immeubles concernés<br>par des réseaux en fonte ?', 800);
-    showChoices([
-      { label: '1 immeuble',          action: () => stepSyndicForm('1') },
-      { label: '2 à 5 immeubles',     action: () => stepSyndicForm('2-5') },
-      { label: 'Plus de 5 immeubles', action: () => stepSyndicForm('5+') },
-      RETOUR,
-    ]);
-  }
-
-  async function stepSyndicForm(nb) {
-    formData.nbImmeubles = nb;
-    clearFooter();
-    await showTyping(300);
-    await addBubble('bot', 'Parfait. Laissez-nous vos coordonnées :', 800);
-    showForm([
-      { key: 'nom',     placeholder: 'Nom et Prénom *', required: true },
-      { key: 'cabinet', placeholder: 'Cabinet / Société' },
-      {
-        key: 'email', placeholder: 'Email professionnel *', type: 'email', required: true,
-        validate: V.email, errorMsg: V.msgs.email,
-      },
-      {
-        key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
-        validate: V.phone, errorMsg: V.msgs.phone,
-      },
-    ], 'Envoyer ma demande →', async (data) => {
-      clearFooter();
-      setBenImage(IMG.merci);
-      const prenom = data.nom.split(' ')[0];
-      addSticker(STK.merci);                       // sticker = merci, pas de doublon
-      await addBubble('bot',
-        `<strong>${prenom}</strong>, notre responsable vous contacte sous 24h.<br><a href="syndics.html" class="ben-page-link">Offre syndics →</a>`,
-        500);
-      sendLead('Syndic', data);
-      stepAutresQuestions();
-    });
-  }
-
-  /* ── STEP 1E — PARTENAIRE PRO ─────────────────────────── */
-  async function stepPartenaire() {
-    clearFooter();
-    setBenImage(IMG.sourire);
-    await showTyping(300);
-    await addBubble('bot', 'Super, on aime travailler avec des pros 💪<br>Vous êtes :', 800);
-    showChoices([
-      { label: 'Plombier / Artisan',            action: () => stepPartenaireForm('Plombier / Artisan') },
-      { label: "Bureau d'études / Architecte",  action: () => stepPartenaireForm("Bureau d'études") },
-      { label: 'Gestionnaire immobilier',       action: () => stepPartenaireForm('Gestionnaire immobilier') },
-      { label: 'Autre professionnel',           action: () => stepPartenaireForm('Autre professionnel') },
-      RETOUR,
-    ]);
-  }
-
-  async function stepPartenaireForm(type) {
-    formData.typePartenaire = type;
-    clearFooter();
-    setBenImage(IMG.jecoute);
-    await showTyping(300);
-    await addBubble('bot', 'Décrivez votre activité et ce que vous recherchez.', 800);
-    showTextInput('Votre message…', async (msg) => {
-      formData.message = msg;
-      clearFooter();
-      await showTyping(300);
-      await addBubble('bot', 'Vos coordonnées :', 800);
-      showForm([
-        {
-          key: 'email', placeholder: 'Email *', type: 'email', required: true,
-          validate: V.email, errorMsg: V.msgs.email,
-        },
-        {
-          key: 'tel', placeholder: 'Téléphone', type: 'tel',
-          validate: V.phone, errorMsg: V.msgs.phone,
-        },
-      ], 'Envoyer ma demande →', async (data) => {
-        clearFooter();
-        setBenImage(IMG.bravo);
-        addSticker(STK.bravo);                        // sticker = "Bravo / message reçu"
-        await addBubble('bot', `Un collègue vous répond sous 48h.<br>📧 ${CFG.email}`, 600);
-        sendLead('Partenaire — ' + type, data);
-        stepAutresQuestions();
-      });
-    });
-  }
-
-  /* ── NORMALISATION — accent-strip robuste ─────────── */
   function _norm(s) {
     s = String(s).toLowerCase().normalize('NFD');
     var out = '';
     for (var i = 0; i < s.length; i++) {
       var c = s.charCodeAt(i);
-      if (c < 0x0300 || c > 0x036F) out += s[i]; // retire diacritiques
+      if (c < 0x0300 || c > 0x036F) out += s[i];
     }
     return out
-      .replace(/[‘’‛`]/g, "'") // guillemets -> apostrophe
-      .replace(/[–—-]/g, ' ');       // tirets -> espace
+      .replace(/[''‛`]/g, "'")
+      .replace(/[–—-]/g, ' ');
   }
 
-  /* ── FAQ ENTRIES — référentiel ───────────────────────── */
-  /* Scoring : phrase multi-mots = 3 pts, mot seul = 1 pt.
-     Retourne l'entrée avec le MEILLEUR score.             */
+  /* ── FAQ ENTRIES ─────────────────────────────────────────── */
   var FAQ_ENTRIES = [
-    /* Urgence & disponibilité */
     { keys: ['24h','24/7','nuit','weekend','week end','we','wkd','ferie','feries',
              'dimanche','samedi','heure','hors horaire','intervenez vous le','venez le'],
       text: 'On intervient <strong>24h/24 — 7j/7</strong>, week-ends et jours fériés inclus. Les tarifs sont revalorisés hors horaires — on vous communique le détail à l\'appel.',
@@ -837,7 +549,6 @@
     { keys: ['colonne montante','fuite colonne','urgence','eau partout','inondation'],
       text: 'Une colonne fonte sous pression peut provoquer des dégâts aux étages inférieurs en quelques minutes. <strong>Appelez immédiatement.</strong>',
       link: 'faq.html#urgence' },
-    /* Zone & déplacement — uniquement termes géographiques, pas de verbes ambigus */
     { keys: ['banlieue','province','periph','banlieusard','hors paris',
              'vous deplacez','vous intervenez en','vous venez dans',
              'deplacement','couvert','desservi','zone couverte'],
@@ -852,7 +563,6 @@
     { keys: ['zone','secteur','idf','ile de france','couvert','ville','paris'],
       text: 'Paris intra-muros + Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94) et grande couronne. Contactez-nous pour confirmer votre secteur.',
       link: 'faq.html#zone' },
-    /* Tarifs & paiement */
     { keys: ['gratuit','devis','estimation','prix','combien','cout','tarif','cher'],
       text: 'Le devis est <strong>gratuit</strong> pour les demandes en ligne avec photos claires (WhatsApp bienvenu). Pour les projets complexes sur place, les conditions sont définies ensemble.',
       link: 'faq.html#tarif' },
@@ -862,7 +572,6 @@
     { keys: ['assurance','degat des eaux','sinistre','declaration','anah','aide','rembourse'],
       text: 'Souvent oui pour les dégâts des eaux. Nous fournissons un <strong>rapport d\'intervention complet</strong> reconnu par les assureurs et les notaires.',
       link: 'faq.html#tarif' },
-    /* Technique */
     { keys: ['chemisage','chemiser','rehabilitation','sans demolition','relogement','sans travaux','gaine'],
       text: 'Le chemisage insère une gaine dans la canalisation existante — <strong>aucune démolition, aucun relogement</strong>. Souvent 2 à 3× moins coûteux qu\'un remplacement, durée de vie 30-50 ans.',
       link: 'faq.html#technique' },
@@ -881,14 +590,12 @@
     { keys: ['pourquoi fonte','avantage fonte','bruit','acoustique','feu','reglementation','solide','dure longtemps'],
       text: 'La fonte dure <strong>80 à 100 ans</strong>, amortit les bruits d\'écoulement et résiste au feu. Elle est parfois imposée par la réglementation dans les immeubles haussmanniens.',
       link: 'faq.html#technique' },
-    /* Syndic */
     { keys: ['syndic','contrat','maintenance','gestionnaire','assemblee generale','copropriete'],
       text: 'Oui : contrats annuels avec visite préventive, accès prioritaire 24h/7j et tarifs bloqués sur 12 mois. Rapport technique pour votre AG inclus.',
       link: 'faq.html#syndic' },
     { keys: ['gardien','mandate','accord cadre','mandat syndic','gardiennage'],
       text: 'Oui, on intervient sur appel du gardien avec mandat du syndic. Plusieurs cabinets en accord-cadre.',
       link: 'faq.html#syndic' },
-    /* Partenaires / RH */
     { keys: ['recrut','emploi','rejoindre','travail','embauche','candidat','poste','offre emploi'],
       text: 'Notre communauté grandit ! Envoyez votre dossier à <strong>contact@sosfonte.com</strong> — technicien, sous-traitant ou profil complémentaire. On revient vers vous rapidement.',
       link: 'faq.html#partenaires' },
@@ -905,7 +612,7 @@
       e.keys.forEach(function(k) {
         var nk = _norm(k);
         if (nk.length > 2 && l.indexOf(nk) !== -1) {
-          score += (nk.indexOf(' ') !== -1) ? 3 : 1; // phrase > mot seul
+          score += (nk.indexOf(' ') !== -1) ? 3 : 1;
         }
       });
       if (score > bestScore) { bestScore = score; best = e; }
@@ -913,146 +620,703 @@
     return bestScore > 0 ? best : null;
   }
 
-  /* ── STEP 1F — FAQ (texte libre + retry) ─────────────── */
-  async function stepFAQ() {
+  /* ══════════════════════════════════════════════════════════
+     RETURNING USER ENGINE
+  ══════════════════════════════════════════════════════════ */
+  var RU_KEY = 'ben_ru';
+
+  function saveReturningUser(phone, branch, label) {
+    try {
+      localStorage.setItem(RU_KEY, JSON.stringify({
+        phone: phone,
+        branch: branch,
+        label: label,
+        date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' }),
+      }));
+    } catch(e) {}
+  }
+
+  function loadReturningUser() {
+    try {
+      var raw = localStorage.getItem(RU_KEY);
+      if (!raw) return null;
+      var d = JSON.parse(raw);
+      return d;
+    } catch(e) { return null; }
+  }
+
+  async function stepReturningUser(ru) {
+    setBenImage(IMG.rassurant);
+    await showTyping(300);
+    await addBubble('bot', 'Bonjour. Vous avez déjà contacté SOS FONTE le <strong>' + ru.date + '</strong> pour <strong>' + ru.label + '</strong>.', 900);
+    await showTyping(200);
+    await addBubble('bot', 'Même sujet ou nouvelle demande ?', 500);
+    trackEvent('returning_user_detected');
+    showChoices([
+      {
+        label: '🔄 Même sujet — relancer',
+        action: async () => {
+          trackEvent('returning_same_subject');
+          formData.isReturning = true;
+          formData.returnBranch = ru.branch;
+          formData.score_bonus = 20;
+          setBenImage(IMG.jecoute);
+          await showTyping(300);
+          await addBubble('bot', 'Je relance votre demande en priorité.', 700);
+          stepCanalContact();
+        }
+      },
+      {
+        label: '🆕 Nouveau problème',
+        action: () => {
+          trackEvent('returning_new_subject');
+          formData.score_bonus = 10;
+          clearBody();
+          stepAccueil();
+        }
+      },
+    ]);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     WHATSAPP ENGINE
+  ══════════════════════════════════════════════════════════ */
+  function buildWAMessage() {
+    var parts = [];
+    if (formData.urgence) parts.push('🔴 URGENT — fuite active');
+    if (formData.brancheLabel) parts.push(formData.brancheLabel);
+    if (formData.sousType) parts.push(formData.sousType);
+    if (formData.typeBien) parts.push(formData.typeBien);
+    if (formData.codepostal) parts.push('CP ' + formData.codepostal);
+    if (formData.situation) parts.push(formData.situation.slice(0, 80));
+    var msg = parts.join(' — ');
+    return msg || 'Bonjour, demande via le site SOS FONTE';
+  }
+
+  function openWhatsApp() {
+    var msg = buildWAMessage();
+    var url = 'https://wa.me/' + CFG.waNumber + '?text=' + encodeURIComponent(msg);
+    trackEvent('whatsapp_clicked');
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  function openEmail() {
+    var subject = encodeURIComponent(
+      'Demande SOS FONTE' + (formData.brancheLabel ? ' — ' + formData.brancheLabel : '') +
+      (formData.codepostal ? ' — ' + formData.codepostal : '')
+    );
+    var lines = ['Bonjour,', ''];
+    if (formData.urgence) lines.push('⚠️ URGENCE DÉCLARÉE', '');
+    if (formData.brancheLabel) lines.push('Demande : ' + formData.brancheLabel);
+    if (formData.sousType) lines.push('Type : ' + formData.sousType);
+    if (formData.typeBien) lines.push('Bien : ' + formData.typeBien);
+    if (formData.codepostal) lines.push('Code postal : ' + formData.codepostal);
+    if (formData.situation) lines.push('Description : ' + formData.situation);
+    lines.push('', 'Cordialement');
+    var body = encodeURIComponent(lines.join('\n'));
+    trackEvent('email_clicked');
+    window.location.href = 'mailto:' + CFG.email + '?subject=' + subject + '&body=' + body;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     STEP CANAL CONTACT
+  ══════════════════════════════════════════════════════════ */
+  async function stepCanalContact() {
     clearFooter();
     setBenImage(IMG.jexplique);
     await showTyping(300);
-    await addBubble('bot', 'Posez votre question directement — je vous réponds.', 700);
+    await addBubble('bot', 'Comment souhaitez-vous transmettre votre demande ?', 800);
     await showTyping(200);
-    await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "Vous déplacez-vous en banlieue ?" · "Le devis est gratuit ?" · "Combien de temps dure le chantier ?"</span>', 400);
+    await addBubble('bot', 'WhatsApp est le moyen le plus rapide — réponse SOS FONTE Front Desk sous 10 min en heures ouvrées.', 500);
 
-    /* Affiche la réponse trouvée : sticker diag + délai + réponse */
-    async function showAnswer(match) {
+    showChoices([
+      {
+        label: '💬 WhatsApp — rapide',
+        action: () => {
+          formData.canal = 'whatsapp';
+          if (!formData.nom || !formData.codepostal) {
+            stepCollectMinimal('whatsapp');
+          } else {
+            stepConfirmWA();
+          }
+        }
+      },
+      {
+        label: '📞 Être rappelé',
+        action: () => {
+          formData.canal = 'tel';
+          stepCollectRappel();
+        }
+      },
+      {
+        label: '✉️ Email',
+        action: () => {
+          formData.canal = 'email';
+          if (!formData.codepostal) {
+            stepCollectCP(() => {
+              clearFooter();
+              openEmail();
+              sendLead();
+              stepConfirmationEmail();
+            });
+          } else {
+            openEmail();
+            sendLead();
+            stepConfirmationEmail();
+          }
+        }
+      },
+    ]);
+  }
+
+  async function stepCollectMinimal(canal) {
+    clearFooter();
+    await showTyping(300);
+    await addBubble('bot', 'Quelques infos pour votre message :', 700);
+    showForm([
+      { key: 'nom', placeholder: 'Votre prénom *', required: true },
+      {
+        key: 'codepostal', placeholder: 'Code postal *', required: true,
+        validate: V.postal, errorMsg: V.msgs.postal,
+      },
+    ], 'Continuer →', (data) => {
+      trackEvent('zipcode_submitted');
+      if (canal === 'whatsapp') {
+        stepConfirmWA();
+      }
+    });
+  }
+
+  async function stepCollectRappel() {
+    clearFooter();
+    await showTyping(300);
+    await addBubble('bot', 'Votre numéro pour vous rappeler :', 700);
+    showForm([
+      { key: 'nom', placeholder: 'Votre prénom *', required: true },
+      {
+        key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
+        validate: V.phone, errorMsg: V.msgs.phone,
+      },
+      {
+        key: 'codepostal', placeholder: 'Code postal *', required: true,
+        validate: V.postal, errorMsg: V.msgs.postal,
+      },
+    ], 'Être rappelé →', async (data) => {
+      clearFooter();
+      setBenImage(IMG.reconnaissant);
+      addSticker(STK.rdv);
+      var prenom = (data.nom || '').split(' ')[0];
+      await addBubble('bot', '<strong>' + prenom + '</strong>, SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay, 700);
+      trackEvent('callback_submitted');
+      sendLead();
+      stepAutresQuestions();
+    });
+  }
+
+  async function stepCollectCP(cb) {
+    clearFooter();
+    await showTyping(200);
+    await addBubble('bot', 'Votre code postal ?', 500);
+    showForm([
+      {
+        key: 'codepostal', placeholder: 'Code postal *', required: true,
+        validate: V.postal, errorMsg: V.msgs.postal,
+      },
+    ], 'Continuer →', (data) => {
+      trackEvent('zipcode_submitted');
+      cb && cb(data);
+    });
+  }
+
+  async function stepConfirmWA() {
+    clearFooter();
+    setBenImage(IMG.okParfait);
+    var waMsg = buildWAMessage();
+    await showTyping(300);
+    await addBubble('bot', 'Votre message WhatsApp sera :<br><em style="font-size:12px;opacity:0.8">' + waMsg.replace(/—/g, '·') + '</em>', 800);
+    var block = document.createElement('div');
+    block.className = 'ben-cta-block';
+    block.innerHTML = '<button class="ben-cta-wa-btn" style="background:#25D366;color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:15px;width:100%">💬 Ouvrir WhatsApp</button>';
+    document.getElementById('ben-body').appendChild(block);
+    scrollBottom();
+    block.querySelector('.ben-cta-wa-btn').addEventListener('click', function() {
+      openWhatsApp();
+      sendLead();
+      addBubble('bot', 'Message envoyé à SOS FONTE Front Desk ✓ Réponse sous 10 min en heures ouvrées.', 400);
+      stepAutresQuestions();
+    });
+  }
+
+  async function stepConfirmationEmail() {
+    clearFooter();
+    setBenImage(IMG.reconnaissant);
+    await addBubble('bot', 'Votre messagerie s\'ouvre avec le message pré-rempli. Envoyez-le à <strong>' + CFG.email + '</strong>.', 700);
+    stepAutresQuestions();
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     7 BRANCHES — ACCUEIL
+  ══════════════════════════════════════════════════════════ */
+  const RETOUR = {
+    label: '↩ Retour à l\'accueil',
+    action: () => { clearBody(); setBenImage(IMG.bonjour); stepAccueil(); },
+  };
+
+  async function stepAccueil() {
+    setBenImage(IMG.bonjour);
+    await showTyping(200);
+    await addBubble('bot', 'Bonjour — je suis <strong>Ben</strong>.<br>Fuite, bouchon, canalisation fonte — dites-moi ce qui se passe.', 900);
+    showChoices([
+      { label: '🔴 Fuite / urgence',               action: stepFuite },
+      { label: '🚽 Canalisation bouchée',           action: stepBouchon },
+      { label: '👃 Odeur / humidité',               action: stepOdeur },
+      { label: '🏢 Colonne fonte / copropriété',    action: stepColonne },
+      { label: '📷 Diagnostic / caméra',            action: stepDiagnostic },
+      { label: '📋 Syndic / professionnel',         action: stepSyndic },
+      { label: '❓ Autre question',                  action: stepFAQ },
+    ]);
+    trackEvent('option_clicked');
+  }
+
+  /* ── BRANCHE 1 — FUITE / URGENCE ────────────────────────── */
+  async function stepFuite() {
+    formData.branche = 'urgence';
+    formData.brancheLabel = 'Fuite / urgence';
+    clearFooter();
+    setBenImage(IMG.cestChaud);
+    await showTyping(300);
+    await addBubble('bot', 'L\'eau coule en ce moment ?', 800);
+    showChoices([
+      {
+        label: '⚠️ Oui, ça coule maintenant',
+        action: async () => {
+          formData.urgence = true;
+          formData.sousType = 'Fuite active';
+          addSticker(STK.urgence);
+          setBenImage(IMG.jinterviens);
+          await addBubble('bot', 'Coupez l\'arrivée d\'eau dès que vous pouvez. Je prépare votre demande pendant ce temps.', 700);
+          await showTyping(200);
+          await addBubble('bot', 'Pour les colonnes communes, signalez-le au gardien en parallèle.', 400);
+          stepCollectCP(async () => {
+            clearFooter();
+            setBenImage(IMG.okParfait);
+            await showTyping(300);
+            await addBubble('bot', 'SOS FONTE Front Desk prend en charge. Canal de contact ?', 600);
+            showChoices([
+              {
+                label: '💬 WhatsApp — immédiat',
+                action: () => { formData.canal = 'whatsapp'; stepConfirmWA(); }
+              },
+              {
+                label: '📞 Appeler maintenant — ' + CFG.phoneDisplay,
+                action: () => {
+                  formData.canal = 'tel_direct';
+                  trackEvent('call_clicked');
+                  sendLead();
+                  window.location.href = CFG.phone;
+                }
+              },
+              {
+                label: '📞 Être rappelé',
+                action: () => { formData.canal = 'tel'; stepCollectRappel(); }
+              },
+            ]);
+          });
+        }
+      },
+      {
+        label: '💧 Oui, mais faible / intermittent',
+        action: () => {
+          formData.urgence = false;
+          formData.sousType = 'Fuite faible';
+          stepTypeBien(() => stepCanalContact());
+        }
+      },
+      {
+        label: '🟠 Trace ancienne / humidité',
+        action: () => {
+          formData.urgence = false;
+          formData.sousType = 'Trace humidité';
+          formData.branche = 'odeur';
+          formData.brancheLabel = 'Humidité / trace';
+          stepTypeBien(() => stepCanalContact());
+        }
+      },
+      {
+        label: 'Je ne sais pas',
+        action: () => {
+          formData.urgence = false;
+          formData.sousType = 'Incertain';
+          stepTypeBien(() => stepCanalContact());
+        }
+      },
+    ]);
+  }
+
+  /* ── BRANCHE 2 — BOUCHON ─────────────────────────────────── */
+  async function stepBouchon() {
+    formData.branche = 'bouchon';
+    formData.brancheLabel = 'Canalisation bouchée';
+    clearFooter();
+    setBenImage(IMG.pensif);
+    await showTyping(300);
+    await addBubble('bot', 'Où semble se situer le bouchon ?', 800);
+    showChoices([
+      { label: '🚽 WC / sanitaire',    action: () => { formData.sousType = 'WC/sanitaire'; stepTypeBien(() => stepCanalContact()); } },
+      { label: '🍳 Cuisine / évier',   action: () => { formData.sousType = 'Cuisine';      stepTypeBien(() => stepCanalContact()); } },
+      {
+        label: '🏢 Colonne immeuble',
+        action: () => {
+          formData.sousType = 'Colonne immeuble';
+          formData.branche = 'colonne';
+          stepTypeBien(() => stepCanalContact());
+        }
+      },
+      { label: 'Je ne sais pas',       action: () => { formData.sousType = 'Incertain';    stepTypeBien(() => stepCanalContact()); } },
+      RETOUR,
+    ]);
+  }
+
+  /* ── BRANCHE 3 — ODEUR / HUMIDITÉ ───────────────────────── */
+  async function stepOdeur() {
+    formData.branche = 'odeur';
+    formData.brancheLabel = 'Odeur / humidité';
+    clearFooter();
+    setBenImage(IMG.pensif);
+    await showTyping(300);
+    await addBubble('bot', 'L\'odeur ou l\'humidité vient plutôt :', 800);
+    showChoices([
+      { label: 'Canalisations',          action: () => { formData.sousType = 'Canalisations';     stepTypeBien(() => stepCanalContact()); } },
+      { label: 'Parties communes',       action: () => { formData.sousType = 'Parties communes';  stepTypeBien(() => stepCanalContact()); } },
+      { label: 'Avec trace d\'humidité', action: () => { formData.sousType = 'Trace humidité';    stepTypeBien(() => stepCanalContact()); } },
+      { label: 'Difficile à localiser',  action: () => { formData.sousType = 'Non localisé';      stepTypeBien(() => stepCanalContact()); } },
+      RETOUR,
+    ]);
+  }
+
+  /* ── BRANCHE 4 — COLONNE FONTE / COPROPRIÉTÉ ────────────── */
+  async function stepColonne() {
+    formData.branche = 'colonne';
+    formData.brancheLabel = 'Colonne fonte / copropriété';
+    clearFooter();
+    setBenImage(IMG.rassurant);
+    await showTyping(300);
+    await addBubble('bot', 'Le problème concerne quel type de bien ?', 800);
+    stepTypeBien(() => stepStatutColonne());
+  }
+
+  async function stepStatutColonne() {
+    clearFooter();
+    setBenImage(IMG.jexplique);
+    await showTyping(300);
+    await addBubble('bot', 'Vous êtes :', 700);
+    showChoices([
+      {
+        label: '👤 Propriétaire',
+        action: () => { formData.statut = 'proprietaire'; stepCanalContact(); }
+      },
+      {
+        label: '🧾 Locataire',
+        action: async () => {
+          formData.statut = 'locataire';
+          clearFooter();
+          setBenImage(IMG.jexplique);
+          await showTyping(300);
+          await addBubble('bot', 'Votre propriétaire ou syndic doit nous contacter. Mais on peut réaliser un diagnostic préventif si vous le souhaitez.', 900);
+          showChoices([
+            { label: '📷 Demander un diagnostic', action: () => { formData.branche = 'diagnostic'; stepDiagnostic(); } },
+            { label: '💬 Contacter le syndic d\'abord', action: stepFarewell },
+            RETOUR,
+          ]);
+        }
+      },
+      {
+        label: '📋 Syndic / gestionnaire',
+        action: () => { formData.statut = 'syndic'; stepSyndic(); }
+      },
+      {
+        label: '🏢 Conseil syndical',
+        action: () => { formData.statut = 'conseil_syndical'; stepCanalContact(); }
+      },
+      {
+        label: '🛠 Gardien / maintenance',
+        action: () => { formData.statut = 'gardien'; stepCanalContact(); }
+      },
+      RETOUR,
+    ]);
+  }
+
+  /* ── HELPER — TYPE DE BIEN ───────────────────────────────── */
+  async function stepTypeBien(callback) {
+    clearFooter();
+    setBenImage(IMG.pensif);
+    await showTyping(200);
+    await addBubble('bot', 'Type de bien :', 600);
+    showChoices([
+      { label: '🏢 Appartement / immeuble', action: () => { formData.typeBien = 'Appartement / immeuble'; callback(); } },
+      { label: '🏠 Maison individuelle',    action: () => { formData.typeBien = 'Maison';                  callback(); } },
+      { label: '🏬 Local commercial',       action: () => { formData.typeBien = 'Local commercial';        callback(); } },
+      { label: 'Je ne sais pas',            action: () => { formData.typeBien = null;                      callback(); } },
+    ]);
+  }
+
+  /* ── BRANCHE 5 — DIAGNOSTIC ──────────────────────────────── */
+  async function stepDiagnostic() {
+    formData.branche = 'diagnostic';
+    formData.brancheLabel = 'Diagnostic / caméra';
+    clearFooter();
+    setBenImage(IMG.pensif);
+    await showTyping(300);
+    await addBubble('bot', 'Quel diagnostic souhaitez-vous ?', 800);
+    showChoices([
+      { label: '📹 Inspection caméra',          action: () => { formData.typeDiag = 'Inspection caméra';    formData.sousType = 'camera';  stepCanalContact(); } },
+      { label: '💧 Recherche de fuite',         action: () => { formData.typeDiag = 'Recherche de fuite';   formData.sousType = 'fuite';   stepCanalContact(); } },
+      { label: '🧼 Curage haute pression',      action: () => { formData.typeDiag = 'Curage haute pression';formData.sousType = 'curage';  stepCanalContact(); } },
+      { label: '🏢 Audit copropriété',          action: () => { formData.typeDiag = 'Audit copropriété';    formData.sousType = 'audit';   stepCanalContact(); } },
+      { label: '🏠 Diagnostic avant achat',     action: () => { formData.typeDiag = 'Diagnostic avant achat';formData.sousType = 'achat'; stepCanalContact(); } },
+      RETOUR,
+    ]);
+  }
+
+  /* ── BRANCHE 6 — SYNDIC / PROFESSIONNEL ─────────────────── */
+  async function stepSyndic() {
+    formData.branche = formData.branche || 'syndic';
+    formData.brancheLabel = formData.brancheLabel || 'Syndic / professionnel';
+    clearFooter();
+    setBenImage(IMG.rassurant);
+    await showTyping(300);
+    await addBubble('bot', 'Bienvenue. SOS FONTE travaille avec les principaux gestionnaires IDF.', 800);
+    await showTyping(200);
+    await addBubble('bot', 'Vous êtes :', 500);
+    showChoices([
+      { label: '📋 Syndic / gestionnaire professionnel', action: () => { formData.profil = 'Syndic professionnel';    formData.statut = 'syndic';          stepSyndicNbImmeubles(); } },
+      { label: '🏢 Conseil syndical',                     action: () => { formData.profil = 'Conseil Syndical';        formData.statut = 'conseil_syndical'; stepSyndicDescription(); } },
+      { label: '🛠 Plombier / artisan',                   action: () => { formData.profil = 'Plombier';               formData.statut = 'pro';             stepSyndicDescription(); } },
+      { label: '🏗 Architecte / bureau d\'études',        action: () => { formData.profil = "Bureau d'études";        formData.statut = 'pro';             stepSyndicDescription(); } },
+      { label: 'Autre professionnel',                      action: () => { formData.profil = 'Autre professionnel';   formData.statut = 'pro';             stepSyndicDescription(); } },
+      RETOUR,
+    ]);
+  }
+
+  async function stepSyndicNbImmeubles() {
+    clearFooter();
+    await showTyping(300);
+    await addBubble('bot', 'Combien d\'immeubles en fonte dans votre portefeuille ?', 800);
+    showChoices([
+      { label: '1 immeuble',          action: () => { formData.nbImmeubles = '1';   stepSyndicDescription(); } },
+      { label: '2 à 5 immeubles',     action: () => { formData.nbImmeubles = '2-5'; stepSyndicDescription(); } },
+      { label: 'Plus de 5 immeubles', action: () => { formData.nbImmeubles = '5+';  stepSyndicDescription(); } },
+      RETOUR,
+    ]);
+  }
+
+  async function stepSyndicDescription() {
+    clearFooter();
+    setBenImage(IMG.jecoute);
+    await showTyping(300);
+    await addBubble('bot', 'Décrivez brièvement votre besoin (optionnel).', 700);
+    showTextInput('Votre besoin (optionnel)…', (txt) => {
+      formData.situation = txt;
+      stepCanalContact();
+    });
+    // Bouton "Passer" discret sous l'input
+    var footer = document.getElementById('ben-footer');
+    var skipLink = document.createElement('div');
+    skipLink.style.cssText = 'text-align:center;padding:6px 0 2px';
+    skipLink.innerHTML = '<a href="#" style="font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;">Passer →</a>';
+    skipLink.querySelector('a').addEventListener('click', function(e) {
+      e.preventDefault();
+      clearFooter();
+      stepCanalContact();
+    });
+    footer.appendChild(skipLink);
+  }
+
+  /* ── BRANCHE 7 — FAQ ─────────────────────────────────────── */
+  async function stepFAQ() {
+    faqAttempts = 0;
+    clearFooter();
+    setBenImage(IMG.jexplique);
+    await showTyping(300);
+    await addBubble('bot', 'Posez votre question — je vais essayer de vous répondre simplement.', 700);
+    await showTyping(200);
+    await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "Vous intervenez le week-end ?" · "Le devis est gratuit ?" · "Durée du chantier ?"</span>', 400);
+
+    async function showFAQAnswer(match) {
       addSticker(STK.diag);
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, 2500));
       setBenImage(IMG.jexplique);
       await addBubble('bot', match.text, 0);
       if (match.link) {
         await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
       }
-      stepAutresQuestions();
+      trackEvent('faq_match');
+      showChoices([
+        { label: '💬 WhatsApp', action: () => { formData.canal = 'whatsapp'; formData.branche = 'faq'; stepConfirmWA(); } },
+        { label: '📞 Être rappelé', action: () => { formData.branche = 'faq'; stepCollectRappel(); } },
+        RETOUR,
+      ]);
     }
 
-    /* 1re saisie */
-    showTextInput('Tapez votre question…', async (question) => {
+    showTextInput('Tapez votre question…', async (q) => {
       clearFooter();
-      const match = matchFAQ(question);
-      if (match) { await showAnswer(match); return; }
+      faqAttempts++;
+      const match = matchFAQ(q);
+      if (match) { await showFAQAnswer(match); return; }
 
-      /* ── Raté #1 : sticker diag + demande de reformulation ── */
+      trackEvent('faq_miss_1');
       addSticker(STK.diag);
-      await new Promise(r => setTimeout(r, 2500));
+      await new Promise(r => setTimeout(r, 2000));
       setBenImage(IMG.pensif);
-      await addBubble('bot', 'Je n\'ai pas trouvé de réponse précise à votre question 🤔<br>Pouvez-vous la reformuler en quelques mots-clés ?', 800);
-      await showTyping(200);
-      await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "devis gratuit" · "week-end" · "durée chantier" · "banlieue"</span>', 300);
+      await addBubble('bot', 'Je n\'ai pas trouvé de réponse précise. Pouvez-vous reformuler ?', 800);
 
-      /* 2e saisie */
-      showTextInput('Reformulez votre question…', async (question2) => {
+      showTextInput('Reformulez…', async (q2) => {
         clearFooter();
-        setBenImage(IMG.pensif);
-        await showTyping(700);
+        faqAttempts++;
+        await showTyping(600);
+        const match2 = matchFAQ(q2);
+        if (match2) { await showFAQAnswer(match2); return; }
 
-        const match2 = matchFAQ(question2);
-        if (match2) { await showAnswer(match2); return; }
-
-        /* ── Raté #2 : orientation équipe (sans demander coordonnées) */
+        trackEvent('faq_miss_2');
+        trackEvent('handoff_requested');
         setBenImage(IMG.sourire);
-        await addBubble('bot', 'Votre question sort de mon périmètre — l\'équipe vous répondra précisément 😊', 900);
-        await showTyping(300);
-        await addBubble('bot', '<a href="faq.html" class="ben-page-link">📖 FAQ complète (20 questions) →</a>', 400);
-        addCTABlock("Bonjour, j'ai une question concernant vos services.");
-        stepAutresQuestions();
+        await addBubble('bot', 'Votre demande mérite une réponse précise. Je la transmets à SOS FONTE Front Desk.', 900);
+        await addBubble('bot', '<a href="faq.html" class="ben-page-link">📖 FAQ complète →</a>', 400);
+        formData.branche = 'faq';
+        stepCanalContact();
       });
     });
   }
 
-  /* ── STEP HORS HORAIRES ───────────────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     HORS HORAIRES
+  ══════════════════════════════════════════════════════════ */
   async function stepOffHours() {
     setBenImage(IMG.deborde);
-    addSticker(STK.hs);                               // sticker = "je suis HS", remplace le texte émotionnel
-    await addBubble('bot', "Hors ligne pour l'instant. Laissez votre numéro — rappel dès 7h !", 700);
-    showForm([
+    addSticker(STK.hs);
+    await addBubble('bot', 'L\'équipe SOS FONTE Front Desk reprend à 7h.', 700);
+    await showTyping(200);
+    await addBubble('bot', 'Si votre demande est urgente, je peux préparer un message WhatsApp maintenant — il sera lu dès l\'ouverture.', 600);
+    showChoices([
       {
-        key: 'tel', placeholder: 'Votre téléphone *', type: 'tel', required: true,
-        validate: V.phone, errorMsg: V.msgs.phone,
+        label: '💬 Préparer un WhatsApp',
+        action: () => { formData.canal = 'whatsapp'; formData.branche = 'offhours'; stepFuite(); }
       },
-    ], 'Me rappeler demain', async (data) => {
-      clearFooter();
-      setBenImage(IMG.reconnaissant);
-      addSticker(STK.ok);
-      await addBubble('bot', 'Noté — rappel dès 7h. 📞 ' + CFG.phoneDisplay, 600);
-      sendLead('Rappel hors-horaires', data);
-      stepAutresQuestions();
-    });
+      {
+        label: '📞 Être rappelé à 7h',
+        action: async () => {
+          formData.branche = 'offhours';
+          clearFooter();
+          await showTyping(300);
+          await addBubble('bot', 'Votre numéro — rappel à 7h15 :', 700);
+          showForm([
+            {
+              key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
+              validate: V.phone, errorMsg: V.msgs.phone,
+            },
+          ], 'Rappel à 7h15 →', async (data) => {
+            clearFooter();
+            setBenImage(IMG.reconnaissant);
+            addSticker(STK.ok);
+            await addBubble('bot', 'Noté — SOS FONTE Front Desk vous rappelle à 7h15. 📞 ' + CFG.phoneDisplay, 600);
+            formData.canal = 'tel';
+            sendLead();
+            stepAutresQuestions();
+          });
+        }
+      },
+      {
+        label: '❓ Poser une question',
+        action: stepFAQ,
+      },
+    ]);
   }
 
-  /* ── SEND LEAD ───────────────────────────────────────── */
-  function sendLead(branch, data) {
-    // ── 1. Payload Formspree (email relay — filet de sécurité) ──
-    const formspreePayload = {
-      _subject:     '[BOT BEN] ' + branch + ' — ' + (data.nom || data.tel || 'Lead'),
-      branche:      branch,
-      nom:          data.nom        || '—',
-      telephone:    data.tel        || '—',
-      email:        data.email      || 'nomail@sf.com',
-      codepostal:   data.codepostal || formData.codepostal || '—',
-      message:      data.message    || formData.situation  || '—',
-      cabinet:      data.cabinet    || '—',
-      profil:       formData.profil      || '—',
-      nb_immeubles: formData.nbImmeubles || '—',
-      timestamp:    new Date().toLocaleString('fr-FR'),
-      page:         window.location.href,
+  /* ══════════════════════════════════════════════════════════
+     SEND LEAD — VERSION COMPLÈTE
+  ══════════════════════════════════════════════════════════ */
+  function sendLead() {
+    var branch = formData.branche || 'contact_generique';
+    var brancheLabel = formData.brancheLabel || branch;
+
+    // Sauvegarder returning user
+    if (formData.tel && branch !== 'offhours') {
+      saveReturningUser(formData.tel, branch, brancheLabel);
+    }
+
+    trackEvent('flow_completed');
+
+    // ── Payload Formspree (filet de sécurité)
+    var formspreePayload = {
+      _subject:       '[BOT BEN V2] ' + brancheLabel + (formData.urgence ? ' 🔴 URGENT' : ''),
+      branche:        brancheLabel,
+      urgence:        formData.urgence ? 'OUI — fuite active' : 'non',
+      sousType:       formData.sousType      || '—',
+      typeBien:       formData.typeBien      || '—',
+      statut:         formData.statut        || '—',
+      profil:         formData.profil        || '—',
+      nbImmeubles:    formData.nbImmeubles   || '—',
+      typeDiag:       formData.typeDiag      || '—',
+      nom:            formData.nom           || '—',
+      telephone:      formData.tel           || '—',
+      email:          formData.email         || 'nomail@sf.com',
+      codepostal:     formData.codepostal    || '—',
+      situation:      formData.situation     || '—',
+      canal:          formData.canal         || '—',
+      page:           window.location.href,
+      timestamp:      new Date().toLocaleString('fr-FR'),
     };
 
     fetch(CFG.formspree, {
-      method:  'POST',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body:    JSON.stringify(formspreePayload),
+      body: JSON.stringify(formspreePayload),
     })
       .then(r => r.json())
       .then(r => { if (r.ok) console.log('[BenBot] Formspree ✓'); else throw r; })
       .catch(err => {
-        const leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
-        leads.push(formspreePayload);
-        localStorage.setItem('ben_leads', JSON.stringify(leads));
+        try {
+          var leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
+          leads.push(formspreePayload);
+          localStorage.setItem('ben_leads', JSON.stringify(leads));
+        } catch(e) {}
         console.warn('[BenBot] Fallback localStorage', err);
       });
 
-    // ── 2. Payload Supabase (source de vérité — envoi parallèle) ──
-    if (!CFG.ingestUrl) return;   // Edge Function non configurée — skip silencieux
+    // ── Payload Supabase (source de vérité)
+    if (!CFG.ingestUrl) return;
 
-    const supabasePayload = {
-      action:         'lead',
-      branche:        branch,
-      nom:            data.nom        || null,
-      telephone:      data.tel        || null,
-      email:          data.email      || null,
-      codepostal:     data.codepostal || formData.codepostal || null,
-      message:        data.message    || formData.situation  || null,
-      cabinet:        data.cabinet    || null,
-      profil:         formData.profil      || null,
-      nb_immeubles:   formData.nbImmeubles || null,
-      typeDiag:       formData.typeDiag       || null,   // 'fuite' | 'camera' | 'curage' | 'achat'
-      typePartenaire: formData.typePartenaire || null,   // label brut sélectionné par le visiteur
-      session_id:     botSessionId,
-      page:           window.location.href,
+    var supabasePayload = {
+      action:          'lead',
+      branche:         brancheLabel,
+      nom:             formData.nom          || null,
+      telephone:       formData.tel          || null,
+      email:           formData.email        || null,
+      codepostal:      formData.codepostal   || null,
+      message:         formData.situation    || null,
+      cabinet:         formData.cabinet      || null,
+      profil:          formData.profil       || null,
+      nb_immeubles:    formData.nbImmeubles  || null,
+      typeDiag:        formData.typeDiag     || formData.sousType || null,
+      typePartenaire:  formData.profil       || null,
+      is_urgence:      formData.urgence      === true,
+      canal_contact:   formData.canal        || null,
+      session_id:      botSessionId,
+      page:            window.location.href,
     };
 
     fetch(CFG.ingestUrl, {
-      method:  'POST',
+      method: 'POST',
       headers: {
         'Content-Type':  'application/json',
         'Authorization': 'Bearer ' + CFG.anonKey,
       },
-      body:    JSON.stringify(supabasePayload),
+      body: JSON.stringify(supabasePayload),
     })
       .then(r => r.json())
       .then(r => {
         if (r.ok) {
           console.log('[BenBot] Supabase ✓ lead_id=' + r.lead_id + (r.is_duplicate ? ' (doublon)' : ''));
-          // Stocker le lead_id pour les événements ultérieurs dans cette session
           window.__BEN = window.__BEN || {};
           window.__BEN.leadId = r.lead_id;
         } else {
@@ -1060,6 +1324,26 @@
         }
       })
       .catch(err => console.warn('[BenBot] Supabase ingest error', err));
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     TRACK EVENT
+  ══════════════════════════════════════════════════════════ */
+  function trackEvent(eventType) {
+    if (!CFG.ingestUrl) return;
+    var payload = {
+      action:     'event',
+      event_type: eventType,
+      session_id: botSessionId,
+      lead_id:    (window.__BEN && window.__BEN.leadId) || null,
+      page_url:   window.location.href,
+    };
+    fetch(CFG.ingestUrl, {
+      method:    'POST',
+      headers:   { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CFG.anonKey },
+      body:      JSON.stringify(payload),
+      keepalive: true,
+    }).catch(function() {});
   }
 
   /* ── INIT ─────────────────────────────────────────────── */

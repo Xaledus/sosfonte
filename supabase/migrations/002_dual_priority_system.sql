@@ -180,7 +180,7 @@ CREATE TRIGGER leads_calculate_priority
 
 CREATE INDEX IF NOT EXISTS idx_leads_dispatch
   ON leads (priorite_op, priorite_biz, created_at DESC)
-  WHERE deleted_at IS NULL AND statut = 'nouveau';
+  WHERE deleted_at IS NULL AND status = 'nouveau';
 
 -- ── 7. Vue de dispatch Front Desk ───────────────────────────────────────────
 -- Ordre : P_OP1 en tête → P_BIZ brise l'égalité → puis date
@@ -201,14 +201,14 @@ SELECT
   priorite_op,
   priorite_biz,
   score          AS score_business,
-  statut,
+  status,
   canal_contact,
   message,
   page_url
 FROM leads
 WHERE
   deleted_at IS NULL
-  AND statut   = 'nouveau'
+  AND status   = 'nouveau'
 ORDER BY
   -- Règle d'or : opérationnel d'abord
   CASE priorite_op
