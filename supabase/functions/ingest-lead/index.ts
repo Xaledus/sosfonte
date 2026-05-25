@@ -61,16 +61,31 @@ interface BrancheMap {
 }
 
 function mapBranche(branche: string): BrancheMap {
-  if (branche === 'Intervention fonte')
-    return { source: 'bot_intervention', branch: 'intervention' };
-  if (branche === 'Syndic')
+  // ── Labels V2 (brancheLabel envoyé par bot-ben.js V2) ─────────────────────
+  if (branche === 'Fuite / urgence' || branche === 'urgence')
+    return { source: 'bot_urgence', branch: 'urgence' };
+  if (branche === 'Canalisation bouchée' || branche === 'bouchon')
+    return { source: 'bot_bouchon', branch: 'bouchon' };
+  if (branche === 'Odeur / humidité' || branche === 'Humidité / trace' || branche === 'odeur')
+    return { source: 'bot_odeur', branch: 'odeur' };
+  if (branche === 'Colonne fonte / copropriété' || branche === 'colonne')
+    return { source: 'bot_colonne', branch: 'colonne' };
+  if (branche === 'Diagnostic / caméra' || branche === 'diagnostic')
+    return { source: 'bot_diagnostic', branch: 'diagnostic' };
+  if (branche === 'Syndic / professionnel' || branche === 'Syndic' || branche === 'syndic')
     return { source: 'bot_syndic', branch: 'syndic' };
-  if (branche === 'Rappel hors-horaires')
-    return { source: 'bot_offhours', branch: 'offhours' };
-  if (branche.startsWith('Partenaire'))
-    return { source: 'bot_partenaire', branch: 'partenaire' };
 
-  // Branches diagnostic — le branche string = le type de diag
+  // ── Labels V1 (rétrocompatibilité) ────────────────────────────────────────
+  if (branche === 'Intervention fonte' || branche === 'intervention')
+    return { source: 'bot_intervention', branch: 'intervention' };
+  if (branche === 'Rappel hors-horaires' || branche === 'offhours')
+    return { source: 'bot_offhours', branch: 'offhours' };
+  if (branche.startsWith('Partenaire') || branche === 'partenaire')
+    return { source: 'bot_partenaire', branch: 'partenaire' };
+  if (branche === 'faq')
+    return { source: 'bot_faq', branch: 'contact_generique' };
+
+  // Branches diagnostic — sous-types V1 (le branche string = le type de diag)
   const diagMap: Record<string, string> = {
     'Recherche de fuite':    'fuite',
     'Inspection caméra':     'camera',
@@ -207,15 +222,18 @@ async function handleLead(
 
   // Champs communs
   const leadPayload: Record<string, unknown> = {
-    source:       mapped.source,
-    branch:       mapped.branch,
-    nom:          clean(body.nom),
+    source:        mapped.source,
+    branch:        mapped.branch,
+    nom:           clean(body.nom),
     telephone_raw: telephoneRaw,
     email,
-    code_postal:  clean(body.codepostal ?? body.code_postal),
-    message:      clean(body.message),
-    session_id:   sessionId,
-    page_url:     pageUrl,
+    code_postal:   clean(body.codepostal ?? body.code_postal),
+    message:       clean(body.message),
+    session_id:    sessionId,
+    page_url:      pageUrl,
+    // Dual priority V2
+    is_urgence:    body.is_urgence === true,
+    canal_contact: clean(body.canal_contact ?? body.canal) ?? null,
   };
 
   // Champs branche Syndic
@@ -227,8 +245,11 @@ async function handleLead(
   }
 
   // Champs branche Diagnostic
-  if (mapped.branch === 'diagnostic' && mapped.diag_sous_type) {
-    leadPayload.diag_sous_type = mapped.diag_sous_type;
+  // mapped.diag_sous_type vient des labels V1 ; body.typeDiag vient du bot V2
+  if (mapped.branch === 'diagnostic') {
+    leadPayload.diag_sous_type = mapped.diag_sous_type
+      ?? clean(body.typeDiag ?? body.sousType)
+      ?? null;
   }
 
   // Champs branche Partenaire
