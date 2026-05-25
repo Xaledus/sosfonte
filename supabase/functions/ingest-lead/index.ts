@@ -82,8 +82,8 @@ function mapBranche(branche: string): BrancheMap {
     return { source: 'bot_offhours', branch: 'offhours' };
   if (branche.startsWith('Partenaire') || branche === 'partenaire')
     return { source: 'bot_partenaire', branch: 'partenaire' };
-  if (branche === 'faq')
-    return { source: 'bot_faq', branch: 'contact_generique' };
+  if (branche === 'faq' || branche === 'Question / FAQ')
+    return { source: 'contact_form', branch: 'contact_generique' };
 
   // Branches diagnostic — sous-types V1 (le branche string = le type de diag)
   const diagMap: Record<string, string> = {

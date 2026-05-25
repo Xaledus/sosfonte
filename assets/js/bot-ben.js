@@ -190,7 +190,7 @@
       if (!isOpen && !hasOpenedOnce) {
         popup.classList.add('ben-popup-visible');
         showTrigger();
-        playDing();
+        // playDing() retiré ici : AudioContext interdit sans geste utilisateur
       }
     }, delay);
 
@@ -501,8 +501,7 @@
         action: () => {
           clearAutoClose();
           clearBody();
-          setBenImage(IMG.bonjour);
-          stepAccueil();
+          stepAccueilRetour();   // version légère — pas de "Bonjour je suis Ben"
         },
       },
       {
@@ -625,13 +624,14 @@
   ══════════════════════════════════════════════════════════ */
   var RU_KEY = 'ben_ru';
 
-  function saveReturningUser(phone, branch, label) {
+  function saveReturningUser(phone, branch, label, nom) {
     try {
       localStorage.setItem(RU_KEY, JSON.stringify({
-        phone: phone,
+        phone:  phone,
         branch: branch,
-        label: label,
-        date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' }),
+        label:  label,
+        nom:    nom || null,
+        date:   new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' }),
       }));
     } catch(e) {}
   }
@@ -646,9 +646,16 @@
   }
 
   async function stepReturningUser(ru) {
+    // Pré-remplir formData avec ce qu'on connaît déjà — évite de redemander
+    if (ru.phone) formData.tel = ru.phone;
+    if (ru.nom)   formData.nom = ru.nom;
+
+    var prenom = (ru.nom || '').trim().split(' ')[0];
+    var salut  = prenom ? 'Bonjour <strong>' + prenom + '</strong>.' : 'Bonjour.';
+
     setBenImage(IMG.rassurant);
     await showTyping(300);
-    await addBubble('bot', 'Bonjour. Vous avez déjà contacté SOS FONTE le <strong>' + ru.date + '</strong> pour <strong>' + ru.label + '</strong>.', 900);
+    await addBubble('bot', salut + ' Vous avez déjà contacté SOS FONTE le <strong>' + ru.date + '</strong> pour <strong>' + ru.label + '</strong>.', 900);
     await showTyping(200);
     await addBubble('bot', 'Même sujet ou nouvelle demande ?', 500);
     trackEvent('returning_user_detected');
@@ -657,13 +664,16 @@
         label: '🔄 Même sujet — relancer',
         action: async () => {
           trackEvent('returning_same_subject');
-          formData.isReturning = true;
-          formData.returnBranch = ru.branch;
-          formData.score_bonus = 20;
+          formData.isReturning   = true;
+          formData.returnBranch  = ru.branch;
+          formData.branche       = ru.branch;
+          formData.brancheLabel  = ru.label;
+          formData.score_bonus   = 20;
+          addSticker(STK.jecoute);
           setBenImage(IMG.jecoute);
           await showTyping(300);
           await addBubble('bot', 'Je relance votre demande en priorité.', 700);
-          stepCanalContact();
+          stepCanalContact();   // formData.tel déjà rempli → rappel sans redemander
         }
       },
       {
@@ -672,7 +682,7 @@
           trackEvent('returning_new_subject');
           formData.score_bonus = 10;
           clearBody();
-          stepAccueil();
+          stepAccueilRetour();  // version légère sans "Bonjour je suis Ben"
         }
       },
     ]);
@@ -682,15 +692,18 @@
      WHATSAPP ENGINE
   ══════════════════════════════════════════════════════════ */
   function buildWAMessage() {
-    var parts = [];
-    if (formData.urgence) parts.push('🔴 URGENT — fuite active');
-    if (formData.brancheLabel) parts.push(formData.brancheLabel);
-    if (formData.sousType) parts.push(formData.sousType);
-    if (formData.typeBien) parts.push(formData.typeBien);
-    if (formData.codepostal) parts.push('CP ' + formData.codepostal);
-    if (formData.situation) parts.push(formData.situation.slice(0, 80));
-    var msg = parts.join(' — ');
-    return msg || 'Bonjour, demande via le site SOS FONTE';
+    var details = [];
+    if (formData.urgence)      details.push('🔴 URGENT — fuite active');
+    if (formData.brancheLabel) details.push(formData.brancheLabel);
+    if (formData.sousType)     details.push(formData.sousType);
+    if (formData.typeBien)     details.push(formData.typeBien);
+    if (formData.codepostal)   details.push('CP ' + formData.codepostal);
+    if (formData.situation)    details.push(formData.situation.slice(0, 80));
+    var sujet = details.join(', ') || 'ma canalisation en fonte';
+    var msg = 'Bonjour, je vous contacte à propos de ' + sujet + '. J\'attends votre réponse.';
+    var prenom = (formData.nom || '').trim().split(' ')[0];
+    if (prenom) msg += ' ' + prenom;
+    return msg;
   }
 
   function openWhatsApp() {
@@ -771,46 +784,54 @@
 
   async function stepCollectMinimal(canal) {
     clearFooter();
+    // Ne redemande que les infos manquantes
+    var fields = [];
+    if (!formData.nom)        fields.push({ key: 'nom', placeholder: 'Votre prénom *', required: true });
+    if (!formData.codepostal) fields.push({ key: 'codepostal', placeholder: 'Code postal *', required: true, validate: V.postal, errorMsg: V.msgs.postal });
+
+    if (fields.length === 0) {
+      // Tout est déjà connu — on continue directement
+      if (canal === 'whatsapp') stepConfirmWA();
+      return;
+    }
     await showTyping(300);
     await addBubble('bot', 'Quelques infos pour votre message :', 700);
-    showForm([
-      { key: 'nom', placeholder: 'Votre prénom *', required: true },
-      {
-        key: 'codepostal', placeholder: 'Code postal *', required: true,
-        validate: V.postal, errorMsg: V.msgs.postal,
-      },
-    ], 'Continuer →', (data) => {
+    showForm(fields, 'Continuer →', (data) => {
       trackEvent('zipcode_submitted');
-      if (canal === 'whatsapp') {
-        stepConfirmWA();
-      }
+      if (canal === 'whatsapp') stepConfirmWA();
     });
   }
 
   async function stepCollectRappel() {
     clearFooter();
-    await showTyping(300);
-    await addBubble('bot', 'Votre numéro pour vous rappeler :', 700);
-    showForm([
-      { key: 'nom', placeholder: 'Votre prénom *', required: true },
-      {
-        key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true,
-        validate: V.phone, errorMsg: V.msgs.phone,
-      },
-      {
-        key: 'codepostal', placeholder: 'Code postal *', required: true,
-        validate: V.postal, errorMsg: V.msgs.postal,
-      },
-    ], 'Être rappelé →', async (data) => {
+    // Ne redemande que les infos manquantes
+    var fields = [];
+    if (!formData.nom)       fields.push({ key: 'nom', placeholder: 'Votre prénom *', required: true });
+    if (!formData.tel)       fields.push({ key: 'tel', placeholder: 'Téléphone *', type: 'tel', required: true, validate: V.phone, errorMsg: V.msgs.phone });
+    if (!formData.codepostal) fields.push({ key: 'codepostal', placeholder: 'Code postal *', required: true, validate: V.postal, errorMsg: V.msgs.postal });
+
+    var doConfirm = async () => {
       clearFooter();
       setBenImage(IMG.reconnaissant);
       addSticker(STK.rdv);
-      var prenom = (data.nom || '').split(' ')[0];
-      await addBubble('bot', '<strong>' + prenom + '</strong>, SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay, 700);
+      var prenom = (formData.nom || '').trim().split(' ')[0];
+      var msg = prenom ? '<strong>' + prenom + '</strong>, SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay
+                       : 'SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay;
+      await addBubble('bot', msg, 700);
       trackEvent('callback_submitted');
       sendLead();
       stepAutresQuestions();
-    });
+    };
+
+    if (fields.length === 0) {
+      // Tout est déjà connu — confirmation directe
+      doConfirm();
+      return;
+    }
+
+    await showTyping(300);
+    await addBubble('bot', fields.length < 3 ? 'Juste une dernière info :' : 'Votre numéro pour vous rappeler :', 700);
+    showForm(fields, 'Être rappelé →', doConfirm);
   }
 
   async function stepCollectCP(cb) {
@@ -831,9 +852,8 @@
   async function stepConfirmWA() {
     clearFooter();
     setBenImage(IMG.okParfait);
-    var waMsg = buildWAMessage();
     await showTyping(300);
-    await addBubble('bot', 'Votre message WhatsApp sera :<br><em style="font-size:12px;opacity:0.8">' + waMsg.replace(/—/g, '·') + '</em>', 800);
+    await addBubble('bot', 'Un message pré-rempli s\'ouvre dans WhatsApp. Envoyez-le en un clic — notre équipe répond très rapidement.', 800);
     var block = document.createElement('div');
     block.className = 'ben-cta-block';
     block.innerHTML = '<button class="ben-cta-wa-btn" style="background:#25D366;color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:15px;width:100%">💬 Ouvrir WhatsApp</button>';
@@ -842,7 +862,7 @@
     block.querySelector('.ben-cta-wa-btn').addEventListener('click', function() {
       openWhatsApp();
       sendLead();
-      addBubble('bot', 'Message envoyé à SOS FONTE Front Desk ✓ Réponse sous 10 min en heures ouvrées.', 400);
+      addBubble('bot', '✓ Message transmis — un technicien vous répond très rapidement.', 400);
       stepAutresQuestions();
     });
   }
@@ -876,6 +896,24 @@
       { label: '❓ Autre question',                  action: stepFAQ },
     ]);
     trackEvent('option_clicked');
+  }
+
+  /* Version allégée de l'accueil pour une deuxième question —
+     pas de "Bonjour je suis Ben", sticker J'écoute, texte court.  */
+  async function stepAccueilRetour() {
+    addSticker(STK.jecoute);
+    setBenImage(IMG.jecoute);
+    await showTyping(200);
+    await addBubble('bot', 'Quelle est votre nouvelle demande ?', 600);
+    showChoices([
+      { label: '🔴 Fuite / urgence',               action: stepFuite },
+      { label: '🚽 Canalisation bouchée',           action: stepBouchon },
+      { label: '👃 Odeur / humidité',               action: stepOdeur },
+      { label: '🏢 Colonne fonte / copropriété',    action: stepColonne },
+      { label: '📷 Diagnostic / caméra',            action: stepDiagnostic },
+      { label: '📋 Syndic / professionnel',         action: stepSyndic },
+      { label: '❓ Autre question',                  action: stepFAQ },
+    ]);
   }
 
   /* ── BRANCHE 1 — FUITE / URGENCE ────────────────────────── */
@@ -1173,17 +1211,41 @@
       showTextInput('Reformulez…', async (q2) => {
         clearFooter();
         faqAttempts++;
+        addSticker(STK.diag);
         await showTyping(600);
         const match2 = matchFAQ(q2);
         if (match2) { await showFAQAnswer(match2); return; }
 
         trackEvent('faq_miss_2');
         trackEvent('handoff_requested');
+        // Délai naturel 2-5s avant le handoff — simulation de "réflexion"
+        await new Promise(r => setTimeout(r, 2000 + Math.floor(Math.random() * 3000)));
         setBenImage(IMG.sourire);
-        await addBubble('bot', 'Votre demande mérite une réponse précise. Je la transmets à SOS FONTE Front Desk.', 900);
+        await addBubble('bot', 'Je préfère transférer votre demande à quelqu\'un de plus expérimenté.', 900);
         await addBubble('bot', '<a href="faq.html" class="ben-page-link">📖 FAQ complète →</a>', 400);
         formData.branche = 'faq';
-        stepCanalContact();
+        formData.brancheLabel = 'Question / FAQ';
+        // Uniquement WA ou email — pas de tel pour éviter de surcharger la ligne
+        showChoices([
+          {
+            label: '💬 WhatsApp — réponse rapide',
+            action: () => {
+              formData.canal = 'whatsapp';
+              if (!formData.nom || !formData.codepostal) stepCollectMinimal('whatsapp');
+              else stepConfirmWA();
+            }
+          },
+          {
+            label: '✉️ Email',
+            action: () => {
+              formData.canal = 'email';
+              openEmail();
+              sendLead();
+              stepConfirmationEmail();
+            }
+          },
+          RETOUR,
+        ]);
       });
     });
   }
@@ -1241,7 +1303,7 @@
 
     // Sauvegarder returning user
     if (formData.tel && branch !== 'offhours') {
-      saveReturningUser(formData.tel, branch, brancheLabel);
+      saveReturningUser(formData.tel, branch, brancheLabel, formData.nom || null);
     }
 
     trackEvent('flow_completed');
