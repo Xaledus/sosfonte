@@ -1307,7 +1307,7 @@
         faqAttempts++;
         await showTyping(600);
         const match2 = matchFAQ(q2);
-        if (match2) { await showFAQAnswer(match2); return; }
+        if (match2) { formData.branche = 'faq'; await checkFAQInline(q2, () => {}); return; }
 
         trackEvent('faq_miss_2');
         trackEvent('handoff_requested');
