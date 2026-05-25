@@ -730,15 +730,22 @@
     if (formData.brancheLabel) contexte.push(formData.brancheLabel);
     if (formData.sousType)     contexte.push(formData.sousType);
     if (formData.typeBien)     contexte.push(formData.typeBien);
-    if (formData.codepostal)   contexte.push('code postal ' + formData.codepostal);
+    if (formData.codepostal)   contexte.push('CP ' + formData.codepostal);
 
-    var sujet = contexte.join(', ') || 'ma canalisation en fonte';
-    var lines = [];
-    lines.push('Bonjour, je vous contacte à propos de ' + sujet + '.');
-    if (formData.situation) lines.push(formData.situation.slice(0, 100));
-    lines.push('J\'attends votre réponse.');
-    if (prenom) lines.push(prenom);
-    return lines.join('\n');
+    var sujet = contexte.join(' — ') || 'ma canalisation en fonte';
+
+    // Situation intégrée inline (évite les majuscules qui flottent seules)
+    if (formData.situation) {
+      var sit = formData.situation.trim().slice(0, 100);
+      // Normalize casse : première lettre majuscule, reste tel quel mais sans tout-maj
+      if (sit === sit.toUpperCase() && sit.length > 3) sit = sit.charAt(0) + sit.slice(1).toLowerCase();
+      sujet += ' : ' + sit;
+    }
+
+    var msg = 'Bonjour, je vous contacte à propos de ' + sujet + '.'
+            + '\nJ\'attends votre réponse.';
+    if (prenom) msg += ' ' + prenom;
+    return msg;
   }
 
   function openWhatsApp() {
@@ -1188,9 +1195,11 @@
     setBenImage(IMG.jecoute);
     await showTyping(300);
     await addBubble('bot', 'Décrivez brièvement votre besoin (optionnel).', 700);
-    showTextInput('Votre besoin (optionnel)…', (txt) => {
+    showTextInput('Votre besoin (optionnel)…', async (txt) => {
       formData.situation = txt;
-      stepCanalContact();
+      clearFooter();
+      // Vérification FAQ systématique sur tout texte libre
+      await checkFAQInline(txt, () => stepCanalContact());
     });
     // Bouton "Passer" discret sous l'input
     var footer = document.getElementById('ben-footer');
@@ -1205,6 +1214,49 @@
     footer.appendChild(skipLink);
   }
 
+  /* ══════════════════════════════════════════════════════════
+     FAQ INLINE — vérification systématique sur tout texte libre
+     checkFAQInline(txt, onMiss) :
+       - match trouvé  → sticker + délai + réponse + choix WA/rappel/continuer
+       - aucun match   → appelle onMiss(txt) pour reprendre le flow normal
+  ══════════════════════════════════════════════════════════ */
+  async function checkFAQInline(txt, onMiss) {
+    const match = matchFAQ(txt);
+    if (!match) {
+      onMiss(txt);
+      return;
+    }
+    // Réponse trouvée dans la FAQ
+    trackEvent('faq_match');
+    addSticker(STK.diag);
+    await new Promise(r => setTimeout(r, 2000));
+    setBenImage(IMG.jexplique);
+    await addBubble('bot', match.text, 0);
+    if (match.link) {
+      await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
+    }
+    await showTyping(200);
+    await addBubble('bot', 'Est-ce que ça répond à votre question ?', 500);
+    showChoices([
+      {
+        label: '✅ Oui, merci',
+        action: () => stepAutresQuestions()
+      },
+      {
+        label: '💬 WhatsApp — question complémentaire',
+        action: () => {
+          formData.canal = 'whatsapp';
+          if (!formData.nom || !formData.codepostal) stepCollectMinimal('whatsapp');
+          else stepConfirmWA();
+        }
+      },
+      {
+        label: '➡️ Continuer ma demande quand même',
+        action: () => onMiss(txt)
+      },
+    ]);
+  }
+
   /* ── BRANCHE 7 — FAQ ─────────────────────────────────────── */
   async function stepFAQ() {
     faqAttempts = 0;
@@ -1215,27 +1267,17 @@
     await showTyping(200);
     await addBubble('bot', '<span style="font-size:12px;color:rgba(255,255,255,0.45)">Ex : "Vous intervenez le week-end ?" · "Le devis est gratuit ?" · "Durée du chantier ?"</span>', 400);
 
-    async function showFAQAnswer(match) {
-      addSticker(STK.diag);
-      await new Promise(r => setTimeout(r, 2500));
-      setBenImage(IMG.jexplique);
-      await addBubble('bot', match.text, 0);
-      if (match.link) {
-        await addBubble('bot', '<a href="' + match.link + '" class="ben-page-link">En savoir plus →</a>', 400);
-      }
-      trackEvent('faq_match');
-      showChoices([
-        { label: '💬 WhatsApp', action: () => { formData.canal = 'whatsapp'; formData.branche = 'faq'; stepConfirmWA(); } },
-        { label: '📞 Être rappelé', action: () => { formData.branche = 'faq'; stepCollectRappel(); } },
-        RETOUR,
-      ]);
-    }
-
+    // stepFAQ réutilise checkFAQInline — cohérence + handoff partagé
     showTextInput('Tapez votre question…', async (q) => {
       clearFooter();
       faqAttempts++;
       const match = matchFAQ(q);
-      if (match) { await showFAQAnswer(match); return; }
+      if (match) {
+        // FAQ match → même helper que les autres branches
+        formData.branche = 'faq';
+        await checkFAQInline(q, () => {});   // onMiss vide : pas d'étape suivante dans la FAQ pure
+        return;
+      }
 
       trackEvent('faq_miss_1');
       addSticker(STK.diag);
