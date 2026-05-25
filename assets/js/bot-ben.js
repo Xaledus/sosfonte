@@ -14,6 +14,7 @@
   const _p = (_S.phone) || {};
   const CFG = {
     formspree:      (_S.formspree)  || 'https://formspree.io/f/xpqnzoyg',
+    ingestUrl:      (_S.supabase && _S.supabase.ingestUrl) || null,   // Edge Function
     phone:          'tel:' + (_p.raw     || '0180846040'),
     phoneDisplay:   (_p.display          || '01 80 84 60 40'),
     wa:             _S.waUrl ? _S.waUrl('urgence') : 'https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20urgence%20sur%20une%20canalisation%20en%20fonte.',
@@ -97,6 +98,7 @@
   let autoCloseTimer = null;
   let countdownInterval = null;
   let hasOpenedOnce = false;
+  let botSessionId = null;   // UUID v4 généré à l'ouverture du bot (RGPD — mémoire seule)
 
   /* ── HELPERS ─────────────────────────────────────────────── */
   function isOffHours() { const h = new Date().getHours(); return h < 7 || h >= 22; }
@@ -238,6 +240,18 @@
     formData = {};
     hasOpenedOnce = true;        // bloque le re-déclenchement du popup
     clearAutoClose();
+
+    // Session UUID v4 — jamais persisté, réinitialisé à chaque ouverture du widget
+    botSessionId = (crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'xxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, c => {
+          const r = Math.random() * 16 | 0;
+          return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    // API publique minimale : permet à site-init.js de lire la session courante
+    window.__BEN = window.__BEN || {};
+    window.__BEN.sessionId = botSessionId;
+
     document.getElementById('ben-widget').classList.add('ben-open');
     clearBody(); clearFooter();
     isOffHours() ? stepOffHours() : stepAccueil();
@@ -975,34 +989,73 @@
 
   /* ── SEND LEAD ───────────────────────────────────────── */
   function sendLead(branch, data) {
-    const payload = {
-      _subject:   '[BOT BEN] ' + branch + ' — ' + (data.nom || data.tel || 'Lead'),
-      branche:    branch,
-      nom:        data.nom        || '—',
-      telephone:  data.tel        || '—',
-      email:      data.email      || '—',
-      codepostal: data.codepostal || formData.codepostal || '—',
-      message:    data.message    || formData.situation  || '—',
-      cabinet:    data.cabinet    || '—',
-      profil:     formData.profil      || '—',
+    // ── 1. Payload Formspree (email relay — filet de sécurité) ──
+    const formspreePayload = {
+      _subject:     '[BOT BEN] ' + branch + ' — ' + (data.nom || data.tel || 'Lead'),
+      branche:      branch,
+      nom:          data.nom        || '—',
+      telephone:    data.tel        || '—',
+      email:        data.email      || '—',
+      codepostal:   data.codepostal || formData.codepostal || '—',
+      message:      data.message    || formData.situation  || '—',
+      cabinet:      data.cabinet    || '—',
+      profil:       formData.profil      || '—',
       nb_immeubles: formData.nbImmeubles || '—',
-      timestamp:  new Date().toLocaleString('fr-FR'),
-      page:       window.location.href,
+      timestamp:    new Date().toLocaleString('fr-FR'),
+      page:         window.location.href,
     };
 
     fetch(CFG.formspree, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body:    JSON.stringify(payload),
+      body:    JSON.stringify(formspreePayload),
     })
       .then(r => r.json())
-      .then(r => { if (r.ok) console.log('[BenBot] Lead envoyé ✓'); else throw r; })
+      .then(r => { if (r.ok) console.log('[BenBot] Formspree ✓'); else throw r; })
       .catch(err => {
         const leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
-        leads.push(payload);
+        leads.push(formspreePayload);
         localStorage.setItem('ben_leads', JSON.stringify(leads));
         console.warn('[BenBot] Fallback localStorage', err);
       });
+
+    // ── 2. Payload Supabase (source de vérité — envoi parallèle) ──
+    if (!CFG.ingestUrl) return;   // Edge Function non configurée — skip silencieux
+
+    const supabasePayload = {
+      action:         'lead',
+      branche:        branch,
+      nom:            data.nom        || null,
+      telephone:      data.tel        || null,
+      email:          data.email      || null,
+      codepostal:     data.codepostal || formData.codepostal || null,
+      message:        data.message    || formData.situation  || null,
+      cabinet:        data.cabinet    || null,
+      profil:         formData.profil      || null,
+      nb_immeubles:   formData.nbImmeubles || null,
+      typeDiag:       formData.typeDiag       || null,   // 'fuite' | 'camera' | 'curage' | 'achat'
+      typePartenaire: formData.typePartenaire || null,   // label brut sélectionné par le visiteur
+      session_id:     botSessionId,
+      page:           window.location.href,
+    };
+
+    fetch(CFG.ingestUrl, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(supabasePayload),
+    })
+      .then(r => r.json())
+      .then(r => {
+        if (r.ok) {
+          console.log('[BenBot] Supabase ✓ lead_id=' + r.lead_id + (r.is_duplicate ? ' (doublon)' : ''));
+          // Stocker le lead_id pour les événements ultérieurs dans cette session
+          window.__BEN = window.__BEN || {};
+          window.__BEN.leadId = r.lead_id;
+        } else {
+          console.warn('[BenBot] Supabase response non-ok', r);
+        }
+      })
+      .catch(err => console.warn('[BenBot] Supabase ingest error', err));
   }
 
   /* ── INIT ─────────────────────────────────────────────── */

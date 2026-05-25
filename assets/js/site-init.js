@@ -72,4 +72,47 @@
     el.title = S.company.name + ' — ' + S.address.full;
   });
 
+  /* ── Tracking clics WhatsApp & Téléphone ─────────────────────────────── */
+  /* Envoie un événement à l'Edge Function ingest-lead si elle est configurée.
+     La session_id est récupérée depuis window.__BEN (bot-ben.js), peut être null
+     si le visiteur n'a pas ouvert le bot — l'event est quand même utile (page_url).  */
+  (function () {
+    var ingestUrl = S.supabase && S.supabase.ingestUrl;
+    if (!ingestUrl) return;   // Edge Function non configurée — skip
+
+    function postEvent(eventType) {
+      var ben = window.__BEN || {};
+      var payload = {
+        action:     'event',
+        event_type: eventType,
+        session_id: ben.sessionId || null,
+        lead_id:    ben.leadId    || null,
+        page_url:   window.location.href,
+        user_agent: navigator.userAgent,
+      };
+      // navigator.sendBeacon garantit l'envoi même si la page se ferme
+      if (navigator.sendBeacon) {
+        var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+        navigator.sendBeacon(ingestUrl, blob);
+      } else {
+        fetch(ingestUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(function () {});
+      }
+    }
+
+    /* Clics WhatsApp ─────────────────────────────────────────────────────── */
+    document.querySelectorAll('[data-sfc^="wa"]').forEach(function (el) {
+      el.addEventListener('click', function () { postEvent('wa_click'); });
+    });
+
+    /* Clics Téléphone ────────────────────────────────────────────────────── */
+    document.querySelectorAll('[data-sfc^="tel"]').forEach(function (el) {
+      el.addEventListener('click', function () { postEvent('tel_click'); });
+    });
+  })();
+
 })();

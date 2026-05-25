@@ -46,6 +46,13 @@ window.SFC = {
   /* ── FORMSPREE ──────────────────────────────────────────────────────────── */
   formspree: 'https://formspree.io/f/xpqnzoyg',
 
+  /* ── SUPABASE — Edge Function ingest-lead ───────────────────────────────── */
+  /* Remplacer YOUR_PROJECT_REF par la référence du projet Supabase.           */
+  /* Visible dans : Supabase Dashboard → Settings → API → Project URL          */
+  supabase: {
+    ingestUrl: 'https://xhxqxyojhloylysaqhjg.supabase.co/functions/v1/ingest-lead',
+  },
+
   /* ── COPY CLÉ — titres modifiables sans toucher au HTML ─────────────────── */
   copy: {
     prestige: {
