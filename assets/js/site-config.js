@@ -51,6 +51,7 @@ window.SFC = {
   /* Visible dans : Supabase Dashboard → Settings → API → Project URL          */
   supabase: {
     ingestUrl: 'https://xhxqxyojhloylysaqhjg.supabase.co/functions/v1/ingest-lead',
+    anonKey:   'sb_publishable_3rUf6bkw-WVb-z6SBUchIQ_h2sjWCKI',
   },
 
   /* ── COPY CLÉ — titres modifiables sans toucher au HTML ─────────────────── */

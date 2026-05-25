@@ -78,7 +78,8 @@
      si le visiteur n'a pas ouvert le bot — l'event est quand même utile (page_url).  */
   (function () {
     var ingestUrl = S.supabase && S.supabase.ingestUrl;
-    if (!ingestUrl) return;   // Edge Function non configurée — skip
+    var anonKey   = S.supabase && S.supabase.anonKey;
+    if (!ingestUrl || !anonKey) return;   // Edge Function non configurée — skip
 
     function postEvent(eventType) {
       var ben = window.__BEN || {};
@@ -90,18 +91,13 @@
         page_url:   window.location.href,
         user_agent: navigator.userAgent,
       };
-      // navigator.sendBeacon garantit l'envoi même si la page se ferme
-      if (navigator.sendBeacon) {
-        var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-        navigator.sendBeacon(ingestUrl, blob);
-      } else {
-        fetch(ingestUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          keepalive: true,
-        }).catch(function () {});
-      }
+      // fetch keepalive — fonctionne même si la page se ferme + supporte Authorization
+      fetch(ingestUrl, {
+        method:    'POST',
+        headers:   { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + anonKey },
+        body:      JSON.stringify(payload),
+        keepalive: true,
+      }).catch(function () {});
     }
 
     /* Clics WhatsApp ─────────────────────────────────────────────────────── */

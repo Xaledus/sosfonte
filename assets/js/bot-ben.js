@@ -15,6 +15,7 @@
   const CFG = {
     formspree:      (_S.formspree)  || 'https://formspree.io/f/xpqnzoyg',
     ingestUrl:      (_S.supabase && _S.supabase.ingestUrl) || null,   // Edge Function
+    anonKey:        (_S.supabase && _S.supabase.anonKey)   || null,   // clé publique Supabase
     phone:          'tel:' + (_p.raw     || '0180846040'),
     phoneDisplay:   (_p.display          || '01 80 84 60 40'),
     wa:             _S.waUrl ? _S.waUrl('urgence') : 'https://wa.me/33180846040?text=Bonjour%2C%20j%27ai%20une%20urgence%20sur%20une%20canalisation%20en%20fonte.',
@@ -1041,7 +1042,10 @@
 
     fetch(CFG.ingestUrl, {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + CFG.anonKey,
+      },
       body:    JSON.stringify(supabasePayload),
     })
       .then(r => r.json())
