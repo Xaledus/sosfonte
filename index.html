@@ -1006,55 +1006,7 @@ footer {
     <h2 class="section-title"><em>Chantiers</em> récents</h2>
     <p class="section-sub">Chaque intervention est documentée. Voici quelques exemples de <em>chantiers</em> réalisés en Île-de-France.</p>
 
-    <div class="real-grid">
-      <div class="real-card" onclick="location.href='realisations.html'" style="cursor:pointer">
-        <div class="real-card-bg" style="background-image:url('photos/chantiers/paris17-colonne-2024/IMG-20250812-WA0003.jpg');background-size:cover;background-position:center"></div>
-        <div class="real-overlay">
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <span style="background:rgba(23,181,166,0.25);border:1px solid rgba(23,181,166,0.4);color:var(--teal-light);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">6 niveaux</span>
-            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500">8 jours</span>
-            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500">Décennale</span>
-          </div>
-          <div>
-            <p class="real-type">Remplacement colonne</p>
-            <p class="real-title">Colonne EU complète — immeuble 1910</p>
-            <p class="real-loc">Paris 17e — Rapport assurance fourni</p>
-          </div>
-        </div>
-      </div>
-      <div class="real-card">
-        <div class="real-card-bg"></div>
-        <div class="real-overlay">
-          <p class="real-type">Urgence fuite</p>
-          <p class="real-title">Fuite fonte cave — intervention J+1</p>
-          <p class="real-loc">Neuilly-sur-Seine (92)</p>
-        </div>
-      </div>
-      <div class="real-card">
-        <div class="real-card-bg"></div>
-        <div class="real-overlay">
-          <p class="real-type">Diagnostic</p>
-          <p class="real-title">Inspection réseau — rapport assurance</p>
-          <p class="real-loc">Paris 16e — copropriété 32 lots</p>
-        </div>
-      </div>
-      <div class="real-card">
-        <div class="real-card-bg"></div>
-        <div class="real-overlay">
-          <p class="real-type">Réparation</p>
-          <p class="real-title">Reprise jonction fonte/PVC</p>
-          <p class="real-loc">Vincennes (94)</p>
-        </div>
-      </div>
-      <div class="real-card">
-        <div class="real-card-bg"></div>
-        <div class="real-overlay">
-          <p class="real-type">Contrat syndic</p>
-          <p class="real-title">Maintenance annuelle — 4 immeubles</p>
-          <p class="real-loc">Cabinet Paris Ouest</p>
-        </div>
-      </div>
-    </div>
+    <div id="index-chantiers-grid" class="real-grid"></div>
   </div>
 </section>
 
@@ -1205,6 +1157,8 @@ footer {
 <script>
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
 </script>
+<script src="assets/js/chantiers-data.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ window.renderIndexChantiers && window.renderIndexChantiers(); });</script>
 <script src="assets/js/bot-ben.js"></script>
 <script src="assets/js/site-init.js"></script>
 </body>
