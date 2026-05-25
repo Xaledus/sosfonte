@@ -156,8 +156,12 @@ Deno.serve(async (req: Request) => {
     if (action === 'message') return await handleMessage(body, headers);
     return new Response(JSON.stringify({ error: `Unknown action: ${action}` }), { status: 400, headers });
   } catch (err) {
-    console.error('[ingest-lead] Unhandled error:', err);
-    return new Response(JSON.stringify({ error: 'Internal error' }), { status: 500, headers });
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error('[ingest-lead] Unhandled error:', detail, err);
+    return new Response(
+      JSON.stringify({ error: 'Internal error', detail }),
+      { status: 500, headers },
+    );
   }
 });
 
@@ -186,8 +190,11 @@ async function handleLead(
   });
 
   if (rpcError) {
-    console.error('[ingest-lead] find_duplicate_lead error:', rpcError);
-    throw rpcError;
+    console.error('[ingest-lead] find_duplicate_lead error:', JSON.stringify(rpcError));
+    return new Response(
+      JSON.stringify({ error: 'RPC error', detail: rpcError.message, code: rpcError.code, hint: rpcError.hint }),
+      { status: 500, headers },
+    );
   }
 
   // ── 2a. Doublon détecté ────────────────────────────────────────
@@ -274,8 +281,11 @@ async function handleLead(
     .single();
 
   if (insertError) {
-    console.error('[ingest-lead] leads INSERT error:', insertError);
-    throw insertError;
+    console.error('[ingest-lead] leads INSERT error:', JSON.stringify(insertError));
+    return new Response(
+      JSON.stringify({ error: 'Insert error', detail: insertError.message, code: insertError.code, hint: insertError.hint }),
+      { status: 500, headers },
+    );
   }
 
   // Événement lead_cree

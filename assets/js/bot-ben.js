@@ -724,7 +724,30 @@
         + 'Merci de me tenir informé SVP.';
     }
 
-    // ── Message standard ──────────────────────────────────────
+    // Normalise la casse d'une saisie libre (évite TOUT EN MAJUSCULES)
+    function _normSit(s) {
+      s = (s || '').trim().slice(0, 100);
+      if (!s) return '';
+      if (s === s.toUpperCase() && s.length > 3) s = s.charAt(0) + s.slice(1).toLowerCase();
+      return s;
+    }
+
+    // ── Cas Syndic — brancheLabel = catégorie client, pas le sujet ───
+    if (formData.branche === 'syndic') {
+      var profil    = formData.profil || 'Professionnel';
+      var synCtx    = [];
+      if (formData.nbImmeubles) synCtx.push(formData.nbImmeubles + ' immeuble(s)');
+      if (formData.codepostal)  synCtx.push('CP ' + formData.codepostal);
+      var synCtxStr = synCtx.length ? ' (' + synCtx.join(', ') + ')' : '';
+      var synSit    = _normSit(formData.situation);
+      var msg = 'Bonjour, je suis ' + profil + synCtxStr + ', je vous contacte';
+      if (synSit) msg += ' à propos de ' + synSit;
+      msg += '.\nJ\'attends votre réponse.';
+      if (prenom) msg += ' ' + prenom;
+      return msg;
+    }
+
+    // ── Message standard (autres branches) ───────────────────────────
     var contexte = [];
     if (formData.urgence)      contexte.push('🔴 URGENT — fuite active');
     if (formData.brancheLabel) contexte.push(formData.brancheLabel);
@@ -733,14 +756,8 @@
     if (formData.codepostal)   contexte.push('CP ' + formData.codepostal);
 
     var sujet = contexte.join(' — ') || 'ma canalisation en fonte';
-
-    // Situation intégrée inline (évite les majuscules qui flottent seules)
-    if (formData.situation) {
-      var sit = formData.situation.trim().slice(0, 100);
-      // Normalize casse : première lettre majuscule, reste tel quel mais sans tout-maj
-      if (sit === sit.toUpperCase() && sit.length > 3) sit = sit.charAt(0) + sit.slice(1).toLowerCase();
-      sujet += ' : ' + sit;
-    }
+    var sit = _normSit(formData.situation);
+    if (sit) sujet += ' : ' + sit;
 
     var msg = 'Bonjour, je vous contacte à propos de ' + sujet + '.'
             + '\nJ\'attends votre réponse.';
@@ -895,7 +912,7 @@
     clearFooter();
     setBenImage(IMG.okParfait);
     await showTyping(300);
-    await addBubble('bot', 'Un message pré-rempli s\'ouvre dans WhatsApp. Envoyez-le en un clic — notre équipe répond très rapidement.', 800);
+    await addBubble('bot', 'Un message pré-rempli s\'ouvre dans WhatsApp.<br><span style="font-size:12px;opacity:0.65">💡 Vous pouvez le modifier avant d\'envoyer.</span>', 800);
     var block = document.createElement('div');
     block.className = 'ben-cta-block';
     block.innerHTML = '<button class="ben-cta-wa-btn" style="background:#25D366;color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:15px;width:100%">💬 Ouvrir WhatsApp</button>';
