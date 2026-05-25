@@ -50,12 +50,16 @@
   <div class="section-inner">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="reveal">
       
-    <div style="background:linear-gradient(135deg,#1a3a5c,#0d2438);border-radius:16px;overflow:hidden;position:relative;cursor:pointer;transition:transform .3s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
-      <div style="padding:48px 36px 36px;position:relative">
-        <div style="font-size:48px;margin-bottom:20px;opacity:0.15;position:absolute;top:20px;right:20px">🏗️</div>
+    <!-- Chantier Paris 17e — carte avec photos -->
+    <div onclick="openGallery17()" style="background:#0d2438;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;transition:transform .3s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
+      <div style="height:200px;background-image:url('photos/chantiers/paris17-colonne-2024/IMG-20250812-WA0003.jpg');background-size:cover;background-position:center;position:relative">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(13,36,56,0.95) 100%)"></div>
+        <div style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px)">📸 6 photos</div>
+      </div>
+      <div style="padding:20px 24px 24px;position:relative">
         <span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-light)">Remplacement colonne</span>
-        <h3 style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:white;margin:10px 0 6px;line-height:1.2"><em>Colonne</em> <em>EU</em> complète — immeuble <em>1910</em></h3>
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Paris 17e</p>
+        <h3 style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:white;margin:8px 0 6px;line-height:1.2"><em>Colonne</em> <em>EU</em> complète — immeuble <em>1910</em></h3>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px">Paris 17e</p>
         <p style="font-size:13px;color:rgba(255,255,255,0.35);font-weight:300">6 niveaux · 4 jours · Rapport assurance fourni</p>
       </div>
     </div>
@@ -183,4 +187,70 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 </script>
 <script src="assets/js/bot-ben.js"></script>
 <script src="assets/js/site-init.js"></script>
+
+<!-- ── Galerie lightbox Paris 17e ───────────────────────────── -->
+<div id="gallery17-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;flex-direction:column" onclick="if(event.target===this)closeGallery17()">
+  <button onclick="closeGallery17()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:white;font-size:32px;cursor:pointer;line-height:1;z-index:1">✕</button>
+  <div style="position:relative;max-width:90vw;max-height:80vh;display:flex;align-items:center;justify-content:center">
+    <button id="g17-prev" onclick="g17Nav(-1)" style="position:absolute;left:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%;z-index:1">‹</button>
+    <img id="g17-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;display:block">
+    <button id="g17-next" onclick="g17Nav(1)" style="position:absolute;right:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%;z-index:1">›</button>
+  </div>
+  <div id="g17-caption" style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:14px;text-align:center"></div>
+  <div id="g17-dots" style="display:flex;gap:8px;margin-top:12px"></div>
+</div>
+
+<script>
+(function(){
+  var photos = [
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250812-WA0003.jpg', cap: 'Pied de colonne — nouvelles colonnes fonte en cave (août 2025)' },
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG20250617133227.jpg',   cap: 'Avant — dépose colonne fonte existante (juin 2025)' },
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG20250618162740.jpg',   cap: 'En cours — pose nouvelle colonne PVC (juin 2025)' },
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG20250619124530.jpg',   cap: 'Finition — rebouchage et remise en état (juin 2025)' },
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0022.jpg', cap: 'Raccordement bas de colonne en cave (août 2025)' },
+    { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0008.jpg', cap: 'Colonnes en place — vue cave (août 2025)' },
+  ];
+  var cur = 0;
+  var modal = document.getElementById('gallery17-modal');
+  var img   = document.getElementById('g17-img');
+  var cap   = document.getElementById('g17-caption');
+  var dots  = document.getElementById('g17-dots');
+
+  // Build dots
+  photos.forEach(function(_, i){
+    var d = document.createElement('div');
+    d.style.cssText = 'width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background .2s';
+    d.addEventListener('click', function(){ g17Show(i); });
+    dots.appendChild(d);
+  });
+
+  function g17Show(idx) {
+    cur = (idx + photos.length) % photos.length;
+    img.src = photos[cur].src;
+    cap.textContent = photos[cur].cap;
+    var ds = dots.children;
+    for (var i = 0; i < ds.length; i++)
+      ds[i].style.background = i === cur ? 'var(--teal-light, #4dd9c0)' : 'rgba(255,255,255,0.3)';
+  }
+
+  window.openGallery17 = function() {
+    g17Show(0);
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeGallery17 = function() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  window.g17Nav = function(dir) { g17Show(cur + dir); };
+
+  // Keyboard nav
+  document.addEventListener('keydown', function(e){
+    if (modal.style.display === 'none') return;
+    if (e.key === 'ArrowRight') g17Nav(1);
+    if (e.key === 'ArrowLeft')  g17Nav(-1);
+    if (e.key === 'Escape')     closeGallery17();
+  });
+})();
+</script>
 </body></html>
