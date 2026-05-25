@@ -665,15 +665,18 @@
         action: async () => {
           trackEvent('returning_same_subject');
           formData.isReturning   = true;
+          formData.isRelance     = true;   // active le message WA relance
           formData.returnBranch  = ru.branch;
           formData.branche       = ru.branch;
           formData.brancheLabel  = ru.label;
+          formData.canal         = 'whatsapp';
           formData.score_bonus   = 20;
-          addSticker(STK.jecoute);
-          setBenImage(IMG.jecoute);
+          // Pas de sticker J'écoute — redondant avec le message qui suit
+          setBenImage(IMG.okParfait);
           await showTyping(300);
-          await addBubble('bot', 'Je relance votre demande en priorité.', 700);
-          stepCanalContact();   // formData.tel déjà rempli → rappel sans redemander
+          await addBubble('bot', 'Je génère votre message de relance.', 600);
+          // Aller directement au WA — pas de collecte d'infos supplémentaires
+          stepConfirmWA();
         }
       },
       {
@@ -692,18 +695,31 @@
      WHATSAPP ENGINE
   ══════════════════════════════════════════════════════════ */
   function buildWAMessage() {
-    var details = [];
-    if (formData.urgence)      details.push('🔴 URGENT — fuite active');
-    if (formData.brancheLabel) details.push(formData.brancheLabel);
-    if (formData.sousType)     details.push(formData.sousType);
-    if (formData.typeBien)     details.push(formData.typeBien);
-    if (formData.codepostal)   details.push('CP ' + formData.codepostal);
-    if (formData.situation)    details.push(formData.situation.slice(0, 80));
-    var sujet = details.join(', ') || 'ma canalisation en fonte';
-    var msg = 'Bonjour, je vous contacte à propos de ' + sujet + '. J\'attends votre réponse.';
     var prenom = (formData.nom || '').trim().split(' ')[0];
-    if (prenom) msg += ' ' + prenom;
-    return msg;
+
+    // ── Cas relance (returning user, même sujet) ──────────────
+    if (formData.isRelance) {
+      var sujetRelance = formData.brancheLabel || formData.returnBranch || 'ma canalisation en fonte';
+      return 'Bonjour, je suis ' + (prenom || 'votre client')
+        + ', je vous relance à propos de « ' + sujetRelance + ' ».\n'
+        + 'Merci de me tenir informé SVP.';
+    }
+
+    // ── Message standard ──────────────────────────────────────
+    var contexte = [];
+    if (formData.urgence)      contexte.push('🔴 URGENT — fuite active');
+    if (formData.brancheLabel) contexte.push(formData.brancheLabel);
+    if (formData.sousType)     contexte.push(formData.sousType);
+    if (formData.typeBien)     contexte.push(formData.typeBien);
+    if (formData.codepostal)   contexte.push('code postal ' + formData.codepostal);
+
+    var sujet = contexte.join(', ') || 'ma canalisation en fonte';
+    var lines = [];
+    lines.push('Bonjour, je vous contacte à propos de ' + sujet + '.');
+    if (formData.situation) lines.push(formData.situation.slice(0, 100));
+    lines.push('J\'attends votre réponse.');
+    if (prenom) lines.push(prenom);
+    return lines.join('\n');
   }
 
   function openWhatsApp() {
@@ -1211,7 +1227,6 @@
       showTextInput('Reformulez…', async (q2) => {
         clearFooter();
         faqAttempts++;
-        addSticker(STK.diag);
         await showTyping(600);
         const match2 = matchFAQ(q2);
         if (match2) { await showFAQAnswer(match2); return; }
