@@ -996,7 +996,7 @@
       branche:      branch,
       nom:          data.nom        || '—',
       telephone:    data.tel        || '—',
-      email:        data.email      || '—',
+      email:        data.email      || 'nomail@sf.com',
       codepostal:   data.codepostal || formData.codepostal || '—',
       message:      data.message    || formData.situation  || '—',
       cabinet:      data.cabinet    || '—',
