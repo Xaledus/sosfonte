@@ -102,6 +102,7 @@
   let hasOpenedOnce = false;
   let botSessionId = null;
   let faqAttempts = 0;
+  let farewellShown = false;  // guard : sticker Au revoir une seule fois par session
 
   /* ── HELPERS ─────────────────────────────────────────────── */
   function isOffHours() { const h = new Date().getHours(); return h < 7 || h >= 22; }
@@ -242,6 +243,7 @@
     isOpen = true;
     formData = {};
     faqAttempts = 0;
+    farewellShown = false;
     hasOpenedOnce = true;
     clearAutoClose();
     botSessionId = (crypto && crypto.randomUUID)
@@ -267,9 +269,15 @@
 
   function closeWidget() {
     clearAutoClose();
-    setBenImage(IMG.auRevoir);
-    addSticker(STK.auRevoir);
-    setTimeout(closeWidgetSilent, 1500);
+    if (!farewellShown) {
+      // Sticker Au revoir uniquement si stepFarewell ne l'a pas déjà montré
+      farewellShown = true;
+      setBenImage(IMG.auRevoir);
+      addSticker(STK.auRevoir);
+      setTimeout(closeWidgetSilent, 1500);
+    } else {
+      closeWidgetSilent();
+    }
   }
 
   function closeWidgetSilent() {
@@ -492,7 +500,7 @@
     }, 1000);
 
     autoCloseTimer = setTimeout(() => {
-      if (isOpen) stepFarewell();
+      if (isOpen) closeWidgetSilent();   // fermeture silencieuse — pas de sticker en double
     }, CFG.autoCloseDelay);
 
     showChoices([
@@ -516,8 +524,11 @@
 
   async function stepFarewell() {
     clearFooter();
-    setBenImage(IMG.auRevoir);
-    addSticker(STK.auRevoir);
+    if (!farewellShown) {
+      farewellShown = true;
+      setBenImage(IMG.auRevoir);
+      addSticker(STK.auRevoir);
+    }
     setTimeout(closeWidgetSilent, 5000);
   }
 
@@ -673,10 +684,18 @@
           formData.score_bonus   = 20;
           // Pas de sticker J'écoute — redondant avec le message qui suit
           setBenImage(IMG.okParfait);
-          await showTyping(300);
-          await addBubble('bot', 'Je génère votre message de relance.', 600);
-          // Aller directement au WA — pas de collecte d'infos supplémentaires
-          stepConfirmWA();
+          if (!formData.nom) {
+            // Prénom inconnu → demander en une ligne avant de générer le WA
+            await showTyping(300);
+            await addBubble('bot', 'Votre prénom pour personnaliser le message :', 600);
+            showForm([
+              { key: 'nom', placeholder: 'Votre prénom *', required: true },
+            ], 'Générer →', () => { stepConfirmWA(); });
+          } else {
+            await showTyping(300);
+            await addBubble('bot', 'Je génère votre message de relance.', 500);
+            stepConfirmWA();
+          }
         }
       },
       {
