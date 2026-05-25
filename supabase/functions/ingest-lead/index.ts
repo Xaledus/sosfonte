@@ -267,10 +267,11 @@ async function handleLead(
     );
   }
 
-  // Form HTML hors-bot
+  // Form HTML hors-bot — form_id obligatoire par contrainte DB (leads_form_id_coherence)
+  // Si le bot tombe en source 'contact_form' (FAQ, relance…) on injecte 'bot_ben'
   if (mapped.source === 'contact_form') {
     const formId = clean(body.form_id);
-    if (formId) leadPayload.form_id = formId;
+    leadPayload.form_id = formId ?? 'bot_ben';
   }
 
   // INSERT lead (le trigger calcule score + updated_at automatiquement)
