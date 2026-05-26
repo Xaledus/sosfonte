@@ -1,9 +1,9 @@
 {
-  "titre": "Colonne EU complète — immeuble 1910",
+  "titre": "Colonne EU/EV complète — immeuble 1910",
   "lieu": "Paris 17e",
-  "type": "Remplacement colonne",
-  "probleme": "",
-  "solution": "",
-  "resultat": "6 niveaux · 4 jours · Rapport assurance fourni",
+  "type": "Remplacement colonne et collecteur en Fonte SME",
+  "probleme": "Fonte SME Fuillarde à plusieurs endroits ainsi qu'un problème d'écoulement",
+  "solution": "Remplacement de toute la colonne montante en SME DN100 et du collecteur en CAVE SME DN125, 150 et 200",
+  "resultat": "6 niveaux · 8 jours · Rapport assurance fourni",
   "annee": "2024"
 }
