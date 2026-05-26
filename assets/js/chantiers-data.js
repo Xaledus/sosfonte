@@ -79,17 +79,26 @@ window.CHANTIERS = [
     ]
   },
   {
-    id:       'paris16-diagnostic-2024',
-    featured: false,
-    type:     'Diagnostic',
-    titre:    'Inspection réseau — rapport assurance',
+    id:       'paris16-ep-2025',
+    featured: true,
+    type:     'Remplacement descente EP',
+    titre:    'Descente EP fonte — immeuble haussmannien',
     lieu:     'Paris 16e',
-    details:  'Copropriété 32 lots · Caméra auto-propulsée',
-    tags:     [],
-    gradient: 'linear-gradient(135deg,#3a2a1a,#281a0d)',
-    icon:     '🔍',
-    cover:    null,
-    photos:   []
+    details:  '7 étages · Dépose, pose, mise en peinture · DN100',
+    tags:     ['7 étages', 'DN100', 'EP fonte'],
+    gradient: 'linear-gradient(135deg,#1a2a3a,#0d1a28)',
+    icon:     '🏛️',
+    cover:    'photos/chantiers/paris16-ep-2025/couverture.jpg',
+    photos: [
+      { src: 'photos/chantiers/paris16-ep-2025/couverture.jpg',  cap: '', tag: 'EP fonte — existant' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-01.jpg',    cap: '', tag: 'EP fonte — existant' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-02.jpg',    cap: '', tag: 'EP fonte — existant' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-03.jpg',    cap: '', tag: 'EP fonte — existant' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-04.jpg',    cap: '', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-05.jpg',    cap: '', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-06.jpg',    cap: '', tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/paris16-ep-2025/photo-07.jpg',    cap: '', tag: 'SME DN100 — neuf' },
+    ]
   },
   {
     id:       'vincennes-reparation-2024',
@@ -113,32 +122,6 @@ window.CHANTIERS = [
       { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: '', tag: 'SME DN100 — neuf' },
     ]
   },
-  {
-    id:       'paris-syndic-2024',
-    featured: true,
-    type:     'Contrat syndic',
-    titre:    'Maintenance annuelle — 4 immeubles',
-    lieu:     'Cabinet Paris Ouest',
-    details:  'Tarifs bloqués 12 mois · Urgences prioritaires',
-    tags:     [],
-    gradient: 'linear-gradient(135deg,#2a1a3a,#1a0d28)',
-    icon:     '📋',
-    cover:    null,
-    photos:   []
-  },
-  {
-    id:       'paris8-colonne-2024',
-    featured: false,
-    type:     'Remplacement colonne',
-    titre:    'Colonne EV — immeuble haussmannien',
-    lieu:     'Paris 8e',
-    details:  '5 niveaux · Sans casse parties communes',
-    tags:     [],
-    gradient: 'linear-gradient(135deg,#3a1a1a,#280d0d)',
-    icon:     '🏛️',
-    cover:    null,
-    photos:   []
-  }
 ];
 
 // ── Lightbox partagée ────────────────────────────────────────────────

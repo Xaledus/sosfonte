@@ -24,11 +24,13 @@
 
 /* ── Desktop : photo = hauteur exacte du texte ── */
 @media(min-width:769px){
-  #svc-01,#svc-02,#svc-05{align-items:stretch!important}
-  #svc-01 .sf-svc-photo,#svc-02 .sf-svc-photo,#svc-05 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
+  #svc-01,#svc-02,#svc-05,#svc-06,#svc-07{align-items:stretch!important}
+  #svc-01 .sf-svc-photo,#svc-02 .sf-svc-photo,#svc-05 .sf-svc-photo,#svc-06 .sf-svc-photo,#svc-07 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
   #svc-01 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
   #svc-02 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
   #svc-05 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%}
+  #svc-06 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  #svc-07 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
 }
 
 /* ── Mobile ── */
@@ -223,7 +225,9 @@
           </div>
           <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander une étude chemisage →</a></div>
         </div>
-        <div class="sf-svc-photo" style="background:linear-gradient(135deg,#1a3a2a,#0d2418);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🛠️</div>
+        <div class="sf-svc-photo" style="border-radius:16px;overflow:hidden">
+          <img src="photos/Logo_pictos/service-chemisage.jpeg" alt="Chemisage canalisation fonte — réhabilitation sans démolition Paris IDF" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
+        </div>
       </div>
 
       <div id="svc-07" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
@@ -240,7 +244,9 @@
             </div>
             <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis curage →</a></div>
           </div>
-          <div class="sf-svc-photo" style="background:linear-gradient(135deg,#f7f4ef,#ede9e2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">💧</div>
+          <div class="sf-svc-photo" style="border-radius:16px;overflow:hidden">
+            <img src="photos/Logo_pictos/service-curage.jpg" alt="Curage haute pression canalisation fonte — protocole adapté Paris IDF" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
+          </div>
       </div>
 
       <div id="svc-08" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0" class="reveal">
