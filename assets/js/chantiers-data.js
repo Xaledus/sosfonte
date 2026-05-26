@@ -26,13 +26,13 @@ window.CHANTIERS = [
     icon:     '🏗️',
     cover:    'photos/chantiers/paris17-colonne-2024/COUVERTURE_PARIS%2017.jpg',
     photos: [
-      { src: 'photos/chantiers/paris17-colonne-2024/COUVERTURE_PARIS%2017.jpg', cap: 'Collecteur SME DN125/150/200 — chantier Paris 17e' },
-      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250812-WA0003.jpg',   cap: 'Collecteur — travaux en cours' },
-      { src: 'photos/chantiers/paris17-colonne-2024/IMG20250617133227.jpg',     cap: 'Reprise colonne fonte — logement étage 2 A' },
-      { src: 'photos/chantiers/paris17-colonne-2024/IMG20250618162740.jpg',     cap: 'Fin des travaux de reprise de la colonne — logement étage 2 A' },
+      { src: 'photos/chantiers/paris17-colonne-2024/COUVERTURE_PARIS%2017.jpg', cap: 'Collecteur SME DN125/150/200 — chantier Paris 17e',               tag: 'SME DN100 · DN125 · DN150 · DN200' },
+      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250812-WA0003.jpg',   cap: 'Collecteur — travaux en cours',                                   tag: 'SME DN125 · DN150 · DN200' },
+      { src: 'photos/chantiers/paris17-colonne-2024/IMG20250617133227.jpg',     cap: 'Reprise colonne fonte — logement étage 2 A',                      tag: 'SME DN100' },
+      { src: 'photos/chantiers/paris17-colonne-2024/IMG20250618162740.jpg',     cap: 'Fin des travaux de reprise de la colonne — logement étage 2 A',   tag: 'SME DN100' },
       { src: 'photos/chantiers/paris17-colonne-2024/IMG20250619124530.jpg',     cap: 'Reprise coffrage et appareillage après travaux sur la colonne — logement étage 2 A' },
-      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0022.jpg',   cap: 'Reprise raccordement colonne 1 sur collecteur' },
-      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0008.jpg',   cap: 'Collecteur après reprise, pose, tests et finitions' },
+      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0022.jpg',   cap: 'Reprise raccordement colonne 1 sur collecteur',                   tag: 'SME DN100' },
+      { src: 'photos/chantiers/paris17-colonne-2024/IMG-20250826-WA0008.jpg',   cap: 'Collecteur après reprise, pose, tests et finitions',              tag: 'SME DN125 · DN150 · DN200' },
     ]
   },
   {
@@ -47,14 +47,14 @@ window.CHANTIERS = [
     icon:     '⚡',
     cover:    'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/Couverture.jpg',
     photos: [
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/Couverture.jpg',            cap: 'Colonne fonte en cave — état avant intervention' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250717112550.jpg',     cap: 'Diagnostic — localisation de la fuite' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0036.jpg',   cap: 'Colonne EV — vétusté avancée constatée' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0040.jpg',   cap: 'Dépose de la colonne fonte existante' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0049.jpg',   cap: 'Mise en place nouvelle colonne SME DN100' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0001.jpg',   cap: 'Raccordements et finitions' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0003.jpg',   cap: 'Travaux terminés — colonnes EU/EV remplacées' },
-      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250829094333.jpg',     cap: 'Vue d\'ensemble cave après travaux' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/Couverture.jpg',            cap: 'Colonne fonte en cave — état avant intervention',    tag: 'Fonte SMU — existant' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250717112550.jpg',     cap: 'Diagnostic — localisation de la fuite',              tag: 'Fonte SMU — existant' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0036.jpg',   cap: 'Colonne EV — vétusté avancée constatée',            tag: 'Fonte SMU EV — existant' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0040.jpg',   cap: 'Dépose de la colonne fonte existante',               tag: 'Fonte SMU EU — existant' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0049.jpg',   cap: 'Mise en place nouvelle colonne SME DN100',           tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0001.jpg',   cap: 'Raccordements et finitions',                         tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0003.jpg',   cap: 'Travaux terminés — colonnes EU/EV remplacées',       tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250829094333.jpg',     cap: 'Vue d\'ensemble cave après travaux',                 tag: 'SME DN100 — neuf' },
     ]
   },
   {
@@ -125,6 +125,7 @@ function _lbInit() {
     '<div style="position:relative;max-width:90vw;max-height:80vh;display:flex;align-items:center;justify-content:center">' +
       '<button onclick="window._lbNav(-1)" style="position:absolute;left:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%">‹</button>' +
       '<img id="sf-lb-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;display:block">' +
+      '<div id="sf-lb-tag" style="position:absolute;bottom:12px;left:12px;background:rgba(23,181,166,0.92);color:white;font-family:Poppins,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;backdrop-filter:blur(4px);display:none;pointer-events:none"></div>' +
       '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none">' +
         '<span style="font-family:Poppins,sans-serif;font-size:clamp(18px,4vw,32px);font-weight:700;color:rgba(255,255,255,0.22);letter-spacing:.15em;text-transform:uppercase;transform:rotate(-30deg);white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,0.4)">SOS FONTE</span>' +
       '</div>' +
@@ -144,8 +145,16 @@ function _lbInit() {
 
 function _lbShow(idx) {
   _lb.cur = (idx + _lb.photos.length) % _lb.photos.length;
-  document.getElementById('sf-lb-img').src = _lb.photos[_lb.cur].src;
-  document.getElementById('sf-lb-cap').textContent = _lb.photos[_lb.cur].cap;
+  var photo = _lb.photos[_lb.cur];
+  document.getElementById('sf-lb-img').src = photo.src;
+  document.getElementById('sf-lb-cap').textContent = photo.cap;
+  var tagEl = document.getElementById('sf-lb-tag');
+  if (photo.tag) {
+    tagEl.textContent = photo.tag;
+    tagEl.style.display = 'block';
+  } else {
+    tagEl.style.display = 'none';
+  }
   var ds = document.getElementById('sf-lb-dots').children;
   for (var i = 0; i < ds.length; i++)
     ds[i].style.background = i === _lb.cur ? '#4dd9c0' : 'rgba(255,255,255,0.3)';
