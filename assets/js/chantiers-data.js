@@ -136,17 +136,23 @@ function _lbInit() {
   el.innerHTML =
     '<button onclick="window._lbClose()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:white;font-size:32px;cursor:pointer;line-height:1;z-index:1">✕</button>' +
     '<div style="position:relative;max-width:90vw;max-height:80vh;display:flex;align-items:center;justify-content:center">' +
-      '<button onclick="window._lbNav(-1)" style="position:absolute;left:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%">‹</button>' +
+      '<button onclick="window._lbNav(-1)" style="position:absolute;left:8px;background:rgba(0,0,0,0.45);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%;z-index:2">‹</button>' +
       '<img id="sf-lb-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;display:block">' +
       '<div id="sf-lb-tag" style="position:absolute;bottom:12px;left:12px;background:rgba(23,181,166,0.92);color:white;font-family:Poppins,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;backdrop-filter:blur(4px);display:none;pointer-events:none"></div>' +
       '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none">' +
         '<span style="font-family:Poppins,sans-serif;font-size:clamp(18px,4vw,32px);font-weight:700;color:rgba(255,255,255,0.22);letter-spacing:.15em;text-transform:uppercase;transform:rotate(-30deg);white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,0.4)">SOS FONTE</span>' +
       '</div>' +
-      '<button onclick="window._lbNav(1)" style="position:absolute;right:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%">›</button>' +
+      '<button onclick="window._lbNav(1)" style="position:absolute;right:8px;background:rgba(0,0,0,0.45);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%;z-index:2">›</button>' +
     '</div>' +
-    '<div id="sf-lb-cap" style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:14px;text-align:center;max-width:600px;padding:0 20px"></div>' +
+    '<div id="sf-lb-cap" style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:14px;text-align:center;max-width:600px;padding:0 20px;display:none"></div>' +
     '<div id="sf-lb-dots" style="display:flex;gap:8px;margin-top:12px"></div>';
   el.addEventListener('click', function (e) { if (e.target === el) window._lbClose(); });
+  var _touchX = 0;
+  el.addEventListener('touchstart', function(e){ _touchX = e.changedTouches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - _touchX;
+    if (Math.abs(dx) > 50) { if (dx < 0) window._lbNav(1); else window._lbNav(-1); }
+  }, {passive:true});
   document.body.appendChild(el);
   document.addEventListener('keydown', function (e) {
     if (document.getElementById('sf-lightbox').style.display === 'none') return;
@@ -160,7 +166,9 @@ function _lbShow(idx) {
   _lb.cur = (idx + _lb.photos.length) % _lb.photos.length;
   var photo = _lb.photos[_lb.cur];
   document.getElementById('sf-lb-img').src = photo.src;
-  document.getElementById('sf-lb-cap').textContent = photo.cap;
+  var capEl = document.getElementById('sf-lb-cap');
+  capEl.textContent = photo.cap;
+  capEl.style.display = photo.cap ? 'block' : 'none';
   var tagEl = document.getElementById('sf-lb-tag');
   if (photo.tag) {
     tagEl.textContent = photo.tag;

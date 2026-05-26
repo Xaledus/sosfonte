@@ -10,6 +10,17 @@
 <link rel="stylesheet" href="sosfonte_shared.css?v=12">
 <link rel="stylesheet" href="assets/css/bot-ben.css">
 <script src="assets/js/site-config.js"></script>
+<style>
+/* ── Syndics mobile ── */
+@media(max-width:768px){
+  /* Logos bar : padding réduit + centrage */
+  .sf-logos-bar{padding:20px 16px!important;overflow-x:hidden}
+  .sf-logos-bar>div{flex-direction:column!important;gap:12px!important;align-items:center!important}
+  /* Logos : taille uniforme et centrés */
+  .sf-logos-bar>div>div{justify-content:center!important;flex-wrap:wrap!important;gap:12px!important}
+  .sf-logos-bar>div>div>div{width:80px!important;height:60px!important;flex-shrink:0}
+}
+</style>
 </head>
 <body>
 <header>
@@ -43,10 +54,10 @@
   </div>
 </section>
 
-<div style="background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);padding:28px 40px">
+<div class="sf-logos-bar" style="background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);padding:28px 40px">
   <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center">
     <p style="font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);white-space:nowrap">Partenaires de confiance</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center">
       <!-- □ Century 21 -->
       <div style="width:90px;height:90px;border-radius:14px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,0.7),0 3px 8px rgba(0,0,0,0.4);flex-shrink:0;transition:transform .2s,box-shadow .2s" onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 18px 40px rgba(0,0,0,0.8),0 6px 14px rgba(0,0,0,0.5)'" onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 28px rgba(0,0,0,0.7),0 3px 8px rgba(0,0,0,0.4)'"><img src="photos/Logo_pictos/Partenaire-Century21.png" alt="Century 21" style="width:100%;height:100%;object-fit:cover;display:block"></div>
       <!-- ▭ Laforêt — contain + padding pour dézoomer -->
