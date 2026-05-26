@@ -11,12 +11,31 @@
 <link rel="stylesheet" href="assets/css/bot-ben.css">
 <script src="assets/js/site-config.js"></script>
 <style>
-.sf-svc-nav{position:sticky;top:0;z-index:90;background:var(--anthracite);border-bottom:1px solid var(--border);display:flex;gap:4px;padding:10px 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.sf-svc-nav::-webkit-scrollbar{display:none}
+/* ── Anchor nav ── */
+.sf-svc-nav{position:sticky;top:0;z-index:90;background:var(--anthracite);border-bottom:1px solid var(--border)}
+.sf-svc-nav-toggle{display:none}
+.sf-svc-nav-items{display:flex;gap:4px;padding:10px 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+.sf-svc-nav-items::-webkit-scrollbar{display:none}
 .sf-svc-nav a{flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;padding:6px 14px;border-radius:20px;border:1px solid var(--border);transition:color .2s,border-color .2s,background .2s;white-space:nowrap}
-.sf-svc-nav a:hover{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.08)}
-.sf-svc-nav a.active{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.12)}
-@media(max-width:768px){.sf-svc-img-first{order:2}}
+.sf-svc-nav a:hover,.sf-svc-nav a.active{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.12)}
+
+/* ── Service photo containers ── */
+.sf-svc-photo{height:280px}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  /* Nav : toggle collapsible */
+  .sf-svc-nav-toggle{display:flex;width:100%;align-items:center;justify-content:space-between;padding:12px 20px;background:none;border:none;color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;gap:8px}
+  .sf-svc-nav-toggle svg{transition:transform .22s;flex-shrink:0}
+  .sf-svc-nav-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .sf-svc-nav-toggle[aria-expanded="true"]{color:var(--teal)}
+  .sf-svc-nav-items{display:none;flex-wrap:wrap;gap:8px;padding:10px 16px 14px;border-top:1px solid var(--border);overflow-x:unset}
+  .sf-svc-nav-items.open{display:flex}
+  /* Service rows : single column */
+  #svc-01,#svc-02,#svc-03,#svc-04,#svc-05,#svc-06,#svc-07,#svc-08{grid-template-columns:1fr!important;gap:20px!important;padding:24px 0!important}
+  /* Photo : image avant le texte, hauteur réduite */
+  .sf-svc-photo{order:-1;height:200px!important}
+}
 </style>
 </head>
 <body>
@@ -47,14 +66,20 @@
 </section>
 
 <nav class="sf-svc-nav" id="sf-svc-nav" aria-label="Navigation services">
-  <a href="#svc-01">🏗️ Colonnes EU/EV</a>
-  <a href="#svc-02">🔧 Fuite & réparation</a>
-  <a href="#svc-03">🔍 Diagnostic</a>
-  <a href="#svc-04">📋 Maintenance syndics</a>
-  <a href="#svc-05">🧗 Accès difficile</a>
-  <a href="#svc-06">🛠️ Chemisage</a>
-  <a href="#svc-07">💧 Curage HP</a>
-  <a href="#svc-08">🛡️ Prestige</a>
+  <button class="sf-svc-nav-toggle" id="sf-svc-nav-toggle" aria-expanded="false" aria-controls="sf-svc-nav-items">
+    Nos services
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="sf-svc-nav-items" id="sf-svc-nav-items">
+    <a href="#svc-01">🏗️ Colonnes EU/EV</a>
+    <a href="#svc-02">🔧 Fuite & réparation</a>
+    <a href="#svc-03">🔍 Diagnostic</a>
+    <a href="#svc-04">📋 Maintenance syndics</a>
+    <a href="#svc-05">🧗 Accès difficile</a>
+    <a href="#svc-06">🛠️ Chemisage</a>
+    <a href="#svc-07">💧 Curage HP</a>
+    <a href="#svc-08">🛡️ Prestige</a>
+  </div>
 </nav>
 
 <section class="section">
@@ -75,11 +100,11 @@
           </div>
           <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis →</a></div>
         </div>
-        <div style="background:linear-gradient(135deg,#e8f5f2,#f0f7f5);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🏗️</div>
+        <div class="sf-svc-photo" style="background:linear-gradient(135deg,#e8f5f2,#f0f7f5);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🏗️</div>
       </div>
 
       <div id="svc-02" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,#fef3f2,#fde8e6);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🔧</div>
+        <div class="sf-svc-img-first sf-svc-photo" style="background:linear-gradient(135deg,#fef3f2,#fde8e6);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🔧</div>
         <div>
           <p class="section-eyebrow">Service 02</p>
           <h2 class="section-title"><em>Recherche</em> de fuite & réparation</h2>
@@ -120,11 +145,11 @@
           </div>
           <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Commander un diagnostic →</a></div>
         </div>
-        <div style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🔍</div>
+        <div class="sf-svc-photo" style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🔍</div>
       </div>
 
       <div id="svc-04" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,#0d1f35,#162840);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">📋</div>
+        <div class="sf-svc-img-first sf-svc-photo" style="background:linear-gradient(135deg,#0d1f35,#162840);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">📋</div>
         <div>
           <p class="section-eyebrow">Service 04</p>
           <h2 class="section-title">Contrats de <em>maintenance</em> syndics</h2>
@@ -141,7 +166,7 @@
       </div>
 
       <div id="svc-05" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div class="sf-svc-img-first" style="border-radius:16px;height:280px;overflow:hidden"><img src="photos/Logo_pictos/service-cordiste.jpg" alt="Technicien cordiste en accès difficile — courette parisienne, colonne fonte" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>
+        <div class="sf-svc-img-first sf-svc-photo" style="border-radius:16px;overflow:hidden"><img src="photos/Logo_pictos/service-cordiste.jpg" alt="Technicien cordiste en accès difficile — courette parisienne, colonne fonte" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>
         <div>
           <p class="section-eyebrow">Service 05</p>
           <h2 class="section-title">Interventions en <em>accès</em> <em>difficile</em> — cordiste et nacelle</h2>
@@ -171,7 +196,7 @@
           </div>
           <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander une étude chemisage →</a></div>
         </div>
-        <div style="background:linear-gradient(135deg,#1a3a2a,#0d2418);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🛠️</div>
+        <div class="sf-svc-photo" style="background:linear-gradient(135deg,#1a3a2a,#0d2418);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🛠️</div>
       </div>
 
       <div id="svc-07" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
@@ -188,11 +213,11 @@
             </div>
             <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis curage →</a></div>
           </div>
-          <div style="background:linear-gradient(135deg,#f7f4ef,#ede9e2);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">💧</div>
+          <div class="sf-svc-photo" style="background:linear-gradient(135deg,#f7f4ef,#ede9e2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">💧</div>
       </div>
 
       <div id="svc-08" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0" class="reveal">
-        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,var(--anthracite),var(--navy-light));border-radius:16px;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px solid var(--teal-border)">
+        <div class="sf-svc-img-first sf-svc-photo" style="background:linear-gradient(135deg,var(--anthracite),var(--navy-light));border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px solid var(--teal-border)">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-align:center">Protocole Prestige</p>
         </div>
@@ -290,21 +315,43 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 </script>
 <script>
 (function(){
-  var nav=document.getElementById('sf-svc-nav');
-  if(!nav)return;
-  var links=Array.from(nav.querySelectorAll('a'));
-  var ids=links.map(function(a){return a.getAttribute('href').slice(1)});
-  function update(){
-    var active='';
-    ids.forEach(function(id){
-      var el=document.getElementById(id);
-      if(el&&el.getBoundingClientRect().top<=120)active=id;
+  var nav    = document.getElementById('sf-svc-nav');
+  var toggle = document.getElementById('sf-svc-nav-toggle');
+  var items  = document.getElementById('sf-svc-nav-items');
+  if(!nav) return;
+
+  /* ── Toggle mobile ── */
+  if(toggle && items){
+    toggle.addEventListener('click', function(){
+      var open = items.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
     });
-    links.forEach(function(a){
-      a.classList.toggle('active',a.getAttribute('href')==='#'+active);
+    /* Fermer après sélection d'une catégorie sur mobile */
+    Array.from(items.querySelectorAll('a')).forEach(function(a){
+      a.addEventListener('click', function(){
+        if(window.innerWidth <= 768){
+          items.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      });
     });
   }
-  window.addEventListener('scroll',update,{passive:true});
+
+  /* ── Scroll spy (desktop uniquement) ── */
+  var links = Array.from(nav.querySelectorAll('a'));
+  var ids   = links.map(function(a){ return a.getAttribute('href').slice(1); });
+  function update(){
+    if(window.innerWidth <= 768) return;
+    var active = '';
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top <= 120) active = id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + active);
+    });
+  }
+  window.addEventListener('scroll', update, {passive:true});
   update();
 })();
 </script>
