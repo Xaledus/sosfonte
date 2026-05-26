@@ -103,14 +103,14 @@ window.CHANTIERS = [
     icon:     '🔧',
     cover:    'photos/chantiers/vincennes-reparation-2024/couverture.jpg',
     photos: [
-      { src: 'photos/chantiers/vincennes-reparation-2024/couverture.jpg',  cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-01.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-02.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-03.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-04.jpg',    cap: 'Pendant', tag: 'SME DN100 — en cours' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: 'Pendant', tag: 'SME DN100 — en cours' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: 'Après',   tag: 'SME DN100 — neuf' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: 'Après',   tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/couverture.jpg',  cap: '', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-01.jpg',    cap: '', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-02.jpg',    cap: '', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-03.jpg',    cap: '', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-04.jpg',    cap: '', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: '', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: '', tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: '', tag: 'SME DN100 — neuf' },
     ]
   },
   {
