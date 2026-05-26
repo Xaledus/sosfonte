@@ -94,15 +94,24 @@ window.CHANTIERS = [
   {
     id:       'vincennes-reparation-2024',
     featured: true,
-    type:     'Réparation',
-    titre:    'Reprise jonction fonte/PVC',
+    type:     'Remplacement fonte SME + reprise carrelage',
+    titre:    'Colonne SDB — dégât des eaux voisin',
     lieu:     'Vincennes (94)',
-    details:  'Intervention cave · Rapport technique fourni',
-    tags:     [],
-    gradient: 'linear-gradient(135deg,#1a2a1a,#0d1a0d)',
+    details:  '3 jours · Fonte SME DN100 · Reprise plomberie & carrelage',
+    tags:     ['3 jours', 'DN100', 'Tout compris'],
+    gradient: 'linear-gradient(135deg,#1a2a3a,#0d1a28)',
     icon:     '🔧',
-    cover:    null,
-    photos:   []
+    cover:    'photos/chantiers/vincennes-reparation-2024/couverture.jpg',
+    photos: [
+      { src: 'photos/chantiers/vincennes-reparation-2024/couverture.jpg',  cap: 'SDB Vincennes — état général avant intervention',                              tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-01.jpg',    cap: 'Colonne fonte DN100 en SDB — fuite détectée suite dégât des eaux',             tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-02.jpg',    cap: 'Diagnostic — zone sinistrée, identification du défaut de la colonne',          tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-03.jpg',    cap: 'Colonne fonte avant intervention — angle de référence (avant 3)',               tag: 'Fonte SMU DN100 — avant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-04.jpg',    cap: 'Dépose colonne existante — mise en place nouveau collecteur SME DN100',        tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: 'Raccordements plomberie — reprise jonctions et étanchéité',                    tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: 'Colonne SME DN100 posée — même angle de référence (après 3)',                  tag: 'SME DN100 — après' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: 'Travaux terminés — reprise carrelage et finitions SDB comprises',               tag: 'Résultat final' },
+    ]
   },
   {
     id:       'paris-syndic-2024',
