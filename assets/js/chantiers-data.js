@@ -58,8 +58,29 @@ window.CHANTIERS = [
     ]
   },
   {
-    id:       'paris16-diagnostic-2024',
+    id:       'paris14-jonction-2024',
     featured: true,
+    type:     'Reprise jonction Fonte/PVC/Plomb',
+    titre:    'Collecteur & jonctions — boutique RDC',
+    lieu:     'Paris 14e',
+    details:  '2 jours · Collecteur SME DN125 · Mise en conformité',
+    tags:     ['2 jours', 'DN125', 'Fonte/PVC/Plomb'],
+    gradient: 'linear-gradient(135deg,#2a1a3a,#1a0d2a)',
+    icon:     '🔧',
+    cover:    'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/couverture.jpg',
+    photos: [
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/couverture.jpg',        cap: 'Boutique RDC — état des jonctions avant intervention',          tag: 'Fonte · PVC · Plomb — existant' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250514140336.jpg', cap: 'Collecteur fonte DN125 fuillard en faux-plafond boutique',     tag: 'Fonte SMU DN125 — existant' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250515093845.jpg', cap: 'Dépose du faux-plafond — accès au collecteur',                 tag: 'Fonte SMU DN125 — existant' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250515093855.jpg', cap: 'Collecteur et jonctions Fonte/PVC/Plomb avant reprise',        tag: 'Fonte · PVC · Plomb — existant' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250515093908.jpg', cap: 'Détail jonction non conforme — cause du défaut d\'étanchéité', tag: 'Jonction Fonte/PVC' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250515100759.jpg', cap: 'Pose nouveau collecteur SME DN125 — reprise des jonctions',    tag: 'SME DN125 — neuf' },
+      { src: 'photos/chantiers/Paris%2014%20Reprise%20jonction%20fontePVC/IMG20250515100817.jpg', cap: 'Travaux terminés — collecteur et jonctions mis en conformité', tag: 'SME DN125 — neuf' },
+    ]
+  },
+  {
+    id:       'paris16-diagnostic-2024',
+    featured: false,
     type:     'Diagnostic',
     titre:    'Inspection réseau — rapport assurance',
     lieu:     'Paris 16e',
