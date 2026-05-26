@@ -22,11 +22,11 @@
 /* ── Service photo containers ── */
 .sf-svc-photo{height:280px}
 
-/* ── Desktop : photo à la même hauteur que le texte ── */
+/* ── Desktop : photo = hauteur exacte du texte ── */
 @media(min-width:769px){
   #svc-05{align-items:stretch!important}
-  #svc-05 .sf-svc-photo{height:100%!important;min-height:unset!important}
-  #svc-05 .sf-svc-photo img{height:100%;width:100%;object-fit:cover;object-position:center 15%}
+  #svc-05 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
+  #svc-05 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%}
 }
 
 /* ── Mobile ── */
