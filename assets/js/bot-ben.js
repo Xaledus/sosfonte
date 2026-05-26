@@ -1401,7 +1401,7 @@
 
     trackEvent('flow_completed');
 
-    // ── Payload Formspree (filet de sécurité)
+    // ── Payloads
     var formspreePayload = {
       _subject:       '[BOT BEN V2] ' + brancheLabel + (formData.urgence ? ' 🔴 URGENT' : ''),
       branche:        brancheLabel,
@@ -1422,25 +1422,6 @@
       timestamp:      new Date().toLocaleString('fr-FR'),
     };
 
-    fetch(CFG.formspree, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(formspreePayload),
-    })
-      .then(r => r.json())
-      .then(r => { if (r.ok) console.log('[BenBot] Formspree ✓'); else throw r; })
-      .catch(err => {
-        try {
-          var leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
-          leads.push(formspreePayload);
-          localStorage.setItem('ben_leads', JSON.stringify(leads));
-        } catch(e) {}
-        console.warn('[BenBot] Fallback localStorage', err);
-      });
-
-    // ── Payload Supabase (source de vérité)
-    if (!CFG.ingestUrl) return;
-
     var supabasePayload = {
       action:          'lead',
       branche:         brancheLabel,
@@ -1460,25 +1441,54 @@
       page:            window.location.href,
     };
 
-    fetch(CFG.ingestUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + CFG.anonKey,
-      },
-      body: JSON.stringify(supabasePayload),
-    })
-      .then(r => r.json())
-      .then(r => {
-        if (r.ok) {
-          console.log('[BenBot] Supabase ✓ lead_id=' + r.lead_id + (r.is_duplicate ? ' (doublon)' : ''));
-          window.__BEN = window.__BEN || {};
-          window.__BEN.leadId = r.lead_id;
-        } else {
-          console.warn('[BenBot] Supabase response non-ok', r);
-        }
+    // ── Formspree : filet de sécurité (appelé uniquement si Supabase échoue)
+    function _sendFormspree() {
+      fetch(CFG.formspree, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(formspreePayload),
       })
-      .catch(err => console.warn('[BenBot] Supabase ingest error', err));
+        .then(r => r.json())
+        .then(r => { if (r.ok) console.log('[BenBot] Formspree ✓ (fallback)'); else throw r; })
+        .catch(err => {
+          try {
+            var leads = JSON.parse(localStorage.getItem('ben_leads') || '[]');
+            leads.push(formspreePayload);
+            localStorage.setItem('ben_leads', JSON.stringify(leads));
+          } catch(e) {}
+          console.warn('[BenBot] Fallback localStorage', err);
+        });
+    }
+
+    // ── Supabase : source de vérité — Formspree seulement si Supabase indisponible
+    if (CFG.ingestUrl) {
+      fetch(CFG.ingestUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + CFG.anonKey,
+        },
+        body: JSON.stringify(supabasePayload),
+      })
+        .then(r => r.json())
+        .then(r => {
+          if (r.ok) {
+            console.log('[BenBot] Supabase ✓ lead_id=' + r.lead_id + (r.is_duplicate ? ' (doublon)' : ''));
+            window.__BEN = window.__BEN || {};
+            window.__BEN.leadId = r.lead_id;
+          } else {
+            console.warn('[BenBot] Supabase non-ok → fallback Formspree', r);
+            _sendFormspree();
+          }
+        })
+        .catch(err => {
+          console.warn('[BenBot] Supabase error → fallback Formspree', err);
+          _sendFormspree();
+        });
+    } else {
+      // Pas de Supabase configuré → Formspree directement
+      _sendFormspree();
+    }
   }
 
   /* ══════════════════════════════════════════════════════════

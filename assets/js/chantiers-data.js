@@ -103,14 +103,14 @@ window.CHANTIERS = [
     icon:     '🔧',
     cover:    'photos/chantiers/vincennes-reparation-2024/couverture.jpg',
     photos: [
-      { src: 'photos/chantiers/vincennes-reparation-2024/couverture.jpg',  cap: 'SDB Vincennes — état général avant intervention',                              tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-01.jpg',    cap: 'Colonne fonte DN100 en SDB — fuite détectée suite dégât des eaux',             tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-02.jpg',    cap: 'Diagnostic — zone sinistrée, identification du défaut de la colonne',          tag: 'Fonte SMU DN100 — existant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-03.jpg',    cap: 'Colonne fonte avant intervention — angle de référence (avant 3)',               tag: 'Fonte SMU DN100 — avant' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-04.jpg',    cap: 'Dépose colonne existante — mise en place nouveau collecteur SME DN100',        tag: 'SME DN100 — en cours' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: 'Raccordements plomberie — reprise jonctions et étanchéité',                    tag: 'SME DN100 — neuf' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: 'Colonne SME DN100 posée — même angle de référence (après 3)',                  tag: 'SME DN100 — après' },
-      { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: 'Travaux terminés — reprise carrelage et finitions SDB comprises',               tag: 'Résultat final' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/couverture.jpg',  cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-01.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-02.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-03.jpg',    cap: 'Avant', tag: 'Fonte SMU DN100 — existant' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-04.jpg',    cap: 'Pendant', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: 'Pendant', tag: 'SME DN100 — en cours' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: 'Après',   tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: 'Après',   tag: 'SME DN100 — neuf' },
     ]
   },
   {
