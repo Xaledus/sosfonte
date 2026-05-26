@@ -29,12 +29,14 @@
   #svc-05 .sf-svc-photo,#svc-06 .sf-svc-photo,#svc-07 .sf-svc-photo,#svc-08 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
   #svc-01 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
   #svc-02 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
-  #svc-03 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
-  #svc-04 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}
+  /* Illustrations fond blanc → mix-blend-mode multiply sur fond sombre */
+  #svc-03 .sf-svc-photo,#svc-04 .sf-svc-photo,#svc-08 .sf-svc-photo{background:#0d2038!important}
+  #svc-03 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;mix-blend-mode:multiply;padding:16px}
+  #svc-04 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;mix-blend-mode:multiply;padding:16px}
   #svc-05 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%}
   #svc-06 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
   #svc-07 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
-  #svc-08 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  #svc-08 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;mix-blend-mode:multiply;padding:16px}
 }
 
 /* ── Mobile ── */
