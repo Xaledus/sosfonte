@@ -22,15 +22,19 @@
 /* ── Service photo containers ── */
 .sf-svc-photo{height:280px}
 
-/* ── Desktop : photo = hauteur exacte du texte ── */
+/* ── Desktop : photo = hauteur exacte du texte — TOUS les services ── */
 @media(min-width:769px){
-  #svc-01,#svc-02,#svc-05,#svc-06,#svc-07{align-items:stretch!important}
-  #svc-01 .sf-svc-photo,#svc-02 .sf-svc-photo,#svc-05 .sf-svc-photo,#svc-06 .sf-svc-photo,#svc-07 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
+  #svc-01,#svc-02,#svc-03,#svc-04,#svc-05,#svc-06,#svc-07,#svc-08{align-items:stretch!important}
+  #svc-01 .sf-svc-photo,#svc-02 .sf-svc-photo,#svc-03 .sf-svc-photo,#svc-04 .sf-svc-photo,
+  #svc-05 .sf-svc-photo,#svc-06 .sf-svc-photo,#svc-07 .sf-svc-photo,#svc-08 .sf-svc-photo{position:relative!important;height:unset!important;min-height:unset!important;overflow:hidden;border-radius:16px}
   #svc-01 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
   #svc-02 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+  #svc-03 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  #svc-04 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}
   #svc-05 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%}
   #svc-06 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
   #svc-07 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  #svc-08 .sf-svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
 }
 
 /* ── Mobile ── */
@@ -46,20 +50,33 @@
   #svc-01,#svc-02,#svc-03,#svc-04,#svc-05,#svc-06,#svc-07,#svc-08{grid-template-columns:1fr!important;gap:20px!important;padding:24px 0!important}
   /* Photo emoji : image avant le texte, hauteur réduite */
   .sf-svc-photo{order:-1;height:200px!important}
-  /* Service 05 cordiste : image EN FOND derrière le texte */
-  #svc-05{
+  /* Tous les services : image EN FOND derrière le texte */
+  #svc-01,#svc-02,#svc-03,#svc-04,#svc-05,#svc-06,#svc-07,#svc-08{
     position:relative!important;border-radius:16px;overflow:hidden;
-    background:url('photos/Logo_pictos/service-cordiste.jpg') center 5%/80% auto no-repeat,#0a1820;
     padding:0!important;gap:0!important
   }
-  #svc-05::after{
+  #svc-01{background:url('photos/Logo_pictos/service-eu-ep-ev.jpg') center 30%/cover no-repeat,#0a1820}
+  #svc-02{background:url('photos/Logo_pictos/service-fuite.jpg') center 60%/cover no-repeat,#0a1820}
+  #svc-03{background:url('photos/Logo_pictos/service-diagnostic.jpg') center 30%/cover no-repeat,#0a1820}
+  #svc-04{background:url('photos/Logo_pictos/service-maintenance.jpg') center center/cover no-repeat,#0a1820}
+  #svc-05{background:url('photos/Logo_pictos/service-cordiste.jpg') center 5%/80% auto no-repeat,#0a1820}
+  #svc-06{background:url('photos/Logo_pictos/service-chemisage.jpeg') center 30%/cover no-repeat,#0a1820}
+  #svc-07{background:url('photos/Logo_pictos/service-curage.jpg') center 30%/cover no-repeat,#0a1820}
+  #svc-08{background:url('photos/Logo_pictos/service-prestige.jpg') center 30%/cover no-repeat,#0a1820}
+  #svc-01::after,#svc-02::after,#svc-03::after,#svc-04::after,
+  #svc-05::after,#svc-06::after,#svc-07::after,#svc-08::after{
     content:'';position:absolute;inset:0;
-    background:linear-gradient(160deg,rgba(10,24,42,0.72) 0%,rgba(6,16,30,0.88) 100%);
+    background:linear-gradient(160deg,rgba(10,24,42,0.75) 0%,rgba(6,16,30,0.90) 100%);
     pointer-events:none;z-index:0
   }
-  #svc-05>*{position:relative;z-index:1}
-  #svc-05 .sf-svc-photo{display:none!important}
-  #svc-05>div:not(.sf-svc-photo){padding:28px 20px!important}
+  #svc-01>*,#svc-02>*,#svc-03>*,#svc-04>*,
+  #svc-05>*,#svc-06>*,#svc-07>*,#svc-08>*{position:relative;z-index:1}
+  #svc-01 .sf-svc-photo,#svc-02 .sf-svc-photo,#svc-03 .sf-svc-photo,#svc-04 .sf-svc-photo,
+  #svc-05 .sf-svc-photo,#svc-06 .sf-svc-photo,#svc-07 .sf-svc-photo,#svc-08 .sf-svc-photo{display:none!important}
+  #svc-01>div:not(.sf-svc-photo),#svc-02>div:not(.sf-svc-photo),
+  #svc-03>div:not(.sf-svc-photo),#svc-04>div:not(.sf-svc-photo),
+  #svc-05>div:not(.sf-svc-photo),#svc-06>div:not(.sf-svc-photo),
+  #svc-07>div:not(.sf-svc-photo),#svc-08>div:not(.sf-svc-photo){padding:28px 20px!important}
 }
 </style>
 </head>
@@ -174,11 +191,15 @@
           </div>
           <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Commander un diagnostic →</a></div>
         </div>
-        <div class="sf-svc-photo" style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">🔍</div>
+        <div class="sf-svc-photo" style="border-radius:16px;overflow:hidden">
+          <img src="photos/Logo_pictos/service-diagnostic.jpg" alt="Diagnostic inspection caméra réseau fonte — rapport technique Paris IDF" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
+        </div>
       </div>
 
       <div id="svc-04" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div class="sf-svc-img-first sf-svc-photo" style="background:linear-gradient(135deg,#0d1f35,#162840);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px">📋</div>
+        <div class="sf-svc-img-first sf-svc-photo" style="border-radius:16px;overflow:hidden">
+          <img src="photos/Logo_pictos/service-maintenance.jpg" alt="Contrat maintenance syndic colonnes fonte — Paris IDF" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+        </div>
         <div>
           <p class="section-eyebrow">Service 04</p>
           <h2 class="section-title">Contrats de <em>maintenance</em> syndics</h2>
@@ -250,9 +271,8 @@
       </div>
 
       <div id="svc-08" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0" class="reveal">
-        <div class="sf-svc-img-first sf-svc-photo" style="background:linear-gradient(135deg,var(--anthracite),var(--navy-light));border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px solid var(--teal-border)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-          <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-align:center">Protocole Prestige</p>
+        <div class="sf-svc-img-first sf-svc-photo" style="border-radius:16px;overflow:hidden">
+          <img src="photos/Logo_pictos/service-prestige.jpg" alt="Offre prestige intervention fonte — hôtels immeubles sensibles Paris IDF" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
         </div>
         <div>
             <p class="section-eyebrow">Service 08</p>
