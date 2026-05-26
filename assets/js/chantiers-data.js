@@ -36,17 +36,26 @@ window.CHANTIERS = [
     ]
   },
   {
-    id:       'neuilly-urgence-2024',
+    id:       'neuilly-urgence-2025',
     featured: true,
     type:     'Urgence fuite',
     titre:    'Fuite fonte cave — intervention J+1',
     lieu:     'Neuilly-sur-Seine (92)',
-    details:  'Diagnostic + réparation jonction fonte/PVC',
-    tags:     [],
+    details:  '2 jours · Remplacement colonnes EU/EV DN100',
+    tags:     ['2 jours', 'Colonnes EU/EV', 'DN100'],
     gradient: 'linear-gradient(135deg,#1a4a3a,#0d3028)',
     icon:     '⚡',
-    cover:    null,
-    photos:   []
+    cover:    'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/Couverture.jpg',
+    photos: [
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/Couverture.jpg',            cap: 'Colonne fonte en cave — état avant intervention' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250717112550.jpg',     cap: 'Diagnostic — localisation de la fuite' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0036.jpg',   cap: 'Colonne EV — vétusté avancée constatée' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0040.jpg',   cap: 'Dépose de la colonne fonte existante' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250717-WA0049.jpg',   cap: 'Mise en place nouvelle colonne SME DN100' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0001.jpg',   cap: 'Raccordements et finitions' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG-20250901-WA0003.jpg',   cap: 'Travaux terminés — colonnes EU/EV remplacées' },
+      { src: 'photos/chantiers/Fuite%20fonte%20cave%20%E2%80%94%20Neuilly%2092/IMG20250829094333.jpg',     cap: 'Vue d\'ensemble cave après travaux' },
+    ]
   },
   {
     id:       'paris16-diagnostic-2024',
