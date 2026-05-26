@@ -115,6 +115,9 @@ function _lbInit() {
     '<div style="position:relative;max-width:90vw;max-height:80vh;display:flex;align-items:center;justify-content:center">' +
       '<button onclick="window._lbNav(-1)" style="position:absolute;left:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%">‹</button>' +
       '<img id="sf-lb-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;display:block">' +
+      '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none">' +
+        '<span style="font-family:Poppins,sans-serif;font-size:clamp(18px,4vw,32px);font-weight:700;color:rgba(255,255,255,0.22);letter-spacing:.15em;text-transform:uppercase;transform:rotate(-30deg);white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,0.4)">SOS FONTE</span>' +
+      '</div>' +
       '<button onclick="window._lbNav(1)" style="position:absolute;right:-52px;background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;width:44px;height:44px;border-radius:50%">›</button>' +
     '</div>' +
     '<div id="sf-lb-cap" style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:14px;text-align:center;max-width:600px;padding:0 20px"></div>' +
