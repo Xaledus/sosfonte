@@ -10,6 +10,14 @@
 <link rel="stylesheet" href="sosfonte_shared.css?v=12">
 <link rel="stylesheet" href="assets/css/bot-ben.css">
 <script src="assets/js/site-config.js"></script>
+<style>
+.sf-svc-nav{position:sticky;top:0;z-index:90;background:var(--anthracite);border-bottom:1px solid var(--border);display:flex;gap:4px;padding:10px 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sf-svc-nav::-webkit-scrollbar{display:none}
+.sf-svc-nav a{flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;padding:6px 14px;border-radius:20px;border:1px solid var(--border);transition:color .2s,border-color .2s,background .2s;white-space:nowrap}
+.sf-svc-nav a:hover{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.08)}
+.sf-svc-nav a.active{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.12)}
+@media(max-width:768px){.sf-svc-img-first{order:2}}
+</style>
 </head>
 <body>
 <header>
@@ -38,11 +46,22 @@
   </div>
 </section>
 
+<nav class="sf-svc-nav" id="sf-svc-nav" aria-label="Navigation services">
+  <a href="#svc-01">🏗️ Colonnes EU/EV</a>
+  <a href="#svc-02">🔧 Fuite & réparation</a>
+  <a href="#svc-03">🔍 Diagnostic</a>
+  <a href="#svc-04">📋 Maintenance syndics</a>
+  <a href="#svc-05">🧗 Accès difficile</a>
+  <a href="#svc-06">🛠️ Chemisage</a>
+  <a href="#svc-07">💧 Curage HP</a>
+  <a href="#svc-08">🛡️ Prestige</a>
+</nav>
+
 <section class="section">
   <div class="section-inner">
     <div style="display:flex;flex-direction:column;gap:4px">
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+      <div id="svc-01" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
         <div>
           <p class="section-eyebrow">Service 01</p>
           <h2 class="section-title"><em>Remplacement</em> de colonnes EU/EV</h2>
@@ -54,12 +73,13 @@
             <div class="check-item"><span class="check-icon">✓</span> Intervention dans les bâtiments occupés</div>
             <div class="check-item"><span class="check-icon">✓</span> Rapport technique post-intervention</div>
           </div>
+          <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis →</a></div>
         </div>
         <div style="background:linear-gradient(135deg,#e8f5f2,#f0f7f5);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🏗️</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div style="background:linear-gradient(135deg,#fef3f2,#fde8e6);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🔧</div>
+      <div id="svc-02" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,#fef3f2,#fde8e6);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🔧</div>
         <div>
           <p class="section-eyebrow">Service 02</p>
           <h2 class="section-title"><em>Recherche</em> de fuite & réparation</h2>
@@ -79,10 +99,11 @@
             <div class="check-item"><span class="check-icon">✓</span> Reprise jonction fonte/PVC ou fonte/acier</div>
             <div class="check-item"><span class="check-icon">✓</span> Rapport technique pour déclaration sinistre assurance</div>
           </div>
+          <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander une intervention →</a></div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+      <div id="svc-03" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
         <div>
           <p class="section-eyebrow">Service 03</p>
           <h2 class="section-title"><em>Diagnostic</em> & inspection <em>réseau</em></h2>
@@ -97,12 +118,13 @@
             <p style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:8px">Tarifs transparents</p>
             <p style="font-size:13px;color:var(--text-muted);line-height:1.6">Passage caméra avec rapport : <strong style="color:var(--text)">à partir de 350 €</strong><sup>*</sup><br>Rapport reconnu par les assureurs, notaires et expertises judiciaires.<br><span style="font-size:11px;font-style:italic"><sup>*</sup> Installation standard accès direct · Devis gratuit sur cas complexe</span></p>
           </div>
+          <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Commander un diagnostic →</a></div>
         </div>
         <div style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🔍</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div style="background:linear-gradient(135deg,#0d1f35,#162840);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">📋</div>
+      <div id="svc-04" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,#0d1f35,#162840);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">📋</div>
         <div>
           <p class="section-eyebrow">Service 04</p>
           <h2 class="section-title">Contrats de <em>maintenance</em> syndics</h2>
@@ -118,8 +140,8 @@
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
-        <div style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🧗</div>
+      <div id="svc-05" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,#f0f4fa,#e8eef7);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🧗</div>
         <div>
           <p class="section-eyebrow">Service 05</p>
           <h2 class="section-title">Interventions en <em>accès</em> <em>difficile</em> — cordiste et nacelle</h2>
@@ -131,10 +153,11 @@
             <div class="check-item"><span class="check-icon">✓</span> Protocole sécurité conforme · Décennale incluse</div>
             <div class="check-item"><span class="check-icon">✓</span> Rapport technique post-intervention fourni</div>
           </div>
+          <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis accès difficile →</a></div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+      <div id="svc-06" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
         <div>
           <p class="section-eyebrow">Service 06</p>
           <h2 class="section-title"><em>Chemisage</em> — réhabilitation <em>sans</em> <em>démolition</em> ni relogement</h2>
@@ -151,7 +174,7 @@
         <div style="background:linear-gradient(135deg,#1a3a2a,#0d2418);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">🛠️</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
+      <div id="svc-07" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)" class="reveal">
         <div>
             <p class="section-eyebrow">Service 07</p>
             <h2 class="section-title"><em>Curage</em> haute pression — protocole <em>fonte</em></h2>
@@ -163,12 +186,13 @@
               <div class="check-item"><span class="check-icon">✓</span> Inspection caméra post-intervention sur demande</div>
               <div class="check-item"><span class="check-icon">✓</span> Zéro risque de casse par surpression — protocole garanti</div>
             </div>
+            <div class="btn-actions" style="margin-top:24px"><a href="contact.html" class="btn-teal">Demander un devis curage →</a></div>
           </div>
           <div style="background:linear-gradient(135deg,#f7f4ef,#ede9e2);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;font-size:72px">💧</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0" class="reveal">
-        <div style="background:linear-gradient(135deg,var(--anthracite),var(--navy-light));border-radius:16px;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px solid var(--teal-border)">
+      <div id="svc-08" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:32px 0" class="reveal">
+        <div class="sf-svc-img-first" style="background:linear-gradient(135deg,var(--anthracite),var(--navy-light));border-radius:16px;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px solid var(--teal-border)">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-align:center">Protocole Prestige</p>
         </div>
@@ -263,6 +287,26 @@ if ('IntersectionObserver' in window && window.innerWidth > 768) {
 
 <script>
 (function(){var t=document.getElementById('navToggle');if(t){t.addEventListener('click',function(){var n=document.querySelector('header nav');var o=n.classList.toggle('open');t.classList.toggle('open');document.body.classList.toggle('menu-open',o);t.setAttribute('aria-expanded',String(o));});}})();
+</script>
+<script>
+(function(){
+  var nav=document.getElementById('sf-svc-nav');
+  if(!nav)return;
+  var links=Array.from(nav.querySelectorAll('a'));
+  var ids=links.map(function(a){return a.getAttribute('href').slice(1)});
+  function update(){
+    var active='';
+    ids.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&el.getBoundingClientRect().top<=120)active=id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('active',a.getAttribute('href')==='#'+active);
+    });
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
 </script>
 <script src="assets/js/bot-ben.js"></script>
 <script src="assets/js/site-init.js"></script>
