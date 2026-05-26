@@ -25,8 +25,8 @@
 /* ── Desktop : photo à la même hauteur que le texte ── */
 @media(min-width:769px){
   #svc-05{align-items:stretch!important}
-  #svc-05 .sf-svc-photo{height:auto!important;min-height:280px}
-  #svc-05 .sf-svc-photo img{height:100%;width:100%;object-fit:cover;object-position:center top}
+  #svc-05 .sf-svc-photo{height:100%!important;min-height:unset!important}
+  #svc-05 .sf-svc-photo img{height:100%;width:100%;object-fit:cover;object-position:center 15%}
 }
 
 /* ── Mobile ── */
@@ -45,12 +45,12 @@
   /* Service 05 cordiste : image EN FOND derrière le texte */
   #svc-05{
     position:relative!important;border-radius:16px;overflow:hidden;
-    background:url('photos/Logo_pictos/service-cordiste.jpg') center 20%/cover no-repeat;
+    background:url('photos/Logo_pictos/service-cordiste.jpg') center 5%/80% auto no-repeat,#0a1820;
     padding:0!important;gap:0!important
   }
   #svc-05::after{
     content:'';position:absolute;inset:0;
-    background:linear-gradient(160deg,rgba(10,24,42,0.82) 0%,rgba(6,16,30,0.94) 100%);
+    background:linear-gradient(160deg,rgba(10,24,42,0.72) 0%,rgba(6,16,30,0.88) 100%);
     pointer-events:none;z-index:0
   }
   #svc-05>*{position:relative;z-index:1}
