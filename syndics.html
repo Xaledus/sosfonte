@@ -13,12 +13,17 @@
 <style>
 /* ── Syndics mobile ── */
 @media(max-width:768px){
+  body{overflow-x:hidden}
   /* Logos bar : padding réduit + centrage */
   .sf-logos-bar{padding:20px 16px!important;overflow-x:hidden}
   .sf-logos-bar>div{flex-direction:column!important;gap:12px!important;align-items:center!important}
   /* Logos : taille uniforme et centrés */
   .sf-logos-bar>div>div{justify-content:center!important;flex-wrap:wrap!important;gap:12px!important}
   .sf-logos-bar>div>div>div{width:80px!important;height:60px!important;flex-shrink:0}
+  /* Grids → 1 colonne */
+  .sf-grid-2,.sf-grid-3{grid-template-columns:1fr!important;gap:16px!important}
+  /* Prestige CTA → empilement */
+  .sf-prestige-cta{grid-template-columns:1fr!important;text-align:center;gap:24px!important}
 }
 </style>
 </head>

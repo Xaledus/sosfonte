@@ -101,6 +101,31 @@ window.CHANTIERS = [
     ]
   },
   {
+    id:       'chateau-normandie-2026',
+    featured: true,
+    type:     'Création réseau évacuation fonte',
+    titre:    'Réseau EU — château prestige en réhabilitation',
+    lieu:     'Normandie',
+    details:  '4 jours · Fonte SMU DN100 · Conception & pose',
+    tags:     ['4 jours', 'SMU DN100', 'Prestige'],
+    gradient: 'linear-gradient(135deg,#1a2a1a,#0d1a0d)',
+    icon:     '🏰',
+    cover:    'photos/chantiers/chateau-normandie-2026/couverture.jpg',
+    photos: [
+      { src: 'photos/chantiers/chateau-normandie-2026/couverture.jpg',  cap: '', tag: 'Château — état initial' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-01.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-02.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-03.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-04.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-05.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-06.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-07.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-08.jpg',    cap: '', tag: 'Réseau fonte — création' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-09.jpg',    cap: '', tag: 'Réseau fonte — finitions' },
+      { src: 'photos/chantiers/chateau-normandie-2026/photo-10.jpg',    cap: '', tag: 'Réseau fonte — finitions' },
+    ]
+  },
+  {
     id:       'vincennes-reparation-2024',
     featured: true,
     type:     'Remplacement fonte SME + reprise carrelage',
