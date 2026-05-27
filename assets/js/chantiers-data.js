@@ -145,6 +145,13 @@ window.CHANTIERS = [
       { src: 'photos/chantiers/vincennes-reparation-2024/photo-05.jpg',    cap: '', tag: 'SME DN100 — en cours' },
       { src: 'photos/chantiers/vincennes-reparation-2024/photo-06.jpg',    cap: '', tag: 'SME DN100 — neuf' },
       { src: 'photos/chantiers/vincennes-reparation-2024/photo-07.jpg',    cap: '', tag: 'SME DN100 — neuf' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-08.jpg',    cap: '', tag: 'Reprise SME DN100 · Vincennes' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-09.jpg',    cap: '', tag: 'Reprise SME DN100 · Vincennes' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-10.jpg',    cap: '', tag: 'Remplacement fonte SME DN100' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-11.jpg',    cap: '', tag: 'Remplacement fonte SME DN100' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-12.jpg',    cap: '', tag: 'Reprise carrelage SDB' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-13.jpg',    cap: '', tag: 'Reprise carrelage SDB' },
+      { src: 'photos/chantiers/vincennes-reparation-2024/photo-14.jpg',    cap: '', tag: 'Tout compris — fonte & carrelage' },
     ]
   },
 ];
