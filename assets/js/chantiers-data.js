@@ -112,7 +112,7 @@ window.CHANTIERS = [
     icon:     '🏰',
     cover:    'photos/chantiers/chateau-normandie-2026/couverture.jpg',
     photos: [
-      { src: 'photos/chantiers/chateau-normandie-2026/couverture.jpg',  cap: '', tag: 'Château — état initial' },
+      { src: 'photos/chantiers/chateau-normandie-2026/couverture.jpg',  cap: '', tag: '' },
       { src: 'photos/chantiers/chateau-normandie-2026/photo-01.jpg',    cap: '', tag: 'Réseau fonte — création' },
       { src: 'photos/chantiers/chateau-normandie-2026/photo-02.jpg',    cap: '', tag: 'Réseau fonte — création' },
       { src: 'photos/chantiers/chateau-normandie-2026/photo-03.jpg',    cap: '', tag: 'Réseau fonte — création' },
