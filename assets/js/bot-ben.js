@@ -799,7 +799,7 @@
     await showTyping(300);
     await addBubble('bot', 'Comment souhaitez-vous transmettre votre demande ?', 800);
     await showTyping(200);
-    await addBubble('bot', 'WhatsApp est le moyen le plus rapide — réponse SOS FONTE Front Desk sous 10 min en heures ouvrées.', 500);
+    await addBubble('bot', 'WhatsApp est le moyen le plus rapide — réponse de notre chargé d\'affaires sous 10 min en heures ouvrées.', 500);
 
     showChoices([
       {
@@ -874,8 +874,8 @@
       setBenImage(IMG.reconnaissant);
       addSticker(STK.rdv);
       var prenom = (formData.nom || '').trim().split(' ')[0];
-      var msg = prenom ? '<strong>' + prenom + '</strong>, SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay
-                       : 'SOS FONTE Front Desk vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay;
+      var msg = prenom ? '<strong>' + prenom + '</strong>, notre chargé d\'affaires vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay
+                       : 'Notre chargé d\'affaires vous rappelle sous 2h. 📞 ' + CFG.phoneDisplay;
       await addBubble('bot', msg, 700);
       trackEvent('callback_submitted');
       sendLead();
@@ -998,7 +998,7 @@
             clearFooter();
             setBenImage(IMG.okParfait);
             await showTyping(300);
-            await addBubble('bot', 'SOS FONTE Front Desk prend en charge. Canal de contact ?', 600);
+            await addBubble('bot', 'Notre chargé d\'affaires prend en charge. Canal de contact ?', 600);
             showChoices([
               {
                 label: '💬 WhatsApp — immédiat',
@@ -1349,7 +1349,7 @@
   async function stepOffHours() {
     setBenImage(IMG.deborde);
     addSticker(STK.hs);
-    await addBubble('bot', 'L\'équipe SOS FONTE Front Desk reprend à 7h.', 700);
+    await addBubble('bot', 'Notre chargé d\'affaires reprend à 7h.', 700);
     await showTyping(200);
     await addBubble('bot', 'Si votre demande est urgente, je peux préparer un message WhatsApp maintenant — il sera lu dès l\'ouverture.', 600);
     showChoices([
@@ -1373,7 +1373,7 @@
             clearFooter();
             setBenImage(IMG.reconnaissant);
             addSticker(STK.ok);
-            await addBubble('bot', 'Noté — SOS FONTE Front Desk vous rappelle à 7h15. 📞 ' + CFG.phoneDisplay, 600);
+            await addBubble('bot', 'Noté — notre chargé d\'affaires vous rappelle à 7h15. 📞 ' + CFG.phoneDisplay, 600);
             formData.canal = 'tel';
             sendLead();
             stepAutresQuestions();
