@@ -106,5 +106,15 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://sosfonte.com/guides/fuite-colonne-fonte-cave-neuilly/</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/guides/degat-des-eaux-colonne-fonte-vincennes/</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 
 </urlset>
