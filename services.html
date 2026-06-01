@@ -24,9 +24,9 @@
 <script src="assets/js/site-config.js"></script>
 <style>
 /* ── Anchor nav ── */
-.sf-svc-nav{position:sticky;top:0;z-index:90;background:var(--anthracite);border-bottom:1px solid var(--border)}
+.sf-svc-nav{position:sticky;top:0;z-index:90;background:var(--anthracite);border-bottom:1px solid var(--border);display:flex;justify-content:center}
 .sf-svc-nav-toggle{display:none}
-.sf-svc-nav-items{display:flex;gap:4px;padding:10px 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:space-evenly}
+.sf-svc-nav-items{display:flex;gap:8px;padding:10px 20px;flex-wrap:nowrap;flex:1;max-width:1200px;box-sizing:border-box;justify-content:space-evenly}
 .sf-svc-nav-items::-webkit-scrollbar{display:none}
 .sf-svc-nav a{flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;padding:6px 14px;border-radius:20px;border:1px solid var(--border);transition:color .2s,border-color .2s,background .2s;white-space:nowrap}
 .sf-svc-nav a:hover,.sf-svc-nav a.active{color:var(--teal);border-color:var(--teal);background:rgba(23,181,166,.12)}
@@ -56,7 +56,7 @@
   .sf-svc-nav-toggle svg{transition:transform .22s;flex-shrink:0}
   .sf-svc-nav-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
   .sf-svc-nav-toggle[aria-expanded="true"]{color:var(--teal)}
-  .sf-svc-nav-items{display:none;flex-wrap:wrap;gap:8px;padding:10px 16px 14px;border-top:1px solid var(--border);overflow-x:unset}
+  .sf-svc-nav-items{display:none;flex-wrap:wrap;gap:8px;padding:10px 16px 14px;border-top:1px solid var(--border);overflow-x:auto;justify-content:flex-start}
   .sf-svc-nav-items.open{display:flex}
   /* Service rows : single column */
   #svc-01,#svc-02,#svc-03,#svc-04,#svc-05,#svc-06,#svc-07,#svc-08{grid-template-columns:1fr!important;gap:20px!important;padding:24px 0!important}
