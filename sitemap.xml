@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ── Pages principales ── -->
   <url>
     <loc>https://sosfonte.com/</loc>
     <priority>1.0</priority>
@@ -16,6 +18,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://sosfonte.com/contact/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://sosfonte.com/syndics/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
@@ -26,43 +33,78 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://sosfonte.com/contact/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://sosfonte.com/urgence-canalisation-fonte-paris-24h/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://sosfonte.com/remplacement-colonne-fonte-paris/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://sosfonte.com/recherche-fuite-canalisation-fonte-idf/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://sosfonte.com/inspection-camera-canalisation-paris/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://sosfonte.com/curage-haute-pression-fonte-paris/</loc>
+    <loc>https://sosfonte.com/la-fonte/</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://sosfonte.com/colonne-fonte-copropriete-haussmannienne/</loc>
+    <loc>https://sosfonte.com/prestige/</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/partenaires/</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/faq/</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/mentions-legales/</loc>
+    <priority>0.2</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/confidentialite/</loc>
+    <priority>0.2</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <!-- ── Pages locales SEO ── -->
+  <url>
+    <loc>https://sosfonte.com/intervention/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/intervention/paris-17/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/intervention/paris-14/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/intervention/paris-16/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/intervention/neuilly-sur-seine/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sosfonte.com/intervention/vincennes/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- ── Blog / Guides ── -->
+  <url>
+    <loc>https://sosfonte.com/guides/</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://sosfonte.com/plombier-specialiste-fonte-ile-de-france/</loc>
+    <loc>https://sosfonte.com/guides/remplacement-colonne-eu-immeuble-haussmannien/</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+
 </urlset>
